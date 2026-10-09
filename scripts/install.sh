@@ -88,13 +88,32 @@ info "Aplicando patches de integração..."
 apply_patches "$PKG_DIR/patches/common"
 apply_patches "$PKG_DIR/patches/$TARGET"
 
+# ---- 3) dependências npm ----
+NPM_DEPS_FILE="$PKG_DIR/npm-dependencies.txt"
+if [ -f "$NPM_DEPS_FILE" ]; then
+  deps="$(grep -vE '^\s*#|^\s*$' "$NPM_DEPS_FILE" | tr '\n' ' ')"
+  if [ -n "$deps" ]; then
+    info "Dependências npm a garantir: $deps"
+    echo "   (rode no ambiente do Chatwoot, se ainda não presentes:)"
+    echo "     pnpm add $deps"
+  fi
+fi
+
 cat <<EOF
 
 Instalação de arquivos concluída. Próximos passos (no ambiente do Chatwoot):
 
-  1) Migrations:   bundle exec rails db:migrate
-  2) Assets (dev): o Vite recompila ao subir; (prod) rake assets:precompile
-  3) Reinicie os serviços (rails + sidekiq).
+  1) Dependências npm (se o passo acima listou):  pnpm add <deps>
+  2) Migrations do Kanban. ATENÇÃO: se o banco foi criado via
+     'db:chatwoot_prepare' (schema:load), as migrations do Kanban podem ter
+     sido marcadas como aplicadas sem rodar. Rode o reconciliador:
+         bundle exec rails runner "$(cat "$PKG_DIR/scripts/reconcile_migrations.rb" 2>/dev/null | tr '\n' ' ' | sed 's/"/\\"/g')"
+     ou, mais simples, copie scripts/reconcile_migrations.rb para o app e rode:
+         bundle exec rails runner reconcile_migrations.rb
+     Depois:
+         bundle exec rails db:migrate
+  3) Assets (dev): o Vite recompila ao subir; (prod) rake assets:precompile
+  4) Reinicie os serviços (rails + sidekiq).
 
 Para reverter:  ./scripts/uninstall.sh "$TARGET_DIR" --target $TARGET
 EOF

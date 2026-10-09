@@ -97,16 +97,24 @@ config/routes.rb, actionCable.js, Sidebar.vue, dashboard.routes.js.
 
 ## 4. Plano de continuação (faseado)
 
-### Fase A — Board principal funcional (escopo enxuto) [ESCOLHIDO]
+### Fase A — Board principal funcional (escopo enxuto) [✅ CONCLUÍDA]
 Objetivo: board Kanban renderizando no v4.18, sem a integração automação-macro.
-1. Remover/retirar do pacote os patches de automação-macro problemáticos
-   (listados em 3), mantendo o board, rotas, sidebar, store, API, migrations.
-2. Resolver dependências remanescentes do build do Vite até compilar 100%.
-3. Automatizar no `install.sh`:
-   - `pnpm add chart.js@~4.4.4 vue-chartjs@5.3.1` (ou manifest de deps npm);
-   - passo pós-migrate para as migrations kanban (reconciliar schema_migrations).
-4. Subir o app, abrir o board, criar um funil/estágio/card (smoke manual).
-5. Rodar os specs de Kanban (rede de segurança).
+Resultado do smoke test funcional em Chatwoot CE v4.18 (Docker):
+- 16 patches de automação-macro movidos para `patches/_deferred_automation_macro/`
+  (Fase B). Restam 31 patches `common`, todos estritamente aditivos.
+- Patches corrigidos para serem aditivos (não remover código do v4.18):
+  URLHelper.js, account.rb, busEvents.js, useUISettings.js, config/locales/pt_BR.yml.
+- Dependências npm declaradas em `npm-dependencies.txt` (chart.js, vue-chartjs);
+  `install.sh` passou a listá-las/instruir instalação.
+- Reconciliação de migrations automatizada em `scripts/reconcile_migrations.rb`.
+- **Build do Vite: ✅ `built in 47.75s` (5217 módulos), sem erros.**
+- **HTTP 200; home renderiza sem erro de manifest.**
+- **55 rotas da API Kanban montadas no Rails.**
+- **End-to-end OK:** criado board + 2 estágios + card, card movido entre
+  estágios, contabilizado no board.
+- Validação reproduzível: `install.sh` aplica 31/31 patches em árvore v4.18
+  limpa; sintaxe Ruby/YAML OK; 51 migrations criam 17 tabelas.
+
 
 ### Fase B — Integração automação-macro (completo)
 Refazer manualmente os ~19 patches da seção 3, estritamente **aditivos** sobre

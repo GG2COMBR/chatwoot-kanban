@@ -1,12 +1,11 @@
 diff --git a/app/javascript/dashboard/composables/useUISettings.js b/app/javascript/dashboard/composables/useUISettings.js
-index c964dc6..f922750 100644
+index c964dc6..51edb5a 100644
 --- a/app/javascript/dashboard/composables/useUISettings.js
 +++ b/app/javascript/dashboard/composables/useUISettings.js
-@@ -1,8 +1,16 @@
- import { computed } from 'vue';
+@@ -2,7 +2,16 @@ import { computed } from 'vue';
  import { useStore, useStoreGetters } from 'dashboard/composables/store';
--import wootConstants from 'dashboard/constants/globals';
-+
+ import wootConstants from 'dashboard/constants/globals';
+ 
 +// Kanban and Conversation actions are always pinned to the first two
 +// positions of the conversation sidebar, in this order, and cannot be
 +// reordered by the user.
@@ -14,7 +13,7 @@ index c964dc6..f922750 100644
 +  'kanban',
 +  'conversation_actions',
 +]);
- 
++
  export const DEFAULT_CONVERSATION_SIDEBAR_ITEMS_ORDER = Object.freeze([
 +  { name: 'kanban' },
    { name: 'conversation_actions' },

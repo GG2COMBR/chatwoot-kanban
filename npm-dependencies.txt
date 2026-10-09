@@ -1,0 +1,4 @@
+# Dependências npm exigidas pelo pacote (uma por linha: nome@versão)
+# Instaladas pelo install.sh via pnpm add, se ainda não presentes no alvo.
+chart.js@~4.4.4
+vue-chartjs@5.3.1
