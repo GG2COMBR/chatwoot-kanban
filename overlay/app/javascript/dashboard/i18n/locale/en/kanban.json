@@ -1140,6 +1140,40 @@
         "UNASSIGNED": "Unassigned"
       },
       "LOAD_MORE": "Load more"
+    },
+    "PRODUCTS": {
+      "MANAGE_CATALOG": "Product Catalog",
+      "SETTINGS_SHORTCUT_HINT": "Configure Google Merchant XML feeds or import spreadsheets for this catalog.",
+      "MODAL_TITLE": "Product Catalog & Feed Sync",
+      "MODAL_DESCRIPTION": "Manage Google Merchant XML feeds or import CSV product sheets.",
+      "TAB_GOOGLE_MERCHANT": "Google Merchant Feed (XML)",
+      "TAB_CSV_UPLOAD": "Import CSV Spreadsheet",
+      "FIELD_NAME": "Source Name",
+      "FIELD_FEED_URL": "XML Feed URL",
+      "PLACEHOLDER_FEED_NAME": "e.g. Main Store Feed",
+      "PLACEHOLDER_FEED_URL": "https://yourstore.com/google-merchant-feed.xml",
+      "ADD_FEED_BUTTON": "Add Feed",
+      "FIELD_CSV_NAME": "Spreadsheet Name (optional)",
+      "PLACEHOLDER_CSV_NAME": "e.g. Products 2026",
+      "FIELD_FILE": "CSV File",
+      "IMPORT_CSV_BUTTON": "Import CSV",
+      "EXISTING_SOURCES_TITLE": "Active Product Sources",
+      "LOADING": "Loading sources...",
+      "NO_SOURCES_YET": "No product sources configured yet.",
+      "ITEMS_COUNT": "{count} products",
+      "SYNC_NOW": "Sync now",
+      "DELETE_SOURCE": "Delete source",
+      "CLOSE": "Close",
+      "LOAD_SOURCES_ERROR": "Error loading product sources.",
+      "FEED_CREATED_SUCCESS": "Feed added successfully. Synchronization in progress.",
+      "CREATE_ERROR": "Error creating product feed.",
+      "CSV_IMPORTED_SUCCESS": "{count} products imported successfully!",
+      "CSV_IMPORT_ERROR": "Error importing CSV spreadsheet.",
+      "SYNC_STARTED": "Synchronization started in background.",
+      "SYNC_ERROR": "Error triggering sync.",
+      "CONFIRM_DELETE_SOURCE": "Are you sure you want to delete this product source?",
+      "SOURCE_DELETED": "Product source deleted successfully.",
+      "DELETE_ERROR": "Error deleting product source."
     }
   }
 }

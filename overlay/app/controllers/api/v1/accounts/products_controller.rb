@@ -1,16 +1,19 @@
+# frozen_string_literal: true
+
 class Api::V1::Accounts::ProductsController < Api::V1::Accounts::BaseController
   include KanbanFeatureAuthorization
 
   before_action :ensure_kanban_products_feature_enabled
+
   def search
-    result = KanbanProducts::SearchClient.new.search(
-      text: params[:text],
-      sku: params[:sku],
-      price_list: params[:price_list],
-      limit: params[:limit]
-    )
-    render json: result
-  rescue KanbanProducts::SearchClient::ApiError => e
-    render json: { success: false, error: e.message, products: [] }, status: :bad_gateway
+    query = params[:text].presence || params[:sku].presence
+    limit = (params[:limit] || 20).to_i.clamp(1, 100)
+
+    products = KanbanProduct.search_for(Current.account, query, limit: limit)
+
+    render json: {
+      success: true,
+      products: products.map(&:formatted_payload)
+    }
   end
 end

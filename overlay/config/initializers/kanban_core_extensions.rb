@@ -29,6 +29,8 @@ Rails.application.config.to_prepare do
   Account.class_eval do
     has_many :kanban_automation_rules, dependent: :destroy_async unless reflect_on_association(:kanban_automation_rules)
     has_many :kanban_automation_logs, dependent: :destroy_async unless reflect_on_association(:kanban_automation_logs)
+    has_many :kanban_product_sources, dependent: :destroy_async unless reflect_on_association(:kanban_product_sources)
+    has_many :kanban_products, dependent: :destroy_async unless reflect_on_association(:kanban_products)
   end
 
   # ---------------------------------------------------------------------------

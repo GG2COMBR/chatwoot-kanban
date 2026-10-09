@@ -24,6 +24,7 @@ import KanbanCustomFieldsTab from './KanbanCustomFieldsTab.vue';
 import KanbanEntryRulesTab from './KanbanEntryRulesTab.vue';
 import KanbanReasonsTab from './KanbanReasonsTab.vue';
 import KanbanAutomationsTab from './automations/KanbanAutomationsTab.vue';
+import KanbanProductsModal from './products/KanbanProductsModal.vue';
 import { apiErrorMessage } from 'dashboard/helper/kanbanApiError';
 
 const TAB_KEYS = [
@@ -63,6 +64,7 @@ const showImportExistingConversationsModal = ref(false);
 const showRemoveStageConfirmation = ref(false);
 const showDiscardSettingsConfirmation = ref(false);
 const showUnsavedChangesModal = ref(false);
+const showProductsModal = ref(false);
 
 const stages = ref([]);
 const newStageName = ref('');
@@ -1142,6 +1144,24 @@ onMounted(async () => {
             />
           </label>
 
+          <div
+            v-if="form.enableProducts"
+            class="flex items-center justify-between rounded-lg border border-dashed border-n-weak bg-n-surface-1 p-3 text-sm"
+          >
+            <span class="text-xs text-n-slate-11">
+              {{ t('KANBAN.PRODUCTS.SETTINGS_SHORTCUT_HINT') }}
+            </span>
+            <Button
+              type="button"
+              icon="i-lucide-package"
+              slate
+              outline
+              xs
+              :label="t('KANBAN.PRODUCTS.MANAGE_CATALOG')"
+              @click="showProductsModal = true"
+            />
+          </div>
+
           <label
             class="flex items-center justify-between gap-3 rounded-lg border border-n-weak bg-n-surface-2 p-4 text-sm font-medium text-n-slate-12"
           >
@@ -1420,5 +1440,11 @@ onMounted(async () => {
         </div>
       </div>
     </woot-modal>
+
+    <KanbanProductsModal
+      v-if="showProductsModal"
+      :show="showProductsModal"
+      @close="showProductsModal = false"
+    />
   </main>
 </template>

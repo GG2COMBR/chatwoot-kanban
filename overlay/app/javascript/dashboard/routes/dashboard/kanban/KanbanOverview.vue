@@ -7,6 +7,7 @@ import { useMapGetter, useStore } from 'dashboard/composables/store';
 import Button from 'dashboard/components-next/button/Button.vue';
 import Avatar from 'dashboard/components-next/avatar/Avatar.vue';
 import { getInboxIconByType } from 'dashboard/helper/inbox';
+import KanbanProductsModal from './products/KanbanProductsModal.vue';
 
 const { t } = useI18n();
 const router = useRouter();
@@ -14,6 +15,13 @@ const route = useRoute();
 const store = useStore();
 const { isAdmin } = useAdmin();
 
+const accountId = useMapGetter('getCurrentAccountId');
+const isFeatureEnabledonAccount = useMapGetter('accounts/isFeatureEnabledonAccount');
+const isProductsFeatureEnabled = computed(() =>
+  isFeatureEnabledonAccount.value(accountId.value, 'kanban_products')
+);
+
+const showProductsModal = ref(false);
 const boards = useMapGetter('kanbanBoards/kanbanBoards');
 const isLoading = useMapGetter('kanbanBoards/kanbanBoardsLoading');
 const error = useMapGetter('kanbanBoards/kanbanBoardsError');
@@ -94,7 +102,17 @@ onMounted(async () => {
             {{ t('KANBAN.OVERVIEW.TITLE') }}
           </h1>
         </div>
-        <div class="flex flex-shrink-0 items-center gap-4">
+        <div class="flex flex-shrink-0 items-center gap-3">
+          <Button
+            v-if="isAdmin && isProductsFeatureEnabled"
+            icon="i-lucide-package"
+            data-testid="overview-manage-products-button"
+            :label="t('KANBAN.PRODUCTS.MANAGE_CATALOG')"
+            slate
+            outline
+            size="sm"
+            @click="showProductsModal = true"
+          />
           <Button
             v-if="isAdmin"
             icon="i-lucide-plus"
@@ -322,5 +340,11 @@ onMounted(async () => {
         </button>
       </div>
     </div>
+
+    <KanbanProductsModal
+      v-if="showProductsModal"
+      :show="showProductsModal"
+      @close="showProductsModal = false"
+    />
   </main>
 </template>

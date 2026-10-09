@@ -1188,6 +1188,40 @@
         "UNASSIGNED": "Não atribuído"
       },
       "LOAD_MORE": "Carregar mais"
+    },
+    "PRODUCTS": {
+      "MANAGE_CATALOG": "Catálogo de Produtos",
+      "SETTINGS_SHORTCUT_HINT": "Configure feeds XML do Google Merchant ou importe planilhas para este catálogo.",
+      "MODAL_TITLE": "Catálogo de Produtos e Sincronização",
+      "MODAL_DESCRIPTION": "Gerencie feeds XML padrão Google Merchant ou importe planilhas CSV.",
+      "TAB_GOOGLE_MERCHANT": "Feed Google Merchant (XML)",
+      "TAB_CSV_UPLOAD": "Importar Planilha (CSV)",
+      "FIELD_NAME": "Nome da Fonte",
+      "FIELD_FEED_URL": "URL do Feed XML",
+      "PLACEHOLDER_FEED_NAME": "Ex: Feed Loja Principal",
+      "PLACEHOLDER_FEED_URL": "https://sualoja.com.br/feed-google-merchant.xml",
+      "ADD_FEED_BUTTON": "Adicionar Feed",
+      "FIELD_CSV_NAME": "Nome da Planilha (opcional)",
+      "PLACEHOLDER_CSV_NAME": "Ex: Produtos 2026",
+      "FIELD_FILE": "Arquivo CSV",
+      "IMPORT_CSV_BUTTON": "Importar CSV",
+      "EXISTING_SOURCES_TITLE": "Fontes de Produtos Ativas",
+      "LOADING": "Carregando fontes...",
+      "NO_SOURCES_YET": "Nenhuma fonte de produtos cadastrada ainda.",
+      "ITEMS_COUNT": "{count} produtos",
+      "SYNC_NOW": "Sincronizar agora",
+      "DELETE_SOURCE": "Excluir fonte",
+      "CLOSE": "Fechar",
+      "LOAD_SOURCES_ERROR": "Erro ao carregar fontes de produtos.",
+      "FEED_CREATED_SUCCESS": "Feed adicionado com sucesso. Sincronização em andamento.",
+      "CREATE_ERROR": "Erro ao criar feed de produtos.",
+      "CSV_IMPORTED_SUCCESS": "{count} produtos importados com sucesso!",
+      "CSV_IMPORT_ERROR": "Erro ao importar planilha CSV.",
+      "SYNC_STARTED": "Sincronização iniciada em segundo plano.",
+      "SYNC_ERROR": "Erro ao disparar sincronização.",
+      "CONFIRM_DELETE_SOURCE": "Tem certeza que deseja excluir esta fonte de produtos?",
+      "SOURCE_DELETED": "Fonte de produtos excluída com sucesso.",
+      "DELETE_ERROR": "Erro ao excluir fonte de produtos."
     }
   }
 }

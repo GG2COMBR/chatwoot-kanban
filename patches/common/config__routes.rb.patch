@@ -1,8 +1,8 @@
 diff --git a/config/routes.rb b/config/routes.rb
-index f15e1cf..fd6e48b 100644
+index f15e1cf..95e878b 100644
 --- a/config/routes.rb
 +++ b/config/routes.rb
-@@ -158,6 +158,63 @@ Rails.application.routes.draw do
+@@ -158,6 +158,69 @@ Rails.application.routes.draw do
            namespace :channels do
              resource :twilio_channel, only: [:create]
            end
@@ -66,10 +66,13 @@ index f15e1cf..fd6e48b 100644
 +          resources :products, only: [] do
 +            get :search, on: :collection
 +          end
++          resources :kanban_product_sources, only: [:index, :create, :destroy] do
++            post :sync, on: :member
++          end
            resources :conversations, only: [:index, :create, :show, :update, :destroy] do
              collection do
                get :meta
-@@ -174,6 +231,7 @@ Rails.application.routes.draw do
+@@ -174,6 +237,7 @@ Rails.application.routes.draw do
                end
                resource :contact_info_request, only: [:create]
                resources :assignments, only: [:create]
@@ -77,7 +80,7 @@ index f15e1cf..fd6e48b 100644
                resources :labels, only: [:create, :index]
                resource :participants, only: [:show, :create, :update, :destroy]
                resource :direct_uploads, only: [:create]
-@@ -557,6 +615,18 @@ Rails.application.routes.draw do
+@@ -557,6 +621,18 @@ Rails.application.routes.draw do
                get :outgoing_messages_count
              end
            end
