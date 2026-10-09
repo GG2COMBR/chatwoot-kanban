@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Git pre-commit hook para chatwoot-kanban
+set -e
+
+echo "🔍 Executando validação pré-commit de integridade do pacote..."
+./scripts/test-package.sh
+
+if [ $? -ne 0 ]; then
+  echo "❌ Commit abortado: corrija as falhas acima antes de comitar."
+  exit 1
+fi
