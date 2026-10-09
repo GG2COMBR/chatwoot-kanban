@@ -78,10 +78,23 @@ docs/         diretrizes arquiteturais e guias para contribuidores
 analysis/     documentos e especificações de referência
 ```
 
-### Validação de integridade
+### Desenvolvimento & Pre-commit Hooks
+
+Para configurar o ambiente de desenvolvimento e ativar a validação automática em cada `git commit`:
 
 ```bash
-# Executa a suíte de validação de sintaxe Ruby, JSONs e integridade de patches:
+./scripts/setup-dev.sh
+```
+
+Isso ativa os hooks nativos versionados em `.githooks/pre-commit`, garantindo que:
+- Todos os arquivos Ruby tenham sintaxe válida;
+- Todos os patches e o `MANIFEST.txt` estejam sincronizados e integros;
+- Nenhuma contaminação ou dependência oculta de forks seja introduzida;
+- A regra de ouro de patches estritamente aditivos seja respeitada.
+
+Para rodar a validação manualmente a qualquer momento:
+
+```bash
 ./scripts/test-package.sh
 ```
 
