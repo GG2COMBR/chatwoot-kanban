@@ -63,6 +63,9 @@ index f15e1cf..fd6e48b 100644
 +              resources :reasons, only: [:index, :create, :update, :destroy]
 +            end
 +          end
++          resources :products, only: [] do
++            get :search, on: :collection
++          end
            resources :conversations, only: [:index, :create, :show, :update, :destroy] do
              collection do
                get :meta

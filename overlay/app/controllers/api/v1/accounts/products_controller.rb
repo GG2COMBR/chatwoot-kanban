@@ -8,6 +8,6 @@ class Api::V1::Accounts::ProductsController < Api::V1::Accounts::BaseController
     )
     render json: result
   rescue KanbanProducts::SearchClient::ApiError => e
-    render json: { error: e.message }, status: :bad_gateway
+    render json: { success: false, error: e.message, products: [] }, status: :bad_gateway
   end
 end
