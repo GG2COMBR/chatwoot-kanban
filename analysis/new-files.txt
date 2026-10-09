@@ -25,6 +25,8 @@ app/controllers/concerns/kanban_card_filter_params.rb
 app/javascript/dashboard/api/kanbanBoards.js
 app/javascript/dashboard/api/kanbanReports.js
 app/javascript/dashboard/api/products.js
+app/javascript/dashboard/components-next/message/MessageStatusIndicator.vue
+app/javascript/dashboard/components-next/taginput/AgentTagInput.vue
 app/javascript/dashboard/composables/useKanbanAgendaData.js
 app/javascript/dashboard/composables/useKanbanBoardData.js
 app/javascript/dashboard/composables/useKanbanBoardFiltersState.js
@@ -44,6 +46,9 @@ app/javascript/dashboard/composables/useKanbanOpportunityPanel.js
 app/javascript/dashboard/composables/useKanbanRealtimeBuffer.js
 app/javascript/dashboard/composables/useKanbanStageActions.js
 app/javascript/dashboard/composables/useKanbanStageOrder.js
+app/javascript/dashboard/composables/useMessageStatus.js
+app/javascript/dashboard/composables/useSlaClock.js
+app/javascript/dashboard/helper/embeddedConversationHistory.js
 app/javascript/dashboard/helper/kanbanActionOptions.js
 app/javascript/dashboard/helper/kanbanApiError.js
 app/javascript/dashboard/helper/kanbanBoardFilters.js
@@ -149,6 +154,7 @@ app/javascript/dashboard/routes/dashboard/kanban/routes.js
 app/javascript/dashboard/routes/dashboard/settings/reports/components/KanbanReportTable.vue
 app/javascript/dashboard/routes/dashboard/settings/reports/KanbanReports.vue
 app/javascript/dashboard/store/modules/kanbanBoards.js
+app/javascript/shared/components/charts/DoughnutChart.vue
 app/jobs/kanban_automations/purge_logs_job.rb
 app/jobs/kanban_automations/run_rules_job.rb
 app/jobs/kanban_automations/scan_time_based_job.rb

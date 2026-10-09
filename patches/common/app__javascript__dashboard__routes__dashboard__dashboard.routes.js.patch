@@ -1,30 +1,20 @@
 diff --git a/app/javascript/dashboard/routes/dashboard/dashboard.routes.js b/app/javascript/dashboard/routes/dashboard/dashboard.routes.js
-index a4acf76..639d90a 100644
+index a4acf76..79485db 100644
 --- a/app/javascript/dashboard/routes/dashboard/dashboard.routes.js
 +++ b/app/javascript/dashboard/routes/dashboard/dashboard.routes.js
-@@ -1,10 +1,11 @@
- import settings from './settings/settings.routes';
- import conversation from './conversation/conversation.routes';
- import { routes as searchRoutes } from '../../modules/search/search.routes';
--import { routes as callRoutes } from './calls/routes';
- import { routes as contactRoutes } from './contacts/routes';
- import { routes as companyRoutes } from './companies/routes';
-+import { routes as notificationRoutes } from './notifications/routes';
- import { routes as inboxRoutes } from './inbox/routes';
-+import { routes as kanbanRoutes } from './kanban/routes';
- import { frontendURL } from '../../helper/URLHelper';
+@@ -9,6 +9,7 @@ import { frontendURL } from '../../helper/URLHelper';
  import helpcenterRoutes from './helpcenter/helpcenter.routes';
  import campaignsRoutes from './campaigns/campaigns.routes';
-@@ -25,10 +25,11 @@ export default {
+ import { routes as captainRoutes } from './captain/captain.routes';
++import { routes as kanbanRoutes } from './kanban/routes';
+ import AppContainer from './Dashboard.vue';
+ import Suspended from './suspended/Index.vue';
+ import NoAccounts from './noAccounts/Index.vue';
+@@ -22,6 +23,7 @@ export default {
+       component: AppContainer,
+       children: [
+         ...captainRoutes,
++        ...kanbanRoutes,
          ...inboxRoutes,
          ...conversation.routes,
          ...settings.routes,
--        ...callRoutes,
-         ...contactRoutes,
-         ...companyRoutes,
-+        ...kanbanRoutes,
-         ...searchRoutes,
-+        ...notificationRoutes,
-         ...helpcenterRoutes.routes,
-         ...campaignsRoutes.routes,
-       ],
