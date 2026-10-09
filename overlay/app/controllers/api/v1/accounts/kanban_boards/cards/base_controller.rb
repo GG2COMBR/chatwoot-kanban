@@ -1,6 +1,8 @@
 # Every controller in this namespace addresses a sub-resource of one card, so they all
 # resolve the same board -> card pair before doing anything else.
 class Api::V1::Accounts::KanbanBoards::Cards::BaseController < Api::V1::Accounts::BaseController
+  include KanbanFeatureAuthorization
+
   DEFAULT_LIMIT = 30
   MAX_LIMIT = 100
 

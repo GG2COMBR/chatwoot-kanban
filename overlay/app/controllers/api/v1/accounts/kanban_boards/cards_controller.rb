@@ -1,4 +1,5 @@
 class Api::V1::Accounts::KanbanBoards::CardsController < Api::V1::Accounts::BaseController # rubocop:disable Metrics/ClassLength
+  include KanbanFeatureAuthorization
   include KanbanCardFilterParams
 
   CardSnapshot = Data.define(:stage, :priority, :due_at, :labels)

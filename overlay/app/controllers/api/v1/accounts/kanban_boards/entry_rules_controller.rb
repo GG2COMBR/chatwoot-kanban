@@ -1,4 +1,6 @@
 class Api::V1::Accounts::KanbanBoards::EntryRulesController < Api::V1::Accounts::BaseController
+  include KanbanFeatureAuthorization
+
   before_action :fetch_kanban_board
   before_action :authorize_kanban_board
   before_action :fetch_entry_rule, only: [:update, :destroy, :toggle]

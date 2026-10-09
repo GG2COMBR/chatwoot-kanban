@@ -1,4 +1,5 @@
 class Api::V1::Accounts::KanbanBoards::AutomationLogsController < Api::V1::Accounts::BaseController
+  include KanbanFeatureAuthorization
   include KanbanAutomationAuthorization
 
   DEFAULT_LIMIT = 50

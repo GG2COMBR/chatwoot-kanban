@@ -1,4 +1,5 @@
 class Api::V1::Accounts::KanbanBoards::AutomationRulesController < Api::V1::Accounts::BaseController
+  include KanbanFeatureAuthorization
   include KanbanAutomationAuthorization
 
   PREVIEW_LIMIT = 500

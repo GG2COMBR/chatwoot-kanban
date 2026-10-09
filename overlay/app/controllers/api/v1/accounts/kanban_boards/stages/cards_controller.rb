@@ -1,4 +1,6 @@
 class Api::V1::Accounts::KanbanBoards::Stages::CardsController < Api::V1::Accounts::BaseController
+  include KanbanFeatureAuthorization
+
   EVENT_INSERT_BATCH_SIZE = 1000
 
   include KanbanCardFilterParams

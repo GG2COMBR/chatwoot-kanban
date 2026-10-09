@@ -10,6 +10,7 @@ import ConversationView from '../conversation/ConversationView.vue';
 
 const meta = {
   permissions: ['administrator', 'agent'],
+  featureFlag: 'kanban',
 };
 
 export const routes = [
@@ -72,7 +73,7 @@ export const routes = [
     path: frontendURL('accounts/:accountId/kanban/new'),
     name: 'kanban_board_create_form',
     component: KanbanBoardCreate,
-    meta: { permissions: ['administrator'] },
+    meta: { permissions: ['administrator'], featureFlag: 'kanban' },
   },
   {
     path: frontendURL('accounts/:accountId/kanban/:boardId/edit'),

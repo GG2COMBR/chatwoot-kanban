@@ -1,4 +1,5 @@
 class Api::V1::Accounts::KanbanBoards::SummaryController < Api::V1::Accounts::BaseController
+  include KanbanFeatureAuthorization
   include KanbanCardFilterParams
 
   before_action :fetch_kanban_board

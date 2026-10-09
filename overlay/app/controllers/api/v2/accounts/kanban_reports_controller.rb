@@ -1,4 +1,6 @@
 class Api::V2::Accounts::KanbanReportsController < Api::V1::Accounts::BaseController
+  include KanbanFeatureAuthorization
+
   CACHE_EXPIRATION = 5.minutes
 
   before_action :load_boards

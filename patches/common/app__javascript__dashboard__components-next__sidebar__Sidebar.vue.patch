@@ -1,17 +1,21 @@
 diff --git a/app/javascript/dashboard/components-next/sidebar/Sidebar.vue b/app/javascript/dashboard/components-next/sidebar/Sidebar.vue
-index 0239435..0eb8865 100644
+index 0239435..b436c12 100644
 --- a/app/javascript/dashboard/components-next/sidebar/Sidebar.vue
 +++ b/app/javascript/dashboard/components-next/sidebar/Sidebar.vue
-@@ -70,6 +70,27 @@ const isFeatureEnabledonAccount = useMapGetter(
+@@ -70,6 +70,31 @@ const isFeatureEnabledonAccount = useMapGetter(
    'accounts/isFeatureEnabledonAccount'
  );
  
++const hasKanbanFeature = computed(() => {
++  return isFeatureEnabledonAccount.value(accountId.value, 'kanban');
++});
++
 +const kanbanBoards = useMapGetter('kanbanBoards/kanbanBoards');
 +const isFetchingKanbanBoards = useMapGetter('kanbanBoards/kanbanBoardsLoading');
 +const lastFetchedKanbanAccountId = ref(null);
 +
 +const fetchKanbanBoards = async ({ force = false } = {}) => {
-+  if (!accountId.value || isFetchingKanbanBoards.value) return;
++  if (!accountId.value || !hasKanbanFeature.value || isFetchingKanbanBoards.value) return;
 +
 +  if (!force && kanbanBoards.value.length > 0) {
 +    lastFetchedKanbanAccountId.value = accountId.value;
@@ -30,19 +34,21 @@ index 0239435..0eb8865 100644
  const hasAdvancedAssignment = computed(() => {
    return isFeatureEnabledonAccount.value(
      accountId.value,
-@@ -264,6 +285,19 @@ watch([accountId, currentUserId], fetchSidebarSortPreferences, {
+@@ -264,6 +289,21 @@ watch([accountId, currentUserId], fetchSidebarSortPreferences, {
    immediate: true,
  });
  
 +watch(
-+  accountId,
-+  (newAccountId, oldAccountId) => {
++  [accountId, hasKanbanFeature],
++  ([newAccountId, newHasFeature], [oldAccountId]) => {
 +    const accountChanged =
 +      Boolean(oldAccountId) && newAccountId !== oldAccountId;
-+    if (accountChanged) {
++    if (accountChanged || !newHasFeature) {
 +      store.dispatch('kanbanBoards/resetBoards');
 +    }
-+    fetchKanbanBoards({ force: accountChanged });
++    if (newHasFeature) {
++      fetchKanbanBoards({ force: accountChanged });
++    }
 +  },
 +  { immediate: true }
 +);
@@ -50,43 +56,51 @@ index 0239435..0eb8865 100644
  const hasUnreadCountsForSection = section => {
    if (section === SIDEBAR_SORT_SECTIONS.FOLDERS) {
      return hasFilteredUnreadCounts.value;
-@@ -356,6 +390,11 @@ const newReportRoutes = () => [
+@@ -356,6 +396,15 @@ const newReportRoutes = () => [
      to: accountScopedRoute('team_reports_index'),
      activeOn: ['team_reports_show'],
    },
-+  {
-+    name: 'Reports Kanban',
-+    label: t('SIDEBAR.REPORTS_KANBAN'),
-+    to: accountScopedRoute('kanban_reports'),
-+  },
++  ...(hasKanbanFeature.value
++    ? [
++        {
++          name: 'Reports Kanban',
++          label: t('SIDEBAR.REPORTS_KANBAN'),
++          to: accountScopedRoute('kanban_reports'),
++        },
++      ]
++    : []),
  ];
  
  const reportRoutes = computed(() => newReportRoutes());
-@@ -500,6 +539,27 @@ const menuItems = computed(() => {
+@@ -500,6 +549,31 @@ const menuItems = computed(() => {
          },
        ],
      },
-+    {
-+      name: 'Kanban',
-+      label: t('SIDEBAR.KANBAN'),
-+      icon: 'i-lucide-columns-3',
-+      children: [
-+        {
-+          name: 'Kanban Overview',
-+          label: t('SIDEBAR.KANBAN_OVERVIEW'),
-+          activeOn: ['kanban_boards'],
-+          to: accountScopedRoute('kanban_boards'),
-+        },
-+        ...kanbanBoards.value.map(board => ({
-+          name: `Kanban Board ${board.id}`,
-+          label: board.name,
-+          activeOn: ['kanban_board_show', 'kanban_board_edit_form'],
-+          to: accountScopedRoute('kanban_board_show', {
-+            boardId: board.id,
-+          }),
-+        })),
-+      ],
-+    },
++    ...(hasKanbanFeature.value
++      ? [
++          {
++            name: 'Kanban',
++            label: t('SIDEBAR.KANBAN'),
++            icon: 'i-lucide-columns-3',
++            children: [
++              {
++                name: 'Kanban Overview',
++                label: t('SIDEBAR.KANBAN_OVERVIEW'),
++                activeOn: ['kanban_boards'],
++                to: accountScopedRoute('kanban_boards'),
++              },
++              ...kanbanBoards.value.map(board => ({
++                name: `Kanban Board ${board.id}`,
++                label: board.name,
++                activeOn: ['kanban_board_show', 'kanban_board_edit_form'],
++                to: accountScopedRoute('kanban_board_show', {
++                  boardId: board.id,
++                }),
++              })),
++            ],
++          },
++        ]
++      : []),
      {
        name: 'Captain',
        icon: 'i-woot-captain',

@@ -1,0 +1,16 @@
+diff --git a/config/features.yml b/config/features.yml
+index bcd38b7..0c8be01 100644
+--- a/config/features.yml
++++ b/config/features.yml
+@@ -280,3 +280,11 @@
+   premium: true
+   column: feature_flags_ext_1
++
++- name: kanban
++  display_name: Kanban Boards
++  enabled: true
++  column: feature_flags_ext_1
++- name: kanban_products
++  display_name: Kanban Products Catalog
++  enabled: true
++  column: feature_flags_ext_1

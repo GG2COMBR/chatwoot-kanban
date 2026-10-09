@@ -1,4 +1,7 @@
 class Api::V1::Accounts::ProductsController < Api::V1::Accounts::BaseController
+  include KanbanFeatureAuthorization
+
+  before_action :ensure_kanban_products_feature_enabled
   def search
     result = KanbanProducts::SearchClient.new.search(
       text: params[:text],

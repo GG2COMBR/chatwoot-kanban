@@ -1,4 +1,6 @@
 class Api::V1::Accounts::KanbanBoards::StagesController < Api::V1::Accounts::BaseController
+  include KanbanFeatureAuthorization
+
   before_action :fetch_kanban_board
   before_action :authorize_kanban_board_update
   before_action :fetch_kanban_stage, only: [:update, :destroy, :reorder, :move]

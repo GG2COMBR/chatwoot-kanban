@@ -1,4 +1,6 @@
 class Api::V1::Accounts::Conversations::KanbanCardsController < Api::V1::Accounts::BaseController
+  include KanbanFeatureAuthorization
+
   before_action :fetch_conversation
   before_action :authorize_conversation_show
   before_action :fetch_kanban_board, only: [:create]
