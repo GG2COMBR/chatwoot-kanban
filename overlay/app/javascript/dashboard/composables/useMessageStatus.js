@@ -25,6 +25,7 @@ export const useMessageStatus = (
   { status, isPrivate, messageType, sourceId, contentAttributes },
   inboxId = null
 ) => {
+  const inboxProps = useInbox(inboxId);
   const {
     isAFacebookInbox,
     isALineChannel,
@@ -37,8 +38,8 @@ export const useMessageStatus = (
     isAnEmailChannel,
     isAnInstagramChannel,
     isATiktokChannel,
-    isAWahaChannel,
-  } = useInbox(inboxId);
+  } = inboxProps;
+  const isAWahaChannel = inboxProps.isAWahaChannel || computed(() => false);
 
   const isOutgoingMessage = computed(() => {
     if (toValue(isPrivate)) return false;
