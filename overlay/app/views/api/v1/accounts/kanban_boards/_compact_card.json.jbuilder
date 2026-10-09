@@ -17,10 +17,18 @@ json.due_at card.due_at&.iso8601
 json.labels card.labels.map(&:name)
 json.stage_entered_at card.stage_entered_at&.iso8601
 json.contact do
-  json.partial! 'api/v1/models/contact_slim', formats: [:json], resource: card.contact
+  if card.contact.present?
+    json.partial! 'api/v1/models/contact_slim', formats: [:json], resource: card.contact
+  else
+    json.nil!
+  end
 end
 json.inbox do
-  json.partial! 'api/v1/models/inbox_slim', formats: [:json], resource: card.inbox
+  if card.inbox.present?
+    json.partial! 'api/v1/models/inbox_slim', formats: [:json], resource: card.inbox
+  else
+    json.nil!
+  end
 end
 json.conversation_id conversation&.display_id
 json.priority board_card ? card.priority : conversation&.priority
