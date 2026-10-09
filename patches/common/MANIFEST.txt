@@ -1,52 +1,25 @@
-app/controllers/api/v1/accounts/automation_rules_controller.rb -> patches/common/app__controllers__api__v1__accounts__automation_rules_controller.rb.patch
-app/controllers/api/v1/accounts/macros_controller.rb -> patches/common/app__controllers__api__v1__accounts__macros_controller.rb.patch
-app/dispatchers/async_dispatcher.rb -> patches/common/app__dispatchers__async_dispatcher.rb.patch
-app/javascript/dashboard/components-next/sidebar/Sidebar.vue -> patches/common/app__javascript__dashboard__components-next__sidebar__Sidebar.vue.patch
-app/javascript/dashboard/components/ConversationItem.vue -> patches/common/app__javascript__dashboard__components__ConversationItem.vue.patch
-app/javascript/dashboard/components/widgets/AutomationActionInput.vue -> patches/common/app__javascript__dashboard__components__widgets__AutomationActionInput.vue.patch
-app/javascript/dashboard/composables/useAutomationValues.js -> patches/common/app__javascript__dashboard__composables__useAutomationValues.js.patch
-app/javascript/dashboard/composables/useMacros.js -> patches/common/app__javascript__dashboard__composables__useMacros.js.patch
-app/javascript/dashboard/composables/useUISettings.js -> patches/common/app__javascript__dashboard__composables__useUISettings.js.patch
-app/javascript/dashboard/helper/actionCable.js -> patches/common/app__javascript__dashboard__helper__actionCable.js.patch
-app/javascript/dashboard/helper/actionQueryGenerator.js -> patches/common/app__javascript__dashboard__helper__actionQueryGenerator.js.patch
-app/javascript/dashboard/helper/URLHelper.js -> patches/common/app__javascript__dashboard__helper__URLHelper.js.patch
-app/javascript/dashboard/i18n/locale/en/automation.json -> patches/common/app__javascript__dashboard__i18n__locale__en__automation.json.patch
-app/javascript/dashboard/i18n/locale/en/conversation.json -> patches/common/app__javascript__dashboard__i18n__locale__en__conversation.json.patch
-app/javascript/dashboard/i18n/locale/en/index.js -> patches/common/app__javascript__dashboard__i18n__locale__en__index.js.patch
-app/javascript/dashboard/i18n/locale/en/macros.json -> patches/common/app__javascript__dashboard__i18n__locale__en__macros.json.patch
-app/javascript/dashboard/i18n/locale/en/report.json -> patches/common/app__javascript__dashboard__i18n__locale__en__report.json.patch
-app/javascript/dashboard/i18n/locale/en/settings.json -> patches/common/app__javascript__dashboard__i18n__locale__en__settings.json.patch
-app/javascript/dashboard/i18n/locale/pt_BR/automation.json -> patches/common/app__javascript__dashboard__i18n__locale__pt_BR__automation.json.patch
-app/javascript/dashboard/i18n/locale/pt_BR/conversation.json -> patches/common/app__javascript__dashboard__i18n__locale__pt_BR__conversation.json.patch
-app/javascript/dashboard/i18n/locale/pt_BR/index.js -> patches/common/app__javascript__dashboard__i18n__locale__pt_BR__index.js.patch
-app/javascript/dashboard/i18n/locale/pt_BR/macros.json -> patches/common/app__javascript__dashboard__i18n__locale__pt_BR__macros.json.patch
-app/javascript/dashboard/i18n/locale/pt_BR/report.json -> patches/common/app__javascript__dashboard__i18n__locale__pt_BR__report.json.patch
-app/javascript/dashboard/i18n/locale/pt_BR/settings.json -> patches/common/app__javascript__dashboard__i18n__locale__pt_BR__settings.json.patch
-app/javascript/dashboard/routes/dashboard/conversation/ContactConversations.vue -> patches/common/app__javascript__dashboard__routes__dashboard__conversation__ContactConversations.vue.patch
-app/javascript/dashboard/routes/dashboard/conversation/ContactPanel.vue -> patches/common/app__javascript__dashboard__routes__dashboard__conversation__ContactPanel.vue.patch
-app/javascript/dashboard/routes/dashboard/conversation/ConversationView.vue -> patches/common/app__javascript__dashboard__routes__dashboard__conversation__ConversationView.vue.patch
-app/javascript/dashboard/routes/dashboard/dashboard.routes.js -> patches/common/app__javascript__dashboard__routes__dashboard__dashboard.routes.js.patch
-app/javascript/dashboard/routes/dashboard/settings/automation/constants.js -> patches/common/app__javascript__dashboard__routes__dashboard__settings__automation__constants.js.patch
-app/javascript/dashboard/routes/dashboard/settings/automation/Index.vue -> patches/common/app__javascript__dashboard__routes__dashboard__settings__automation__Index.vue.patch
-app/javascript/dashboard/routes/dashboard/settings/macros/constants.js -> patches/common/app__javascript__dashboard__routes__dashboard__settings__macros__constants.js.patch
-app/javascript/dashboard/routes/dashboard/settings/macros/MacroEditor.vue -> patches/common/app__javascript__dashboard__routes__dashboard__settings__macros__MacroEditor.vue.patch
-app/javascript/dashboard/routes/dashboard/settings/reports/reports.routes.js -> patches/common/app__javascript__dashboard__routes__dashboard__settings__reports__reports.routes.js.patch
-app/javascript/dashboard/store/index.js -> patches/common/app__javascript__dashboard__store__index.js.patch
-app/javascript/dashboard/store/mutation-types.js -> patches/common/app__javascript__dashboard__store__mutation-types.js.patch
-app/javascript/shared/constants/busEvents.js -> patches/common/app__javascript__shared__constants__busEvents.js.patch
-app/listeners/action_cable_listener.rb -> patches/common/app__listeners__action_cable_listener.rb.patch
-app/models/account.rb -> patches/common/app__models__account.rb.patch
-app/models/automation_rule.rb -> patches/common/app__models__automation_rule.rb.patch
-app/models/conversation.rb -> patches/common/app__models__conversation.rb.patch
-app/models/macro.rb -> patches/common/app__models__macro.rb.patch
-app/services/action_service.rb -> patches/common/app__services__action_service.rb.patch
-app/services/labels/destroy_service.rb -> patches/common/app__services__labels__destroy_service.rb.patch
-app/services/labels/update_service.rb -> patches/common/app__services__labels__update_service.rb.patch
-config/initializers/monkey_patches/schema_dumper.rb -> patches/common/config__initializers__monkey_patches__schema_dumper.rb.patch
-config/installation_config.yml -> patches/common/config__installation_config.yml.patch
-config/locales/en.yml -> patches/common/config__locales__en.yml.patch
-config/locales/pt_BR.yml -> patches/common/config__locales__pt_BR.yml.patch
-config/routes.rb -> patches/common/config__routes.rb.patch
-config/schedule.yml -> patches/common/config__schedule.yml.patch
-db/schema.rb -> patches/common/db__schema.rb.patch
-lib/events/types.rb -> patches/common/lib__events__types.rb.patch
+app__javascript__dashboard__components-next__sidebar__Sidebar.vue.patch
+app__javascript__dashboard__composables__useAutomationValues.js.patch
+app__javascript__dashboard__composables__useUISettings.js.patch
+app__javascript__dashboard__helper__actionCable.js.patch
+app__javascript__dashboard__helper__URLHelper.js.patch
+app__javascript__dashboard__i18n__locale__en__conversation.json.patch
+app__javascript__dashboard__i18n__locale__en__index.js.patch
+app__javascript__dashboard__i18n__locale__en__report.json.patch
+app__javascript__dashboard__i18n__locale__en__settings.json.patch
+app__javascript__dashboard__i18n__locale__pt_BR__conversation.json.patch
+app__javascript__dashboard__i18n__locale__pt_BR__index.js.patch
+app__javascript__dashboard__i18n__locale__pt_BR__report.json.patch
+app__javascript__dashboard__i18n__locale__pt_BR__settings.json.patch
+app__javascript__dashboard__routes__dashboard__dashboard.routes.js.patch
+app__javascript__dashboard__routes__dashboard__settings__macros__constants.js.patch
+app__javascript__dashboard__routes__dashboard__settings__reports__reports.routes.js.patch
+app__javascript__dashboard__store__index.js.patch
+app__javascript__dashboard__store__mutation-types.js.patch
+app__javascript__shared__constants__busEvents.js.patch
+config__initializers__monkey_patches__schema_dumper.rb.patch
+config__installation_config.yml.patch
+config__locales__en.yml.patch
+config__locales__pt_BR.yml.patch
+config__routes.rb.patch
+config__schedule.yml.patch

@@ -65,26 +65,31 @@ desejar remover as tabelas.
 
 ## Arquitetura do pacote
 
+Consulte o documento completo em **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** para entender a **Pirâmide de Extensibilidade** e as regras de desenvolvimento para novos contribuidores.
+
 ```
-overlay/      arquivos NOVOS copiados as-is (models, controllers, migrations, front)
+overlay/      arquivos NOVOS copiados as-is (models, controllers, migrations, front, initializers)
 patches/
-  common/     edições em arquivos existentes, válidas para qualquer Chatwoot v4.18
+  common/     patches cirúrgicos e estritamente aditivos compartilhados
   fazer-ai/   edições específicas do fork fazer-ai
-  vanilla/    edições específicas do Chatwoot CE (se necessárias)
-scripts/      install.sh / uninstall.sh (idempotentes, com trava de versão)
-analysis/     listas e documentos de referência do porte
+  vanilla/    edições específicas do Chatwoot CE puro
+scripts/      install.sh, uninstall.sh, test-package.sh, run-specs.sh, reconcile_migrations.rb
+docs/         diretrizes arquiteturais e guias para contribuidores
+analysis/     documentos e especificações de referência
 ```
 
-Princípio: *overlay* (arquivo novo) é separado de *patch* (edição em arquivo
-existente). Os patches são `.patch` git aplicados com `git apply`; se o alvo
-divergir, a instalação falha de forma explícita em vez de corromper arquivos.
+### Validação de integridade
+
+```bash
+# Executa a suíte de validação de sintaxe Ruby, JSONs e integridade de patches:
+./scripts/test-package.sh
+```
 
 ## Estado atual
 
-- Instalação e reversão validadas estruturalmente no Chatwoot CE v4.18.0
-  (overlay + 51 patches aplicam e revertem de forma reproduzível).
-- Pendente: smoke test funcional (board renderizando) num ambiente rodando, e
-  o conjunto `patches/fazer-ai` para o fork fazer-ai.
+- **Fase A (Board Principal):** 100% concluída e validada em Chatwoot v4.18 (banco, migrations, build Vite e telas de funil/cards funcionais).
+- **Governança & Extensibilidade:** Arquitetura limpa estabelecida priorizando *Overlay First* e *Rails Initializers* para manter o core imune a conflitos de atualização.
+
 
 ## Créditos e licença
 
