@@ -576,14 +576,14 @@ const requestClose = () => emit('close');
 watch(
   currentStep,
   step => {
-    if (step === 1) contactSearchInputRef.value?.focus();
-    if (step === 3) subjectInputRef.value?.focus();
+    if (step === 1) contactSearchInputRef.value?.focus?.();
+    if (step === 3) subjectInputRef.value?.focus?.();
   },
   { flush: 'post' }
 );
 
 onMounted(() => {
-  contactSearchInputRef.value?.focus();
+  contactSearchInputRef.value?.focus?.();
   loadRecentContacts();
 });
 
@@ -666,6 +666,7 @@ defineExpose({ hasUnsavedChanges });
           ref="contactSearchInputRef"
           v-model="contactSearchQuery"
           type="search"
+          autofocus
           data-testid="kanban-contact-search-input"
           class="group w-full"
           custom-input-class="no-drag !h-10 !rounded-md !bg-n-surface-1 !py-2 !pl-10 !pr-3"

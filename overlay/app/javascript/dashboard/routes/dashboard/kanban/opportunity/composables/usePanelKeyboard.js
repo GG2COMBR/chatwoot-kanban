@@ -60,7 +60,7 @@ export function usePanelKeyboard({ panelRef, isBlocked, onSave, onClose }) {
   onUnmounted(() => {
     document.removeEventListener('keydown', onKeydown);
     if (previousActiveElement.value?.isConnected) {
-      previousActiveElement.value.focus();
+      previousActiveElement.value.focus?.();
     }
   });
 }
