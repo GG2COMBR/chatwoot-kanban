@@ -20,16 +20,20 @@ class Api::V1::Accounts::KanbanProductSourcesController < Api::V1::Accounts::Bas
   end
 
   def create
-    @source = Current.account.kanban_product_sources.build(source_params)
-
     if params[:file].present?
-      @source.source_type = 'csv_upload'
-      @source.name = params[:name].presence || params[:file].original_filename
-      @source.save!
+      source_name = params[:name].presence ||
+                    params.dig(:kanban_product_source, :name).presence ||
+                    params[:file].original_filename
+
+      @source = Current.account.kanban_product_sources.create!(
+        name: source_name,
+        source_type: 'csv_upload'
+      )
+
       count = KanbanProducts::SyncService.new(@source).sync_csv_content!(params[:file].read)
       render json: { success: true, source: @source, items_count: count }, status: :created
     else
-      @source.save!
+      @source = Current.account.kanban_product_sources.create!(source_params)
       KanbanProductSyncJob.perform_later(@source.id)
       render json: { success: true, source: @source }, status: :created
     end
@@ -58,7 +62,8 @@ class Api::V1::Accounts::KanbanProductSourcesController < Api::V1::Accounts::Bas
   end
 
   def source_params
-    params.require(:kanban_product_source).permit(
+    source_payload = params[:kanban_product_source] || params
+    source_payload.permit(
       :name, :source_type, :feed_url, :sync_interval_hours, :active
     )
   end
