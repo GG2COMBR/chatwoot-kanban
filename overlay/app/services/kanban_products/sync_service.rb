@@ -200,8 +200,17 @@ module KanbanProducts
     def parse_price(raw_string)
       return [0.0, 'BRL'] if raw_string.blank?
 
-      # Detecta moeda (BRL, USD, EUR, etc.)
-      currency = raw_string[/[A-Z]{3}/] || 'BRL'
+      # Detecta moeda por código ISO (BRL, USD, EUR) ou símbolo (R$, $, €)
+      currency = case raw_string
+                 when /[A-Z]{3}/
+                   raw_string[/[A-Z]{3}/]
+                 when /€/
+                   'EUR'
+                 when /\$/
+                   raw_string.include?('R$') ? 'BRL' : 'USD'
+                 else
+                   'BRL'
+                 end
 
       # Remove letras e símbolos de moeda
       cleaned = raw_string.gsub(/[^\d.,]/, '').strip
