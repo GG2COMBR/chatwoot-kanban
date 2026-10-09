@@ -1,8 +1,8 @@
 diff --git a/app/javascript/dashboard/helper/actionQueryGenerator.js b/app/javascript/dashboard/helper/actionQueryGenerator.js
-index 4ecae3d..6e1ce6b 100644
+index 4cbfd39..c6accba 100644
 --- a/app/javascript/dashboard/helper/actionQueryGenerator.js
 +++ b/app/javascript/dashboard/helper/actionQueryGenerator.js
-@@ -26,10 +26,27 @@ const generatePayloadForObject = item => {
+@@ -34,10 +34,27 @@ const generatePayloadForObject = item => {
    return item.action_params;
  };
  

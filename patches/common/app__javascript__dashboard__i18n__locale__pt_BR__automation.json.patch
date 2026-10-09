@@ -1,0 +1,19 @@
+diff --git a/app/javascript/dashboard/i18n/locale/pt_BR/automation.json b/app/javascript/dashboard/i18n/locale/pt_BR/automation.json
+--- a/app/javascript/dashboard/i18n/locale/pt_BR/automation.json
++++ b/app/javascript/dashboard/i18n/locale/pt_BR/automation.json
+@@ -176,4 +176,7 @@
+     },
+     "NONE_OPTION": "Nenhuma",
++    "KANBAN_STAGE_PLACEHOLDER": "Selecione o funil e a etapa",
++    "KANBAN_BOARD_PLACEHOLDER": "Selecione o funil",
++    "KANBAN_AGENT_PLACEHOLDER": "Selecione os agentes",
+     "LAST_RESPONDING_AGENT": "Último Agente que Respondeu",
+     "EVENTS": {
+@@ -203,4 +206,7 @@
+       "ADD_SLA": "Adicionar SLA",
++      "ADD_TO_KANBAN_BOARD": "Adicionar ao funil",
++      "MOVE_KANBAN_CARD": "Mover cartão do funil",
++      "ASSIGN_KANBAN_CARD": "Atribuir cartão do funil",
+       "OPEN_CONVERSATION": "Abrir conversa",
+       "PENDING_CONVERSATION": "Marcar conversa como pendente"
+     },

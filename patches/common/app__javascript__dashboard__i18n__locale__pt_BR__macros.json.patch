@@ -1,8 +1,8 @@
 diff --git a/app/javascript/dashboard/i18n/locale/pt_BR/macros.json b/app/javascript/dashboard/i18n/locale/pt_BR/macros.json
-index 9ad1444..9946ec5 100644
+index 9ad1444..424e4cc 100644
 --- a/app/javascript/dashboard/i18n/locale/pt_BR/macros.json
 +++ b/app/javascript/dashboard/i18n/locale/pt_BR/macros.json
-@@ -94,23 +93,28 @@
+@@ -94,6 +94,9 @@
        "ATLEAST_ONE_CONDITION_REQUIRED": "Pelo menos uma condição é necessária",
        "ATLEAST_ONE_ACTION_REQUIRED": "Pelo menos uma ação é necessária"
      },
@@ -12,18 +12,7 @@ index 9ad1444..9946ec5 100644
      "ACTIONS": {
        "ASSIGN_TEAM": "Atribuir um Time",
        "ASSIGN_AGENT": "Atribuir um Agente",
-       "ADD_LABEL": "Adicionar uma Etiqueta",
-       "REMOVE_LABEL": "Remover uma Etiqueta",
--      "REMOVE_ASSIGNED_AGENT": "Remove Assigned Agent",
-+      "REMOVE_ASSIGNED_AGENT": "Remover agente atribuído",
-       "REMOVE_ASSIGNED_TEAM": "Remover Time Atribuído",
-       "SEND_EMAIL_TRANSCRIPT": "Enviar uma transcrição por e-mail",
-       "MUTE_CONVERSATION": "Silenciar Conversa",
-       "SNOOZE_CONVERSATION": "Adiar Conversa",
--      "RESOLVE_CONVERSATION": "Resolver Conversa",
--      "CHANGE_STATUS": "Alterar Status",
-+      "RESOLVE_CONVERSATION": "Finalizar Conversa",
-       "SEND_ATTACHMENT": "Enviar Anexo",
+@@ -110,7 +113,10 @@
        "SEND_MESSAGE": "Enviar uma Mensagem",
        "CHANGE_PRIORITY": "Alterar Prioridade",
        "ADD_PRIVATE_NOTE": "Adicionar uma Nota Privada",

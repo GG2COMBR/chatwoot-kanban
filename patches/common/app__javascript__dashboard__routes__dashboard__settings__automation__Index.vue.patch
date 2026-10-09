@@ -1,0 +1,12 @@
+diff --git a/app/javascript/dashboard/routes/dashboard/settings/automation/Index.vue b/app/javascript/dashboard/routes/dashboard/settings/automation/Index.vue
+index bc8716b..8403755 100644
+--- a/app/javascript/dashboard/routes/dashboard/settings/automation/Index.vue
++++ b/app/javascript/dashboard/routes/dashboard/settings/automation/Index.vue
+@@ -147,6 +147,7 @@ onMounted(() => {
+   store.dispatch('labels/get');
+   store.dispatch('campaigns/get');
+   store.dispatch('automations/get');
++  store.dispatch('kanbanBoards/fetchBoards');
+ });
+ 
+ const openAddPopup = () => {

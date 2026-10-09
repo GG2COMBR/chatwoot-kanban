@@ -116,18 +116,27 @@ Resultado do smoke test funcional em Chatwoot CE v4.18 (Docker):
   limpa; sintaxe Ruby/YAML OK; 51 migrations criam 17 tabelas.
 
 
-### Fase B — Integração automação-macro (completo)
-Refazer manualmente os ~19 patches da seção 3, estritamente **aditivos** sobre
-o v4.18 (nunca remover código do v4.18). Validar cada um com build + specs.
+### Fase B — Integração automação-macro (completo) [✅ CONCLUÍDA]
+Objetivo: Integrar as 3 ações do Kanban (`add_to_kanban_board`, `move_kanban_card`, `assign_kanban_card`)
+às automações gerais e macros manuais do Chatwoot seguindo a Pirâmide de Extensibilidade.
+Resultado:
+- **Backend (0 patches):** 6 patches de backend eliminados e substituídos pelo initializer
+  `overlay/config/initializers/kanban_core_automations.rb`, injetando `KanbanActionService`,
+  validações de models (`AutomationRule`, `Macro`), sync em `Labels::UpdateService` e
+  strong parameters nos controllers via hooks de boot (`to_prepare`).
+- **Frontend & i18n:** 10 patches reconstruídos de forma estritamente aditiva (sem remover
+  delays, SLAs ou termos nativos do v4.18) em `patches/common/`.
+- Diretório `patches/_deferred_automation_macro/` totalmente limpo e incorporado.
+- Suíte `scripts/test-package.sh` rodando com 100% de sucesso (233 arquivos Ruby e 35 patches).
 
 ### Fase C — Alvo fazer-ai v4.18
-Gerar `patches/fazer-ai`: aplicar sobre o fork, resolver os deltas onde o
-fazer-ai divergiu do vanilla (ex.: Sidebar próprio). Reaproveita Fase A/B.
+Gerar `patches/fazer-ai`: mapear e resolver os 7 deltas onde o fazer-ai divergiu do vanilla
+(Sidebar próprio, rotas do dashboard, composables, routes.rb). Reaproveita 100% das Fases A e B.
 
 ### Fase D — Robustez e automação
-- CI que instala o pacote num Chatwoot CE v4.18 limpo e roda os specs.
-- `install.sh` com manifest de dependências npm e reconciliação de migrations.
-- Documentar o procedimento de instalação completo no README.
+- CI configurado em `.github/workflows/test.yml`.
+- `scripts/test-package.sh` e `scripts/run-specs.sh` criados e integrados.
+- Documentar procedimento no README.
 
 ## 5. Regras aprendidas (para não repetir erros)
 

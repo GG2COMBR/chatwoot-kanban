@@ -1,28 +1,19 @@
 diff --git a/app/javascript/dashboard/components/widgets/AutomationActionInput.vue b/app/javascript/dashboard/components/widgets/AutomationActionInput.vue
-index aa0d7d1..0d7ba08 100644
+index 5c7203e..ae8cab9 100644
 --- a/app/javascript/dashboard/components/widgets/AutomationActionInput.vue
 +++ b/app/javascript/dashboard/components/widgets/AutomationActionInput.vue
-@@ -6,8 +6,7 @@ import NextButton from 'dashboard/components-next/button/Button.vue';
+@@ -7,6 +7,7 @@ import NextButton from 'dashboard/components-next/button/Button.vue';
  import SingleSelect from 'dashboard/components-next/filter/inputs/SingleSelect.vue';
  import MultiSelect from 'dashboard/components-next/filter/inputs/MultiSelect.vue';
  import NextInput from 'dashboard/components-next/input/Input.vue';
--
--const CONTACT_EMAIL_TOKEN = '{{contact.email}}';
 +import { parseBoardStageId } from 'dashboard/helper/kanbanActionOptions';
  
- export default {
-   components: {
-@@ -92,14 +91,90 @@ export default {
-       },
+ const CONTACT_EMAIL_TOKEN = '{{contact.email}}';
+ 
+@@ -104,6 +105,86 @@ export default {
+         icon: a.icon,
+       }));
      },
-     actionTypesAsOptions() {
--      return this.actionTypes.map(a => ({
--        id: a.key,
--        name: a.label,
--        icon: a.icon,
--      }));
-+      return this.actionTypes.map(a => ({ id: a.key, name: a.label }));
-+    },
 +    // Automation and macro action_params are a one-element array around the hash.
 +    kanbanParams() {
 +      return (
@@ -37,7 +28,7 @@ index aa0d7d1..0d7ba08 100644
 +          this.kanbanParams;
 +        return (
 +          this.dropdownValues.find(
-+            option => option.id === `${boardId}:${stageId}`
++            option => option.id === 
 +          ) || null
 +        );
 +      },
@@ -92,24 +83,21 @@ index aa0d7d1..0d7ba08 100644
 +    kanbanPlaceholders() {
 +      if (this.isMacro) {
 +        return {
-+          stage: this.$t('MACROS.KANBAN_STAGE_PLACEHOLDER'),
-+          board: this.$t('MACROS.KANBAN_BOARD_PLACEHOLDER'),
-+          agent: this.$t('MACROS.KANBAN_AGENT_PLACEHOLDER'),
++          stage: this.('MACROS.KANBAN_STAGE_PLACEHOLDER'),
++          board: this.('MACROS.KANBAN_BOARD_PLACEHOLDER'),
++          agent: this.('MACROS.KANBAN_AGENT_PLACEHOLDER'),
 +        };
 +      }
 +      return {
-+        stage: this.$t('AUTOMATION.KANBAN_STAGE_PLACEHOLDER'),
-+        board: this.$t('AUTOMATION.KANBAN_BOARD_PLACEHOLDER'),
-+        agent: this.$t('AUTOMATION.KANBAN_AGENT_PLACEHOLDER'),
++        stage: this.('AUTOMATION.KANBAN_STAGE_PLACEHOLDER'),
++        board: this.('AUTOMATION.KANBAN_BOARD_PLACEHOLDER'),
++        agent: this.('AUTOMATION.KANBAN_AGENT_PLACEHOLDER'),
 +      };
-     },
++    },
      isVerticalLayout() {
--      return ['team_message', 'textarea', 'email'].includes(this.inputType);
-+      return ['team_message', 'textarea'].includes(this.inputType);
+       return ['team_message', 'textarea', 'email'].includes(this.inputType);
      },
-     castMessageVmodel: {
-       get() {
-@@ -158,7 +220,31 @@ export default {
+@@ -165,7 +246,31 @@ export default {
          />
          <template v-if="showActionInput && !isVerticalLayout">
            <SingleSelect

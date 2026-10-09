@@ -1,0 +1,12 @@
+diff --git a/app/javascript/dashboard/routes/dashboard/settings/macros/MacroEditor.vue b/app/javascript/dashboard/routes/dashboard/settings/macros/MacroEditor.vue
+index 1312122..2f0f738 100644
+--- a/app/javascript/dashboard/routes/dashboard/settings/macros/MacroEditor.vue
++++ b/app/javascript/dashboard/routes/dashboard/settings/macros/MacroEditor.vue
+@@ -46,6 +46,7 @@ const fetchDropdownData = () =>
+     store.dispatch('agents/get'),
+     store.dispatch('teams/get'),
+     store.dispatch('labels/get'),
++    store.dispatch('kanbanBoards/fetchBoards'),
+   ]);
+ 
+ const formatMacro = macroData => {
