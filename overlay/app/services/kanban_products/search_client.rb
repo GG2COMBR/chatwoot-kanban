@@ -24,7 +24,7 @@ class KanbanProducts::SearchClient
 
   def api_base_url
     ENV['KANBAN_PRODUCTS_API_URL'].presence ||
-      GlobalConfigService.load('KANBAN_PRODUCTS_API_URL', 'https://produtos-api.sobraltec.com.br')
+      GlobalConfigService.load('KANBAN_PRODUCTS_API_URL', '')
   end
 
   def request_headers

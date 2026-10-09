@@ -99,7 +99,7 @@ Conteúdo final, **bem mais enxuto que o mockup**:
 
 ### 4.1 Integração
 
-- Fonte: API externa já existente do usuário, `https://produtos-api.sobraltec.com.br/products/search`.
+- Fonte: API externa de catálogo de produtos, ex: `https://api.exemplo-loja.com.br/products/search`.
 - Autenticação: header `X-Agent-Token`. **O token fica em uma credencial Rails/ENV global do servidor** (ex: `Rails.application.credentials.products_api_token` ou `ENV['PRODUCTS_API_TOKEN']`) — nunca exposto ao frontend.
 - **Toda chamada à API externa passa por um endpoint proxy no backend Rails** (novo controller, ex: `Api::V1::Accounts::KanbanBoards::ProductsController#search` ou um `Api::V1::Accounts::ProductsController` genérico), que repassa os query params (`text`/`sku`, `price_list`, `limit`) e injeta o header `X-Agent-Token` a partir da credencial do servidor.
 - Parâmetros de busca suportados: texto livre e/ou SKU, `limit` (quantidade de resultados), `price_list` (`default` / `revenda` / `empresas_21_dias`) — **o vendedor escolhe a lista de preço na busca** (um seletor na aba Produtos do card, com "default" pré-selecionado).
@@ -122,7 +122,7 @@ Conteúdo final, **bem mais enxuto que o mockup**:
         "installment_value": 2.5
       },
       "stock_quantity": 10,
-      "checkout_url": "https://www.sobraltec.com.br/...",
+      "checkout_url": "https://www.exemplo-loja.com.br/...",
       "image_url": "https://s3.amazonaws.com/..."
     }
   ]

@@ -9,7 +9,7 @@ index 8796cda..4b7901f 100644
 +# ------- Kanban Products API Config ------- #
 +- name: KANBAN_PRODUCTS_API_TOKEN
 +  display_title: 'Kanban Products API Token'
-+  description: 'X-Agent-Token used to authenticate against the external products search API (produtos-api.sobraltec.com.br)'
++  description: 'X-Agent-Token used to authenticate against the external products search API'
 +  locked: false
 +# ------- End of Kanban Products API Config ------- #
 +
