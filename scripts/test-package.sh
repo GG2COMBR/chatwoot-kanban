@@ -124,6 +124,16 @@ for patch in "$PKG_DIR"/patches/common/*.patch; do
 done
 pass "Checagem de conformidade concluída."
 
+# 6. Auditoria de contaminações de forks não oficiais
+info "6. Auditando vazamentos ou dependências de forks não oficiais..."
+forbidden_terms="evolution_api|baileys|flowbuilder|typebot"
+violations="$(grep -rEi "\b($forbidden_terms)\b" "$PKG_DIR/overlay" "$PKG_DIR/patches" || true)"
+if [ -n "$violations" ]; then
+  fail "Encontradas referências a forks não oficiais sem proteção:\n$violations"
+else
+  pass "Nenhuma dependência não protegida de fork detectada."
+fi
+
 echo "=================================================="
 if [ $ERRORS -eq 0 ]; then
   echo -e "${GREEN}SUCESSO: Todas as validações passaram! Pacote 100% íntegro.${NC}"
