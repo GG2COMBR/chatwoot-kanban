@@ -43,6 +43,14 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
+  showMonetaryValues: {
+    type: Boolean,
+    default: false,
+  },
+  enableProducts: {
+    type: Boolean,
+    default: false,
+  },
   assignedUsers: {
     type: Array,
     default: () => [],
@@ -191,12 +199,12 @@ const selectedAssigneeIds = computed(() =>
     long stage name can never push them onto a line of their own. -->
     <div class="flex flex-none items-center gap-1">
       <button
-        v-if="hasValue"
+        v-if="hasValue && showMonetaryValues"
         type="button"
         data-testid="kanban-opportunity-total-value"
         class="inline-flex h-7 max-w-[10rem] items-center truncate rounded-md px-1.5 text-sm font-semibold text-n-slate-12 hover:bg-n-alpha-2"
         :title="formattedTotalValue"
-        @click="emit('openProducts')"
+        @click="enableProducts && emit('openProducts')"
       >
         {{ formattedTotalValue }}
       </button>

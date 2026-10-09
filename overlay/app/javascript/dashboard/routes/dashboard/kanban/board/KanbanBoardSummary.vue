@@ -21,16 +21,26 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  showMonetaryValues: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(['toggle']);
 const { t } = useI18n();
 
-const metricText = metric =>
-  t('KANBAN.SUMMARY.COUNT_VALUE', {
+const metricText = metric => {
+  if (!props.showMonetaryValues) {
+    return t('KANBAN.SUMMARY.COUNT_ONLY', {
+      count: metric?.count || 0,
+    });
+  }
+  return t('KANBAN.SUMMARY.COUNT_VALUE', {
     count: metric?.count || 0,
     value: formatCurrency(metric?.value),
   });
+};
 
 const metrics = computed(() => {
   const entries = [
@@ -54,8 +64,8 @@ const metrics = computed(() => {
     },
   ];
 
-  // Nothing won this month means there is no average to show.
-  if (props.summary.averageTicket) {
+  // Nothing won this month means there is no average to show, and hide if monetary values are disabled.
+  if (props.showMonetaryValues && props.summary.averageTicket) {
     entries.push({
       key: 'average',
       label: t('KANBAN.SUMMARY.AVERAGE_TICKET'),

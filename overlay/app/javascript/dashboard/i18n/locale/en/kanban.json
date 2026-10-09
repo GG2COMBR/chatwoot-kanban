@@ -16,6 +16,7 @@
       "LOST_MONTH": "Lost this month",
       "AVERAGE_TICKET": "Average ticket",
       "COUNT_VALUE": "{count} · {value}",
+      "COUNT_ONLY": "{count}",
       "HIDE": "Hide summary",
       "SHOW": "Show summary",
       "ERROR": "Could not load the summary."
@@ -123,6 +124,10 @@
       },
       "SETTINGS_TAB": {
         "LOST_REASON_REQUIRED": "Require a loss reason",
+        "ENABLE_PRODUCTS": "Enable product catalog and opportunity items",
+        "ENABLE_PRODUCTS_HINT": "Allows attaching products and opportunity items to cards in this board.",
+        "SHOW_MONETARY_VALUES": "Show monetary values",
+        "SHOW_MONETARY_VALUES_HINT": "Displays currency totals on cards, stage headers, and board summary.",
         "DANGER_ZONE_TITLE": "Danger zone",
         "DANGER_ZONE_DESCRIPTION": "Deleting this funnel removes it from active Kanban navigation. Historical cards are not changed.",
         "DELETE_FUNNEL": "Delete funnel",

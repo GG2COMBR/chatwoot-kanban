@@ -88,7 +88,9 @@ const extraAssigneeCount = computed(() =>
 );
 
 const cardValue = computed(() => Number(props.card.value) || 0);
-const hasValue = computed(() => cardValue.value > 0);
+const hasValue = computed(
+  () => !!cardBoard.value?.showMonetaryValues && cardValue.value > 0
+);
 const hasDueDate = computed(
   () => !!formatDateInput(dueAt.value) && !isTerminal.value
 );

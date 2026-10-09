@@ -249,11 +249,11 @@ const toggleCollapseOnDoubleClick = () => {
       </div>
 
       <div
-        v-if="stage.totalValue > 0 || isTerminalStage(stage)"
+        v-if="(stage.totalValue > 0 && board?.showMonetaryValues) || isTerminalStage(stage)"
         class="flex min-w-0 items-center justify-between gap-2"
       >
         <span
-          v-if="stage.totalValue > 0"
+          v-if="stage.totalValue > 0 && board?.showMonetaryValues"
           data-testid="kanban-stage-total-value"
           class="flex-shrink-0 rounded-full bg-n-alpha-2 px-2 py-0.5 text-xs font-medium text-n-slate-11"
           :title="formatCurrency(stage.totalValue)"

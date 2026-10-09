@@ -295,7 +295,10 @@ const formattedCardValue = computed(() =>
 );
 const fullCardValue = computed(() => formatCurrency(cardValue.value));
 const hasCardFacts = computed(
-  () => cardValue.value > 0 || hasDueDate.value || !!stageTime.value
+  () =>
+    (props.board?.showMonetaryValues && cardValue.value > 0) ||
+    hasDueDate.value ||
+    !!stageTime.value
 );
 
 const openDetails = () => {
@@ -896,7 +899,7 @@ const toggleSelection = async event => {
         </span>
 
         <span
-          v-if="cardValue > 0"
+          v-if="board?.showMonetaryValues && cardValue > 0"
           data-testid="kanban-list-row-value"
           class="flex-shrink-0 font-medium text-n-slate-11"
           :title="fullCardValue"
@@ -1019,7 +1022,7 @@ const toggleSelection = async event => {
           class="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1"
         >
           <span
-            v-if="cardValue > 0"
+            v-if="board?.showMonetaryValues && cardValue > 0"
             data-testid="kanban-card-value"
             class="inline-flex flex-shrink-0 items-center font-medium text-n-slate-11"
             :title="fullCardValue"

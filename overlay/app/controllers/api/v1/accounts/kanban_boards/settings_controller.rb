@@ -64,6 +64,8 @@ class Api::V1::Accounts::KanbanBoards::SettingsController < Api::V1::Accounts::B
       :won_stage_id,
       :lost_stage_id,
       :lost_reason_required,
+      :enable_products,
+      :show_monetary_values,
       automation_settings: {},
       visible_user_ids: []
     )

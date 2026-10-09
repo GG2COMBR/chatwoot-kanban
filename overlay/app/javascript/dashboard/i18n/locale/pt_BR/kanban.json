@@ -16,6 +16,7 @@
       "LOST_MONTH": "Perdidos neste mês",
       "AVERAGE_TICKET": "Valor médio",
       "COUNT_VALUE": "{count} · {value}",
+      "COUNT_ONLY": "{count}",
       "HIDE": "Ocultar resumo",
       "SHOW": "Mostrar resumo",
       "ERROR": "Não foi possível carregar o resumo."
@@ -131,6 +132,10 @@
       },
       "SETTINGS_TAB": {
         "LOST_REASON_REQUIRED": "Motivo de Perda Obrigatório",
+        "ENABLE_PRODUCTS": "Habilitar catálogo e itens de oportunidade",
+        "ENABLE_PRODUCTS_HINT": "Permite adicionar produtos e itens diretamente nos cartões deste funil.",
+        "SHOW_MONETARY_VALUES": "Exibir valores monetários",
+        "SHOW_MONETARY_VALUES_HINT": "Mostra totalizadores em moeda nos cartões, etapas e no resumo do funil.",
         "AUTOMATIONS_TITLE": "Criar cartões automaticamente a partir de conversas",
         "DANGER_ZONE_TITLE": "Zona de perigo",
         "DANGER_ZONE_DESCRIPTION": "Excluir este funil o remove da navegação Kanban ativa. Os cartões históricos não são alterados.",

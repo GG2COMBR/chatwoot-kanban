@@ -48,6 +48,14 @@ defineProps({
     type: Number,
     default: 0,
   },
+  showMonetaryValues: {
+    type: Boolean,
+    default: false,
+  },
+  enableProducts: {
+    type: Boolean,
+    default: false,
+  },
   stages: {
     type: Array,
     default: () => [],
@@ -133,6 +141,8 @@ const dueAt = defineModel('dueAt', {
         :lost-reason-required="lostReasonRequired"
         :reasons="reasons"
         :total-value="totalValue"
+        :show-monetary-values="showMonetaryValues"
+        :enable-products="enableProducts"
         :assigned-users="assignedUsers"
         :assignable-users="assignableUsers"
         :is-pending="isPending"

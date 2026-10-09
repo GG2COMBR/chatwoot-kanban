@@ -865,6 +865,7 @@ watch(searchInput, () => {
       <KanbanBoardSummary
         v-if="selectedBoard"
         :summary="boardSummary"
+        :show-monetary-values="selectedBoard.showMonetaryValues"
         :is-loading="isFetchingSummary"
         :error="summaryError"
         :is-collapsed="isSummaryCollapsed"

@@ -136,6 +136,7 @@ class Api::V1::Accounts::KanbanBoardsController < Api::V1::Accounts::BaseControl
     params.require(:kanban_board).permit(
       :name, :description, :position, :active,
       :won_stage_id, :lost_stage_id, :lost_reason_required,
+      :enable_products, :show_monetary_values,
       automation_settings: {}
     )
   end

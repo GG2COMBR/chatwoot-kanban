@@ -405,7 +405,9 @@ const tabItems = computed(() => [
     key: 'details',
     label: t('KANBAN.OPPORTUNITY_DETAILS.TABS.DETAILS'),
   },
-  { key: 'products', label: t('KANBAN.OPPORTUNITY_DETAILS.TABS.PRODUCTS') },
+  ...(props.board?.enableProducts
+    ? [{ key: 'products', label: t('KANBAN.OPPORTUNITY_DETAILS.TABS.PRODUCTS') }]
+    : []),
   {
     key: 'activity',
     label: t('KANBAN.OPPORTUNITY_DETAILS.TABS.ACTIVITY'),
@@ -512,6 +514,8 @@ onMounted(loadCard);
         :assigned-users="assignedUsers"
         :assignable-users="assignableUsers"
         :total-value="totalValue"
+        :show-monetary-values="board?.showMonetaryValues"
+        :enable-products="board?.enableProducts"
         @update:subject="onSubjectChanged"
         @update:priority="onPriorityChanged"
         @update:due-at="onDueAtChanged"

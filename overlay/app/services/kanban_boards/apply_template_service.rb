@@ -30,7 +30,9 @@ class KanbanBoards::ApplyTemplateService
 
     kanban_board.update!(
       won_stage: create_stage(template[:won][:name_key], KanbanBoards::TemplateCatalog::WON_COLOR, regular_stages.length + 1),
-      lost_stage: create_stage(template[:lost][:name_key], KanbanBoards::TemplateCatalog::LOST_COLOR, regular_stages.length + 2)
+      lost_stage: create_stage(template[:lost][:name_key], KanbanBoards::TemplateCatalog::LOST_COLOR, regular_stages.length + 2),
+      enable_products: template.fetch(:enable_products, false),
+      show_monetary_values: template.fetch(:show_monetary_values, false)
     )
   end
 

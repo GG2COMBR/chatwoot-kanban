@@ -10,7 +10,9 @@ module KanbanBoards::TemplateCatalog
       ],
       won: { name_key: 'won' },
       lost: { name_key: 'lost' },
-      lost_reasons: %w[price delivery_time out_of_stock bought_elsewhere no_reply]
+      lost_reasons: %w[price delivery_time out_of_stock bought_elsewhere no_reply],
+      enable_products: true,
+      show_monetary_values: true
     },
     'tech_support' => {
       stages: [
@@ -43,7 +45,9 @@ module KanbanBoards::TemplateCatalog
       custom_fields: [
         { key: 'company', field_type: :text },
         { key: 'valid_until', field_type: :date }
-      ]
+      ],
+      enable_products: true,
+      show_monetary_values: true
     },
     'blank' => {
       stages: [{ name_key: 'entry', color: '#8B8D98' }],

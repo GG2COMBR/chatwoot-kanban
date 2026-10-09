@@ -98,6 +98,8 @@ const form = reactive({
   wonRecurrenceWindowMinutes: null,
   lostRecurrenceEnabled: false,
   lostRecurrenceWindowMinutes: null,
+  enableProducts: false,
+  showMonetaryValues: false,
   automationSettings: {},
 });
 
@@ -206,6 +208,8 @@ const normalizeForDiff = source => ({
   wonRecurrenceWindowMinutes: source.wonRecurrenceWindowMinutes ?? null,
   lostRecurrenceEnabled: !!source.lostRecurrenceEnabled,
   lostRecurrenceWindowMinutes: source.lostRecurrenceWindowMinutes ?? null,
+  enableProducts: !!source.enableProducts,
+  showMonetaryValues: !!source.showMonetaryValues,
 });
 
 const isDirty = computed(
@@ -231,6 +235,8 @@ const applySettings = payload => {
   form.lostRecurrenceEnabled = settings.lostRecurrenceEnabled || false;
   form.lostRecurrenceWindowMinutes =
     settings.lostRecurrenceWindowMinutes ?? null;
+  form.enableProducts = settings.enableProducts || false;
+  form.showMonetaryValues = settings.showMonetaryValues || false;
   form.automationSettings = settings.automationSettings || {};
 
   wonRecurrenceWindowUnit.value = pickDurationUnit(
@@ -297,6 +303,8 @@ const buildSettingsPayload = () => ({
     won_stage_id: form.wonStageId,
     lost_stage_id: form.lostStageId,
     lost_reason_required: form.lostReasonRequired,
+    enable_products: form.enableProducts,
+    show_monetary_values: form.showMonetaryValues,
     won_recurrence_enabled: form.wonRecurrenceEnabled,
     won_recurrence_window_minutes: form.wonRecurrenceWindowMinutes,
     lost_recurrence_enabled: form.lostRecurrenceEnabled,
@@ -1117,6 +1125,36 @@ onMounted(async () => {
           >
             {{ t('KANBAN.BOARD_EDIT.SETTINGS_TAB.LOST_REASON_REQUIRED') }}
             <Switch v-model="form.lostReasonRequired" />
+          </label>
+
+          <label
+            class="flex items-center justify-between gap-3 rounded-lg border border-n-weak bg-n-surface-2 p-4 text-sm font-medium text-n-slate-12"
+          >
+            <div class="grid gap-0.5">
+              <span>{{ t('KANBAN.BOARD_EDIT.SETTINGS_TAB.ENABLE_PRODUCTS') }}</span>
+              <p class="mb-0 text-xs font-normal text-n-slate-11">
+                {{ t('KANBAN.BOARD_EDIT.SETTINGS_TAB.ENABLE_PRODUCTS_HINT') }}
+              </p>
+            </div>
+            <Switch
+              v-model="form.enableProducts"
+              data-testid="kanban-board-form-enable-products"
+            />
+          </label>
+
+          <label
+            class="flex items-center justify-between gap-3 rounded-lg border border-n-weak bg-n-surface-2 p-4 text-sm font-medium text-n-slate-12"
+          >
+            <div class="grid gap-0.5">
+              <span>{{ t('KANBAN.BOARD_EDIT.SETTINGS_TAB.SHOW_MONETARY_VALUES') }}</span>
+              <p class="mb-0 text-xs font-normal text-n-slate-11">
+                {{ t('KANBAN.BOARD_EDIT.SETTINGS_TAB.SHOW_MONETARY_VALUES_HINT') }}
+              </p>
+            </div>
+            <Switch
+              v-model="form.showMonetaryValues"
+              data-testid="kanban-board-form-show-monetary-values"
+            />
           </label>
 
           <section class="grid gap-4 border-b border-n-weak pb-5">
