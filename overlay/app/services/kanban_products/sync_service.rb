@@ -42,7 +42,10 @@ module KanbanProducts
       total_count = 0
       now = Time.current
 
-      CSV.parse(content, headers: true, header_converters: :downcase) do |row|
+      clean_content = normalize_csv_content(content)
+      col_sep = detect_csv_separator(clean_content)
+
+      CSV.parse(clean_content, headers: true, header_converters: :downcase, col_sep: col_sep) do |row|
         sku = (row['id'] || row['sku'] || row['g:id']).to_s.strip
         title = (row['title'] || row['name'] || row['g:title']).to_s.strip
         next if sku.blank? || title.blank?
@@ -166,6 +169,32 @@ module KanbanProducts
 
     def extract_text(node, field_name)
       node.at_xpath(field_name)&.text&.strip || ''
+    end
+
+    def normalize_csv_content(content)
+      return '' if content.blank?
+
+      # Força codificação UTF-8 válida e remove byte order mark (BOM)
+      utf8_content = content.to_s.force_encoding('UTF-8')
+      utf8_content = utf8_content.scrub('') unless utf8_content.valid_encoding?
+      utf8_content.sub(/\A\xEF\xBB\xBF/, '')
+    end
+
+    def detect_csv_separator(content)
+      first_line = content.lines.first.to_s.strip
+      return ',' if first_line.blank?
+
+      semicolons = first_line.count(';')
+      commas = first_line.count(',')
+      tabs = first_line.count("\t")
+
+      if semicolons > commas && semicolons >= tabs
+        ';'
+      elsif tabs > commas && tabs > semicolons
+        "\t"
+      else
+        ','
+      end
     end
 
     def parse_price(raw_string)
