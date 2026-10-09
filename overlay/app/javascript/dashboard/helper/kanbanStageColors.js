@@ -1,0 +1,1 @@
+export const DEFAULT_KANBAN_STAGE_COLOR = '#8B8D98';

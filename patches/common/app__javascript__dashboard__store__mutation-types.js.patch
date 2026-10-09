@@ -1,0 +1,14 @@
+diff --git a/app/javascript/dashboard/store/mutation-types.js b/app/javascript/dashboard/store/mutation-types.js
+index b5331aa..77d50af 100644
+--- a/app/javascript/dashboard/store/mutation-types.js
++++ b/app/javascript/dashboard/store/mutation-types.js
+@@ -394,4 +397,9 @@ export default {
+   EDIT_AGENT_CAPACITY_POLICIES_INBOXES: 'EDIT_AGENT_CAPACITY_POLICIES_INBOXES',
+   DELETE_AGENT_CAPACITY_POLICIES_INBOXES:
+     'DELETE_AGENT_CAPACITY_POLICIES_INBOXES',
++
++  // Kanban Boards
++  SET_KANBAN_BOARDS: 'SET_KANBAN_BOARDS',
++  UPDATE_KANBAN_BOARD_CARD_COUNTS: 'UPDATE_KANBAN_BOARD_CARD_COUNTS',
++  SET_KANBAN_BOARDS_UI_FLAG: 'SET_KANBAN_BOARDS_UI_FLAG',
+ };

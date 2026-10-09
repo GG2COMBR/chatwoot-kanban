@@ -1,0 +1,17 @@
+json.id @kanban_board.id
+json.name @kanban_board.name
+json.description @kanban_board.description
+json.active @kanban_board.active
+json.visibility_mode @kanban_board.visibility_mode
+json.visible_user_ids @kanban_board.kanban_board_members.order(:user_id).pluck(:user_id)
+inbox_scope = @kanban_board.derived_inbox_scope
+json.inbox_scope_mode inbox_scope.fetch(:mode)
+json.allowed_inbox_ids inbox_scope.fetch(:inbox_ids)
+json.won_recurrence_enabled @kanban_board.won_recurrence_enabled
+json.won_recurrence_window_minutes @kanban_board.won_recurrence_window_minutes
+json.lost_recurrence_enabled @kanban_board.lost_recurrence_enabled
+json.lost_recurrence_window_minutes @kanban_board.lost_recurrence_window_minutes
+json.won_stage_id @kanban_board.won_stage_id
+json.lost_stage_id @kanban_board.lost_stage_id
+json.lost_reason_required @kanban_board.lost_reason_required
+json.automation_settings @kanban_board.automation_settings

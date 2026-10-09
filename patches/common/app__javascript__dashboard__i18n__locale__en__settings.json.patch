@@ -1,0 +1,21 @@
+diff --git a/app/javascript/dashboard/i18n/locale/en/settings.json b/app/javascript/dashboard/i18n/locale/en/settings.json
+index 0391449..709fe9b 100644
+--- a/app/javascript/dashboard/i18n/locale/en/settings.json
++++ b/app/javascript/dashboard/i18n/locale/en/settings.json
+@@ -314,6 +314,8 @@
+     "SWITCH": "Switch",
+     "INBOX_VIEW": "Inbox View",
+     "CONVERSATIONS": "Conversations",
++    "KANBAN": "Kanban",
++    "KANBAN_OVERVIEW": "Overview",
+     "INBOX": "My Inbox",
+     "ALL_CONVERSATIONS": "All Conversations",
+     "MENTIONED_CONVERSATIONS": "Mentions",
+@@ -376,6 +378,7 @@
+     "REPORTS_LABEL": "Labels",
+     "REPORTS_INBOX": "Inbox",
+     "REPORTS_TEAM": "Team",
++    "REPORTS_KANBAN": "Kanban",
+     "AGENT_ASSIGNMENT": "Agent Assignment",
+     "SET_AVAILABILITY_TITLE": "Set yourself as",
+     "SET_YOUR_AVAILABILITY": "Set your availability",

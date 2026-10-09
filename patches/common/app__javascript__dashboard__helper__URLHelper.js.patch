@@ -1,0 +1,76 @@
+diff --git a/app/javascript/dashboard/helper/URLHelper.js b/app/javascript/dashboard/helper/URLHelper.js
+index 76a5d8b..a3f5d18 100644
+--- a/app/javascript/dashboard/helper/URLHelper.js
++++ b/app/javascript/dashboard/helper/URLHelper.js
+@@ -11,6 +11,7 @@ export const conversationUrl = ({
+   teamId,
+   conversationType = '',
+   foldersId,
++  assigneeType = 'all',
+ }) => {
+   let url = `accounts/${accountId}/conversations/${id}`;
+   if (activeInbox) {
+@@ -23,14 +24,21 @@ export const conversationUrl = ({
+     url = `accounts/${accountId}/custom_view/${foldersId}/conversations/${id}`;
+   } else if (conversationType === 'mention') {
+     url = `accounts/${accountId}/mentions/conversations/${id}`;
+-  } else if (conversationType === 'participating') {
+-    url = `accounts/${accountId}/participating/conversations/${id}`;
+   } else if (conversationType === 'unattended') {
+     url = `accounts/${accountId}/unattended/conversations/${id}`;
++  } else if (conversationType === 'archived') {
++    url = `accounts/${accountId}/archived/conversations/${id}`;
++  } else if (conversationType === 'email') {
++    url = `accounts/${accountId}/email/conversations/${id}`;
++  } else if (assigneeType === 'me') {
++    url = `accounts/${accountId}/mine/conversations/${id}`;
+   }
+   return url;
+ };
+ 
++export const kanbanConversationUrl = ({ accountId, boardId, conversationId }) =>
++  `accounts/${accountId}/kanban/${boardId}/conversations/${conversationId}`;
++
+ export const conversationListPageURL = ({
+   accountId,
+   conversationType = '',
+@@ -38,6 +46,7 @@ export const conversationListPageURL = ({
+   label,
+   teamId,
+   customViewId,
++  assigneeType = 'all',
+ }) => {
+   let url = `accounts/${accountId}/dashboard`;
+   if (label) {
+@@ -48,11 +57,14 @@ export const conversationListPageURL = ({
+     url = `accounts/${accountId}/inbox/${inboxId}`;
+   } else if (customViewId) {
+     url = `accounts/${accountId}/custom_view/${customViewId}`;
++  } else if (assigneeType === 'me') {
++    url = `accounts/${accountId}/mine/conversations`;
+   } else if (conversationType) {
+     const urlMap = {
+       mention: 'mentions/conversations',
+-      participating: 'participating/conversations',
+       unattended: 'unattended/conversations',
++      archived: 'archived/conversations',
++      email: 'email/conversations',
+     };
+     url = `accounts/${accountId}/${urlMap[conversationType]}`;
+   }
+@@ -110,15 +122,6 @@ export const hasValidAvatarUrl = avatarUrl => {
+   }
+ };
+ 
+-export const timeStampAppendedURL = dataUrl => {
+-  const url = new URL(dataUrl);
+-  if (!url.searchParams.has('t')) {
+-    url.searchParams.append('t', Date.now());
+-  }
+-
+-  return url.toString();
+-};
+-
+ export const getHostNameFromURL = url => {
+   try {
+     return new URL(url).hostname;

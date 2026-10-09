@@ -1,0 +1,55 @@
+diff --git a/app/javascript/dashboard/composables/useMacros.js b/app/javascript/dashboard/composables/useMacros.js
+index 61b45dd..c00f900 100644
+--- a/app/javascript/dashboard/composables/useMacros.js
++++ b/app/javascript/dashboard/composables/useMacros.js
+@@ -2,18 +2,11 @@ import { computed } from 'vue';
+ import { useI18n } from 'vue-i18n';
+ import { useStoreGetters } from 'dashboard/composables/store';
+ import { PRIORITY_CONDITION_VALUES } from 'dashboard/constants/automation';
+-import {
+-  generateLabelOptions,
+-  generateTeamOptions,
+-} from 'dashboard/helper/automationHelper';
+-import {
+-  resolveActionName,
+-  getFileName,
+-} from 'dashboard/routes/dashboard/settings/macros/macroHelper';
++import { kanbanDropdownValues } from 'dashboard/helper/kanbanActionOptions';
+ 
+ /**
+  * Composable for handling macro-related functionality
+- * @returns {Object} An object containing the getMacroDropdownValues and resolveMacroActions functions
++ * @returns {Object} An object containing the getMacroDropdownValues function
+  */
+ export const useMacros = () => {
+   const { t } = useI18n();
+@@ -22,6 +15,9 @@ export const useMacros = () => {
+   const labels = computed(() => getters['labels/getLabels'].value);
+   const teams = computed(() => getters['teams/getTeams'].value);
+   const agents = computed(() => getters['agents/getVerifiedAgents'].value);
++  const kanbanBoards = computed(
++    () => getters['kanbanBoards/kanbanBoards']?.value || []
++  );
+ 
+   const withNoneOption = options => [
+     { id: 'nil', name: t('AUTOMATION.NONE_OPTION') },
+@@ -34,9 +30,18 @@ export const useMacros = () => {
+    * @returns {Array} An array of dropdown values
+    */
+   const getMacroDropdownValues = type => {
++    const kanbanValues = kanbanDropdownValues(
++      type,
++      kanbanBoards.value,
++      agents.value
++    );
++    if (kanbanValues) return kanbanValues;
++
+     switch (type) {
+       case 'assign_team':
+-        return withNoneOption(generateTeamOptions(teams.value));
++        return withNoneOption(teams.value);
++      case 'send_email_to_team':
++        return teams.value;
+       case 'assign_agent':
+         return [
+           ...withNoneOption(),

@@ -1,0 +1,48 @@
+diff --git a/app/javascript/dashboard/components/ConversationItem.vue b/app/javascript/dashboard/components/ConversationItem.vue
+index 866c8bc..707b6ed 100644
+--- a/app/javascript/dashboard/components/ConversationItem.vue
++++ b/app/javascript/dashboard/components/ConversationItem.vue
+@@ -1,8 +1,14 @@
+ <script setup>
+ import { computed, ref, watch, inject } from 'vue';
+-import { useRouter } from 'vue-router';
++import { useRoute, useRouter } from 'vue-router';
+ import { useStore, useMapGetter } from 'dashboard/composables/store';
+-import { frontendURL, conversationUrl } from 'dashboard/helper/URLHelper';
++import {
++  frontendURL,
++  conversationUrl,
++  kanbanConversationUrl,
++} from 'dashboard/helper/URLHelper';
++import { useEmbeddedConversation } from 'dashboard/composables/useEmbeddedConversation';
++import { pushEmbedded } from 'dashboard/helper/embeddedConversationHistory';
+ import ConversationCard from './widgets/conversation/ConversationCard.vue';
+ import ConversationCardExpanded from 'dashboard/components-next/Conversation/ConversationCard/ConversationCardExpanded.vue';
+ import ContextMenu from 'dashboard/components/ui/ContextMenu.vue';
+@@ -108,6 +112,26 @@ const onCardClick = e => {
+   }
+ 
+   if (isActiveChat.value) return;
++
++  // Staying embedded keeps the board a back button away. The card_id of the
++  // conversation we came from is dropped: it belongs to that conversation.
++  if (embedded.value) {
++    pushEmbedded(
++      router,
++      {
++        path: frontendURL(
++          kanbanConversationUrl({
++            accountId: accountId.value,
++            boardId: route.params.boardId,
++            conversationId: props.source.id,
++          })
++        ),
++      },
++      true
++    );
++    return;
++  }
++
+   router.push({ path });
+ };
+ 

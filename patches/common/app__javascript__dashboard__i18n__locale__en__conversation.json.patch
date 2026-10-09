@@ -1,0 +1,50 @@
+diff --git a/app/javascript/dashboard/i18n/locale/en/conversation.json b/app/javascript/dashboard/i18n/locale/en/conversation.json
+index 7c8095a..345da81 100644
+--- a/app/javascript/dashboard/i18n/locale/en/conversation.json
++++ b/app/javascript/dashboard/i18n/locale/en/conversation.json
+@@ -478,10 +453,45 @@
+       "CONTACT_ATTRIBUTES": "Contact Attributes",
+       "PREVIOUS_CONVERSATION": "Previous Conversations",
+       "MACROS": "Macros",
++      "KANBAN": "Kanban",
+       "LINEAR_ISSUES": "Linked Linear Issues",
+       "SHOPIFY_ORDERS": "Shopify Orders",
+       "SHARED_FILES": "Attachments"
+     },
++    "KANBAN": {
++      "LOADING": "Loading opportunities",
++      "EMPTY": "No opportunities linked to this conversation",
++      "ERROR": "Failed to load opportunities",
++      "COUNT": "{count} opportunities",
++      "STALE_HINT": "{count} stalled",
++      "SEPARATOR": "·",
++      "NEW_OPPORTUNITY": "New opportunity",
++      "BOARD": "Funnel",
++      "SUBJECT": "Subject",
++      "STAGE": "Stage",
++      "LABELS": "Labels",
++      "SELECT_BOARD": "Select a funnel",
++      "SELECT_STAGE": "Select a stage",
++      "NO_ELIGIBLE_BOARDS": "No funnel accepts this inbox.",
++      "CREATE_IN_ANOTHER_BOARD": "Create in another funnel",
++      "ALREADY_IN_BOARD": "Opportunity {id} already exists in this funnel for the same conversation and subject.",
++      "OPEN_EXISTING": "Open",
++      "EDIT_DETAILS": "Edit details",
++      "MOVE_BOARD": "Move to another funnel",
++      "NO_OTHER_BOARDS": "No other funnel is available.",
++      "OPEN_DETAILS": "Open details",
++      "SET_DUE_DATE": "Set due date",
++      "IN_STAGE_FOR": "{age} in this stage",
++      "STAGE_SELECT": "Change stage",
++      "CLOSED_ON": "Closed on {date}",
++      "CREATE_ERROR": "Failed to create opportunity",
++      "CREATED": "Opportunity created",
++      "CANCEL": "Cancel",
++      "CREATE": "Create",
++      "DELETE_CONFIRM_TITLE": "Delete opportunity",
++      "DELETE_CONFIRM_DESCRIPTION": "Are you sure you want to delete this opportunity? This action cannot be undone.",
++      "DELETE_CONFIRM_BUTTON": "Yes, delete"
++    },
+     "SHARED_FILES": {
+       "EMPTY": "No attachments yet",
+       "DOWNLOAD": "Download file",

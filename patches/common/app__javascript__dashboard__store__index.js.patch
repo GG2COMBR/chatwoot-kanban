@@ -1,0 +1,20 @@
+diff --git a/app/javascript/dashboard/store/index.js b/app/javascript/dashboard/store/index.js
+index c77a38d..2c362ab 100755
+--- a/app/javascript/dashboard/store/index.js
++++ b/app/javascript/dashboard/store/index.js
+@@ -62,6 +59,7 @@ import copilotMessages from './captain/copilotMessages';
+ import captainScenarios from './captain/scenarios';
+ import captainTools from './captain/tools';
+ import captainCustomTools from './captain/customTools';
++import kanbanBoards from './modules/kanbanBoards';
+ 
+ const plugins = [];
+ 
+@@ -129,6 +124,7 @@ export default createStore({
+     captainScenarios,
+     captainTools,
+     captainCustomTools,
++    kanbanBoards,
+   },
+   plugins,
+ });

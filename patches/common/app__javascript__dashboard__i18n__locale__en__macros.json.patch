@@ -1,0 +1,31 @@
+diff --git a/app/javascript/dashboard/i18n/locale/en/macros.json b/app/javascript/dashboard/i18n/locale/en/macros.json
+index 0e2ddfa..645a162 100644
+--- a/app/javascript/dashboard/i18n/locale/en/macros.json
++++ b/app/javascript/dashboard/i18n/locale/en/macros.json
+@@ -10,6 +10,9 @@
+     "SEARCH_PLACEHOLDER": "Search macros...",
+     "NO_RESULTS": "No macros found matching your search",
+     "ERROR": "Something went wrong. Please try again",
++    "KANBAN_STAGE_PLACEHOLDER": "Select funnel and stage",
++    "KANBAN_BOARD_PLACEHOLDER": "Select funnel",
++    "KANBAN_AGENT_PLACEHOLDER": "Select agents",
+     "ORDER_INFO": "Macros will run in the order you add your actions. You can rearrange them by dragging them by the handle beside each node.",
+     "ADD": {
+       "FORM": {
+@@ -105,12 +107,14 @@
+       "MUTE_CONVERSATION": "Mute Conversation",
+       "SNOOZE_CONVERSATION": "Snooze Conversation",
+       "RESOLVE_CONVERSATION": "Resolve Conversation",
+-      "CHANGE_STATUS": "Change Status",
+       "SEND_ATTACHMENT": "Send Attachment",
+       "SEND_MESSAGE": "Send a Message",
+       "CHANGE_PRIORITY": "Change Priority",
+       "ADD_PRIVATE_NOTE": "Add a Private Note",
+-      "SEND_WEBHOOK_EVENT": "Send Webhook Event"
++      "SEND_WEBHOOK_EVENT": "Send Webhook Event",
++      "ADD_TO_KANBAN_BOARD": "Add to funnel",
++      "MOVE_KANBAN_CARD": "Move funnel card",
++      "ASSIGN_KANBAN_CARD": "Assign funnel card"
+     },
+     "PRIORITY_TYPES": {
+       "NONE": "None",

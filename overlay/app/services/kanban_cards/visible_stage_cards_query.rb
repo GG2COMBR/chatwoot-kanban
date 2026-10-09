@@ -1,0 +1,177 @@
+class KanbanCards::VisibleStageCardsQuery
+  Result = Struct.new(:cards, :card_ids, :has_more, :next_cursor, :total_count, :total_value, :stale_count, keyword_init: true)
+  RefreshRequiredError = Class.new(StandardError)
+
+  DEFAULT_LIMIT = 20
+  MAX_LIMIT = 50
+  TERMINAL_PERIODS = { '7d' => 7, '30d' => 30, '90d' => 90 }.freeze
+  ALL_TIME_TERMINAL_PERIOD = 'all'.freeze
+  TERMINAL_PERIOD_VALUES = (TERMINAL_PERIODS.keys + [ALL_TIME_TERMINAL_PERIOD]).freeze
+  DEFAULT_TERMINAL_PERIOD = '30d'.freeze
+  STAGE_SLA_VALUES = %w[stale].freeze
+
+  # rubocop:disable Metrics/ParameterLists
+  def initialize(account:, kanban_board:, kanban_stage:, visible_cards:, limit: DEFAULT_LIMIT, cursor: nil,
+                 terminal_period: DEFAULT_TERMINAL_PERIOD, filtered_stage_sla: nil)
+    @account = account
+    @kanban_board = kanban_board
+    @kanban_stage = kanban_stage
+    @board_visible_cards = visible_cards
+    @limit = limit
+    @cursor = cursor
+    @terminal_period = terminal_period.presence || DEFAULT_TERMINAL_PERIOD
+    @filtered_stage_sla = filtered_stage_sla
+  end
+  # rubocop:enable Metrics/ParameterLists
+
+  def call(load_cards: true, hydrate_cards: true)
+    return empty_result unless valid_board_and_stage?
+
+    return metadata_result unless load_cards
+
+    anchor = cursor_after_id.present? ? cursor_anchor! : nil
+    ids = paginated_card_ids(anchor)
+    page_ids = ids.first(effective_limit)
+    cards = hydrate_cards ? self.class.load_payload_cards(page_ids) : []
+
+    Result.new(
+      cards: cards,
+      card_ids: page_ids,
+      has_more: ids.length > effective_limit,
+      next_cursor: next_cursor_for(page_ids, ids),
+      # Counting on every cursor-paginated page would re-scan the whole
+      # stage on each load-more click; only the first page needs it.
+      **(anchor.nil? ? totals_fields : {})
+    )
+  end
+
+  def self.load_payload_cards(ids)
+    KanbanCards::CompactCardsQuery.call(ids)
+  end
+
+  private
+
+  attr_reader :account, :kanban_board, :kanban_stage, :limit, :cursor, :terminal_period, :filtered_stage_sla
+
+  def empty_result
+    Result.new(cards: [], card_ids: [], has_more: false, next_cursor: nil, total_count: 0, total_value: '0.0', stale_count: 0)
+  end
+
+  def valid_board_and_stage?
+    kanban_board.account_id == account.id &&
+      kanban_board.active? &&
+      kanban_stage.account_id == account.id &&
+      kanban_stage.kanban_board_id == kanban_board.id &&
+      kanban_stage.active?
+  end
+
+  def visible_cards
+    @visible_cards ||= begin
+      scope = @board_visible_cards.where(kanban_stage_id: kanban_stage.id)
+      # The period is a column slice, not a user filter, so it stays outside match_mode.
+      scope = scope.where(terminal_period_condition) if terminal_period_condition
+      scope = scope.where(stage_sla_condition) if stage_sla_condition
+      scope
+    end
+  end
+
+  def terminal_period_condition
+    return unless terminal_stage?
+
+    days = TERMINAL_PERIODS[terminal_period]
+    return if days.blank? # 'all' keeps the whole history
+
+    card_table[:stage_entered_at].gteq(days.days.ago)
+  end
+
+  def terminal_stage?
+    KanbanStage.special_stage_ids(kanban_board).include?(kanban_stage.id)
+  end
+
+  # Cards past the stage time limit. A terminal stage or one without a limit has
+  # none, and a predicate no row can satisfy reports that as a zero metric instead
+  # of needing a branch at each call site.
+  def stale_cards_condition
+    return card_table[:id].eq(nil) if terminal_stage? || kanban_stage.sla_hours.blank?
+
+    card_table[:stage_entered_at].lt(kanban_stage.sla_hours.hours.ago)
+  end
+
+  def stage_sla_condition
+    return unless filtered_stage_sla&.include?('stale')
+
+    stale_cards_condition
+  end
+
+  # The stale slice rides along on the totals scan, so the stage header reports
+  # every stale card rather than only the ones the first page happened to load.
+  def visible_totals
+    @visible_totals ||= KanbanCards::Totals.metrics(visible_cards, all: nil, stale: stale_cards_condition)
+  end
+
+  def totals_fields
+    {
+      total_count: visible_totals.fetch(:all).count,
+      total_value: KanbanCards::Totals.decimal_string(visible_totals.fetch(:all).value),
+      stale_count: visible_totals.fetch(:stale).count
+    }
+  end
+
+  def metadata_result
+    Result.new(cards: [], card_ids: [], has_more: false, next_cursor: nil, **totals_fields)
+  end
+
+  def paginated_card_ids(anchor)
+    scope = visible_cards.ordered
+    scope = scope.where(after_anchor_condition(anchor)) if anchor.present?
+
+    scope.limit(effective_limit + 1).ids
+  end
+
+  def cursor_anchor!
+    visible_cards.find_by(id: cursor_after_id) || raise(RefreshRequiredError, 'Kanban cards cursor is no longer valid')
+  end
+
+  def after_anchor_condition(anchor)
+    after_anchor_position(anchor)
+      .or(after_anchor_created_at(anchor))
+      .or(after_anchor_id(anchor))
+  end
+
+  def after_anchor_position(anchor)
+    card_table[:position].gt(anchor.position)
+  end
+
+  def after_anchor_created_at(anchor)
+    card_table[:position].eq(anchor.position).and(card_table[:created_at].gt(anchor.created_at))
+  end
+
+  def after_anchor_id(anchor)
+    card_table[:position]
+      .eq(anchor.position)
+      .and(card_table[:created_at].eq(anchor.created_at))
+      .and(card_table[:id].gt(anchor.id))
+  end
+
+  def next_cursor_for(page_ids, ids)
+    return if ids.length <= effective_limit || page_ids.blank?
+
+    { after_id: page_ids.last }
+  end
+
+  # Callers (controllers) are responsible for clamping limit to [1, MAX_LIMIT]
+  # before it reaches this service.
+  def effective_limit
+    @effective_limit ||= (limit || DEFAULT_LIMIT).to_i
+  end
+
+  def cursor_after_id
+    return if cursor.blank?
+
+    cursor[:after_id] || cursor['after_id']
+  end
+
+  def card_table
+    KanbanCard.arel_table
+  end
+end

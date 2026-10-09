@@ -1,0 +1,50 @@
+diff --git a/app/javascript/dashboard/helper/actionCable.js b/app/javascript/dashboard/helper/actionCable.js
+index 10c5122..53f808f 100644
+--- a/app/javascript/dashboard/helper/actionCable.js
++++ b/app/javascript/dashboard/helper/actionCable.js
+@@ -26,6 +26,18 @@ const getFilteredUnreadCountsRefreshRetryDelay = () =>
+   FILTERED_UNREAD_COUNTS_REFRESH_RETRY_MS +
+   Math.random() * FILTERED_UNREAD_COUNTS_REFRESH_RETRY_JITTER_MS;
+ 
++const KANBAN_EVENTS = [
++  'kanban.board.updated',
++  'kanban.stage.created',
++  'kanban.stage.updated',
++  'kanban.stage.deleted',
++  'kanban.stage.reordered',
++  'kanban.card.created',
++  'kanban.card.updated',
++  'kanban.card.deleted',
++  'kanban.card.reordered',
++];
++
+ class ActionCableConnector extends BaseActionCableConnector {
+   constructor(app, pubsubToken) {
+     const { websocketURL = '' } = window.chatwootConfig || {};
+@@ -66,6 +78,7 @@ class ActionCableConnector extends BaseActionCableConnector {
+       'voice_call.outbound_connected': this.onVoiceCallOutboundConnected,
+       'voice_call.outbound_accepted': this.onVoiceCallOutboundAccepted,
+       'voice_call.ended': this.onVoiceCallEnded,
++      ...this.kanbanEventHandlers(),
+     };
+   }
+ 
+@@ -74,6 +87,18 @@ class ActionCableConnector extends BaseActionCableConnector {
+     emitter.emit(BUS_EVENTS.WEBSOCKET_RECONNECT);
+   };
+ 
++  kanbanEventHandlers = () => {
++    return KANBAN_EVENTS.reduce((handlers, event) => {
++      handlers[event] = data => this.onKanbanRealtimeEvent(event, data);
++      return handlers;
++    }, {});
++  };
++
++  // eslint-disable-next-line class-methods-use-this
++  onKanbanRealtimeEvent = (event, data) => {
++    emitter.emit(BUS_EVENTS.KANBAN_REALTIME_EVENT, { event, data });
++  };
++
+   // eslint-disable-next-line class-methods-use-this
+   onDisconnected = () => {
+     emitter.emit(BUS_EVENTS.WEBSOCKET_DISCONNECT);

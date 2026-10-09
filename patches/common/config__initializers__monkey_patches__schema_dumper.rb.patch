@@ -1,0 +1,16 @@
+diff --git a/config/initializers/monkey_patches/schema_dumper.rb b/config/initializers/monkey_patches/schema_dumper.rb
+index 6400356..b399913 100644
+--- a/config/initializers/monkey_patches/schema_dumper.rb
++++ b/config/initializers/monkey_patches/schema_dumper.rb
+@@ -11,6 +11,11 @@ module ActiveRecord
+       class SchemaDumper < ConnectionAdapters::SchemaDumper
+         cattr_accessor :ignore_extentions, default: []
+ 
++        # schema.rb has no DSL for SQL functions, so we re-emit the ones listed here.
++        # They are dumped between the extensions and the tables because expression
++        # indexes (eg. kanban search) reference them at create_table time.
++        cattr_accessor :dump_functions, default: %w[immutable_unaccent]
++
+         private
+ 
+         def extensions(stream)

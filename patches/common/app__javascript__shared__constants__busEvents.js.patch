@@ -1,0 +1,22 @@
+diff --git a/app/javascript/shared/constants/busEvents.js b/app/javascript/shared/constants/busEvents.js
+index deb07ee..84467a3 100644
+--- a/app/javascript/shared/constants/busEvents.js
++++ b/app/javascript/shared/constants/busEvents.js
+@@ -3,14 +3,16 @@ export const BUS_EVENTS = {
+   START_NEW_CONVERSATION: 'START_NEW_CONVERSATION',
+   FOCUS_CUSTOM_ATTRIBUTE: 'FOCUS_CUSTOM_ATTRIBUTE',
+   SCROLL_TO_MESSAGE: 'SCROLL_TO_MESSAGE',
++  MESSAGE_ADDED: 'MESSAGE_ADDED',
+   MESSAGE_SENT: 'MESSAGE_SENT',
+   ON_MESSAGE_LIST_SCROLL: 'ON_MESSAGE_LIST_SCROLL',
+   WEBSOCKET_DISCONNECT: 'WEBSOCKET_DISCONNECT',
+   WEBSOCKET_RECONNECT: 'WEBSOCKET_RECONNECT',
+   WEBSOCKET_RECONNECT_COMPLETED: 'WEBSOCKET_RECONNECT_COMPLETED',
++  KANBAN_REALTIME_EVENT: 'KANBAN_REALTIME_EVENT',
+   TOGGLE_REPLY_TO_MESSAGE: 'TOGGLE_REPLY_TO_MESSAGE',
+   SHOW_TOAST: 'newToastMessage',
+   NEW_CONVERSATION_MODAL: 'newConversationModal',
+   INSERT_INTO_RICH_EDITOR: 'insertIntoRichEditor',
+-  MFA_STATE_CHANGED: 'MFA_STATE_CHANGED',
++  INSERT_INTO_NORMAL_EDITOR: 'insertIntoNormalEditor',
+ };

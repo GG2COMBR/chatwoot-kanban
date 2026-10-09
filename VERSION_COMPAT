@@ -1,0 +1,4 @@
+# Versões homologadas por alvo (lida pelo scripts/install.sh)
+# formato: <alvo>=<versao_min>..<versao_max>
+fazer-ai=4.18.0..4.18.99
+vanilla=4.18.0..4.18.99

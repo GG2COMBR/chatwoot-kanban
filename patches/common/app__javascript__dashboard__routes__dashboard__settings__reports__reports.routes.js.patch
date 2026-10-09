@@ -1,0 +1,36 @@
+diff --git a/app/javascript/dashboard/routes/dashboard/settings/reports/reports.routes.js b/app/javascript/dashboard/routes/dashboard/settings/reports/reports.routes.js
+index a36e7b6..4be07ca 100644
+--- a/app/javascript/dashboard/routes/dashboard/settings/reports/reports.routes.js
++++ b/app/javascript/dashboard/routes/dashboard/settings/reports/reports.routes.js
+@@ -23,12 +23,18 @@ import CsatResponses from './CsatResponses.vue';
+ import BotReports from './BotReports.vue';
+ import LiveReports from './LiveReports.vue';
+ import SLAReports from './SLAReports.vue';
++import KanbanReports from './KanbanReports.vue';
+ 
+ const meta = {
+   featureFlag: FEATURE_FLAGS.REPORTS,
+   permissions: ['administrator', 'report_manage'],
+ };
+ 
++const kanbanMeta = {
++  featureFlag: FEATURE_FLAGS.REPORTS,
++  permissions: ['agent', 'administrator', 'report_manage'],
++};
++
+ const oldReportRoutes = [
+   {
+     path: 'agent',
+@@ -152,6 +174,12 @@ export default {
+           meta,
+           component: BotReports,
+         },
++        {
++          path: 'kanban',
++          name: 'kanban_reports',
++          meta: kanbanMeta,
++          component: KanbanReports,
++        },
+       ],
+     },
+   ],
