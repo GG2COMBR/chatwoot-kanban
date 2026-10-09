@@ -28,7 +28,7 @@ index 5c7203e..ae8cab9 100644
 +          this.kanbanParams;
 +        return (
 +          this.dropdownValues.find(
-+            option => option.id === 
++            option => option.id === `${boardId}:${stageId}`
 +          ) || null
 +        );
 +      },
@@ -83,15 +83,15 @@ index 5c7203e..ae8cab9 100644
 +    kanbanPlaceholders() {
 +      if (this.isMacro) {
 +        return {
-+          stage: this.('MACROS.KANBAN_STAGE_PLACEHOLDER'),
-+          board: this.('MACROS.KANBAN_BOARD_PLACEHOLDER'),
-+          agent: this.('MACROS.KANBAN_AGENT_PLACEHOLDER'),
++          stage: this.$t('MACROS.KANBAN_STAGE_PLACEHOLDER'),
++          board: this.$t('MACROS.KANBAN_BOARD_PLACEHOLDER'),
++          agent: this.$t('MACROS.KANBAN_AGENT_PLACEHOLDER'),
 +        };
 +      }
 +      return {
-+        stage: this.('AUTOMATION.KANBAN_STAGE_PLACEHOLDER'),
-+        board: this.('AUTOMATION.KANBAN_BOARD_PLACEHOLDER'),
-+        agent: this.('AUTOMATION.KANBAN_AGENT_PLACEHOLDER'),
++        stage: this.$t('AUTOMATION.KANBAN_STAGE_PLACEHOLDER'),
++        board: this.$t('AUTOMATION.KANBAN_BOARD_PLACEHOLDER'),
++        agent: this.$t('AUTOMATION.KANBAN_AGENT_PLACEHOLDER'),
 +      };
 +    },
      isVerticalLayout() {

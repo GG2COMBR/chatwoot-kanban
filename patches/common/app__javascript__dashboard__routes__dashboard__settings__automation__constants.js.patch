@@ -1,8 +1,8 @@
 diff --git a/app/javascript/dashboard/routes/dashboard/settings/automation/constants.js b/app/javascript/dashboard/routes/dashboard/settings/automation/constants.js
-index 815c874..72e00e0 100644
+index 17a60b8..07e1e98 100644
 --- a/app/javascript/dashboard/routes/dashboard/settings/automation/constants.js
 +++ b/app/javascript/dashboard/routes/dashboard/settings/automation/constants.js
-@@ -859,6 +859,21 @@ export const AUTOMATION_ACTION_TYPES = [
+@@ -805,6 +805,21 @@ export const AUTOMATION_ACTION_TYPES = [
      label: 'ADD_SLA',
      inputType: 'search_select',
    },
@@ -21,6 +21,6 @@ index 815c874..72e00e0 100644
 +    label: 'ASSIGN_KANBAN_CARD',
 +    inputType: 'kanban_agents',
 +  },
-   {
-     key: 'remove_custom_attribute',
-     label: 'REMOVE_CUSTOM_ATTRIBUTE',
+ ];
+ 
+ export const DEFAULT_DELAY_MINUTES = 240; // 4 hours
