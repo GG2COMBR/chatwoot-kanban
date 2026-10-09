@@ -103,6 +103,47 @@ const handleUploadCsv = async () => {
   }
 };
 
+const downloadCsvTemplate = () => {
+  const headers = ['id', 'title', 'price', 'description', 'image_link', 'link', 'brand', 'availability'];
+  const sampleRows = [
+    [
+      'PROD-001',
+      'Plano Mensal Consultoria Premium',
+      '199.90 BRL',
+      'Acesso completo aos serviços com suporte prioritário',
+      'https://exemplo.com/imagens/prod-001.png',
+      'https://exemplo.com/planos/premium',
+      'Minha Empresa',
+      'in_stock'
+    ],
+    [
+      'PROD-002',
+      'Treinamento de Equipe Comercial',
+      '1450.00 BRL',
+      'Workshop intensivo de 8 horas para qualificação de vendas',
+      'https://exemplo.com/imagens/prod-002.png',
+      'https://exemplo.com/treinamentos/comercial',
+      'Minha Empresa',
+      'in_stock'
+    ]
+  ];
+
+  const csvContent = [
+    headers.join(','),
+    ...sampleRows.map(row => row.map(val => `"${String(val).replace(/"/g, '""')}"`).join(','))
+  ].join('\n');
+
+  const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.setAttribute('href', url);
+  link.setAttribute('download', 'modelo_produtos_kanban.csv');
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+};
+
 const handleSync = async sourceId => {
   isSyncing.value[sourceId] = true;
   try {
@@ -224,6 +265,24 @@ onMounted(() => {
 
         <!-- Tab CSV Upload -->
         <form v-else class="grid gap-3" @submit.prevent="handleUploadCsv">
+          <div class="flex items-center justify-between rounded-md bg-n-surface-1 p-2.5 border border-n-weak">
+            <div class="text-xs text-n-slate-11">
+              <span class="font-medium text-n-slate-12 block mb-0.5">
+                {{ t('KANBAN.PRODUCTS.DOWNLOAD_TEMPLATE_CSV') }}
+              </span>
+              <span>{{ t('KANBAN.PRODUCTS.CSV_HINT') }}</span>
+            </div>
+            <Button
+              type="button"
+              icon="i-lucide-download"
+              slate
+              outline
+              xs
+              :label="t('KANBAN.PRODUCTS.DOWNLOAD_TEMPLATE_CSV')"
+              @click="downloadCsvTemplate"
+            />
+          </div>
+
           <div class="grid gap-1">
             <label class="text-xs font-medium text-n-slate-11">
               {{ t('KANBAN.PRODUCTS.FIELD_CSV_NAME') }}

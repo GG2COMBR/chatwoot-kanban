@@ -1156,6 +1156,8 @@
       "FIELD_CSV_NAME": "Spreadsheet Name (optional)",
       "PLACEHOLDER_CSV_NAME": "e.g. Products 2026",
       "FIELD_FILE": "CSV File",
+      "DOWNLOAD_TEMPLATE_CSV": "Download sample CSV template",
+      "CSV_HINT": "Accepted columns: id (or sku), title (or name), price, description, image_link, link, brand, availability.",
       "IMPORT_CSV_BUTTON": "Import CSV",
       "EXISTING_SOURCES_TITLE": "Active Product Sources",
       "LOADING": "Loading sources...",

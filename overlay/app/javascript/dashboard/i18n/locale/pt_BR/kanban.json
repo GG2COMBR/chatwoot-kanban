@@ -1204,6 +1204,8 @@
       "FIELD_CSV_NAME": "Nome da Planilha (opcional)",
       "PLACEHOLDER_CSV_NAME": "Ex: Produtos 2026",
       "FIELD_FILE": "Arquivo CSV",
+      "DOWNLOAD_TEMPLATE_CSV": "Baixar modelo de planilha CSV",
+      "CSV_HINT": "Colunas aceitas: id (ou sku), title (ou name), price, description, image_link, link, brand, availability.",
       "IMPORT_CSV_BUTTON": "Importar CSV",
       "EXISTING_SOURCES_TITLE": "Fontes de Produtos Ativas",
       "LOADING": "Carregando fontes...",
