@@ -428,29 +428,38 @@ defineExpose({ reload: loadCardProducts });
               class="size-12 flex-none rounded-md object-cover"
             />
             <div class="grid min-w-0 flex-1 gap-0.5">
-              <span
-                :title="product.name"
-                class="min-w-0 line-clamp-2 text-sm font-medium text-n-slate-12"
-              >
-                {{ product.name }}
-              </span>
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span
+                  :title="product.name"
+                  class="min-w-0 line-clamp-2 text-sm font-medium text-n-slate-12"
+                >
+                  {{ product.name }}
+                </span>
+                <span
+                  v-if="product.onSale || product.pricing?.onSale"
+                  class="rounded bg-n-ruby-9/10 px-1.5 py-0.2 text-[10px] font-bold uppercase tracking-wider text-n-ruby-11"
+                >
+                  {{ t('KANBAN.OPPORTUNITY_DETAILS.PRODUCTS_TAB.ON_SALE_BADGE') }}
+                </span>
+              </div>
               <span class="text-xs text-n-slate-11">
-                {{ product.sku }} · {{ product.brand }}
+                {{ product.sku }}
+                <template v-if="product.brand"> · {{ product.brand }}</template>
+                <template v-if="product.category"> · <span class="text-n-slate-12 font-medium">{{ product.category }}</span></template>
               </span>
-              <span class="text-xs text-n-slate-11">
-                {{
-                  t('KANBAN.OPPORTUNITY_DETAILS.PRODUCTS_TAB.PIX_PRICE', {
-                    price: formatCurrency(product.pricing?.pixPrice),
-                  })
-                }}
-                ·
-                {{
-                  t(
-                    'KANBAN.OPPORTUNITY_DETAILS.PRODUCTS_TAB.INSTALLMENT_PRICE',
-                    { price: formatCurrency(product.pricing?.basePrice) }
-                  )
-                }}
-              </span>
+              <div class="flex items-center gap-2 text-xs">
+                <span
+                  v-if="product.onSale || product.pricing?.onSale"
+                  class="line-through text-n-slate-10"
+                >
+                  {{ formatCurrency(product.regularPrice || product.pricing?.basePrice) }}
+                </span>
+                <span
+                  :class="(product.onSale || product.pricing?.onSale) ? 'text-n-ruby-11 font-semibold' : 'text-n-slate-12'"
+                >
+                  {{ formatCurrency(product.price || product.pricing?.pixPrice) }}
+                </span>
+              </div>
               <span class="text-xs text-n-slate-11">
                 {{
                   t('KANBAN.OPPORTUNITY_DETAILS.PRODUCTS_TAB.STOCK', {

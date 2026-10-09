@@ -104,13 +104,15 @@ const handleUploadCsv = async () => {
 };
 
 const downloadCsvTemplate = () => {
-  const headers = ['id', 'title', 'price', 'description', 'image_link', 'link', 'brand', 'availability'];
+  const headers = ['id', 'title', 'price', 'sale_price', 'category', 'description', 'image_link', 'link', 'brand', 'availability'];
   const sampleRows = [
     [
       'PROD-001',
       'Plano Mensal Consultoria Premium',
+      '249.90 BRL',
       '199.90 BRL',
-      'Acesso completo aos serviços com suporte prioritário',
+      'Consultoria',
+      'Acesso completo aos serviços com suporte prioritário e desconto de lançamento',
       'https://exemplo.com/imagens/prod-001.png',
       'https://exemplo.com/planos/premium',
       'Minha Empresa',
@@ -119,8 +121,10 @@ const downloadCsvTemplate = () => {
     [
       'PROD-002',
       'Treinamento de Equipe Comercial',
+      '1800.00 BRL',
       '1450.00 BRL',
-      'Workshop intensivo de 8 horas para qualificação de vendas',
+      'Treinamentos',
+      'Workshop intensivo de 8 horas para qualificação de vendas com valor promocional De/Por',
       'https://exemplo.com/imagens/prod-002.png',
       'https://exemplo.com/treinamentos/comercial',
       'Minha Empresa',

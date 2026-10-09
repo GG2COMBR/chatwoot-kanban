@@ -50,13 +50,20 @@ module KanbanProducts
         price_raw = (row['price'] || row['g:price']).to_s
         price, currency = parse_price(price_raw)
 
+        sale_price_raw = (row['sale_price'] || row['saleprice'] || row['preco_promocional'] || row['g:sale_price']).to_s
+        sale_price, = parse_price(sale_price_raw) if sale_price_raw.present?
+
+        category = (row['category'] || row['product_type'] || row['categoria'] || row['g:product_type'] || row['g:google_product_category']).to_s.strip.presence
+
         records << {
           account_id: account.id,
           kanban_product_source_id: source.id,
           sku: sku,
           title: title,
           description: (row['description'] || row['g:description']).to_s.strip.presence,
+          category: category,
           price: price,
+          sale_price: sale_price,
           currency: currency.presence || 'BRL',
           image_url: (row['image_link'] || row['image_url'] || row['g:image_link']).to_s.strip.presence,
           product_url: (row['link'] || row['product_url'] || row['g:link']).to_s.strip.presence,
@@ -105,13 +112,20 @@ module KanbanProducts
         price_raw = extract_text(item, 'price')
         price, currency = parse_price(price_raw)
 
+        sale_price_raw = extract_text(item, 'sale_price')
+        sale_price, = parse_price(sale_price_raw) if sale_price_raw.present?
+
+        category = extract_text(item, 'product_type').presence || extract_text(item, 'google_product_category').presence
+
         records << {
           account_id: account.id,
           kanban_product_source_id: source.id,
           sku: sku,
           title: title,
           description: extract_text(item, 'description').presence,
+          category: category,
           price: price,
+          sale_price: sale_price,
           currency: currency.presence || 'BRL',
           image_url: extract_text(item, 'image_link').presence,
           product_url: extract_text(item, 'link').presence,
@@ -187,7 +201,9 @@ module KanbanProducts
           kanban_product_source_id
           title
           description
+          category
           price
+          sale_price
           currency
           image_url
           product_url
