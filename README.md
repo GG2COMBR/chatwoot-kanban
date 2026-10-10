@@ -63,6 +63,12 @@ Reverte os patches e remove os arquivos do overlay. As migrations **não** são
 revertidas automaticamente (há perda de dados) — faça o rollback manualmente se
 desejar remover as tabelas.
 
+## Documentação
+
+- 📘 **[Guia do Usuário e Administrador (docs/USER_GUIDE.md)](docs/USER_GUIDE.md)**: Manual operacional completo cobrindo arquitetura multi-tenant, feature flags por conta, cadastro de motivos de ganho/perda, catálogo de produtos (importação CSV inteligente e Google Merchant XML), regras de automação com exemplos e auditoria em tempo real.
+- 🏗️ **[Arquitetura do Pacote (docs/ARCHITECTURE.md)](docs/ARCHITECTURE.md)**: Pirâmide de extensibilidade, governança de patches aditivos (Regra de Ouro) e isolamento em relação ao core do Chatwoot.
+- 🛡️ **[Pre-flight para Produção (docs/PRODUCTION_PREFLIGHT.md)](docs/PRODUCTION_PREFLIGHT.md)**: Runbook de validação SQL e integridade de dados antes de executar migrations em bases de produção existentes.
+
 ## Arquitetura do pacote
 
 Consulte o documento completo em **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** para entender a **Pirâmide de Extensibilidade** e as regras de desenvolvimento para novos contribuidores.
@@ -74,8 +80,7 @@ patches/
   fazer-ai/   edições específicas do fork fazer-ai
   vanilla/    edições específicas do Chatwoot CE puro
 scripts/      install.sh, uninstall.sh, test-package.sh, run-specs.sh, reconcile_migrations.rb
-docs/         diretrizes arquiteturais e guias para contribuidores
-analysis/     documentos e especificações de referência
+docs/         guias de usuário, arquitetura e pre-flight de produção
 ```
 
 ### Desenvolvimento & Pre-commit Hooks
