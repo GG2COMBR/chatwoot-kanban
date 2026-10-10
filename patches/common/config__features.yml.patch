@@ -2,7 +2,8 @@ diff --git a/config/features.yml b/config/features.yml
 index bcd38b7..0c8be01 100644
 --- a/config/features.yml
 +++ b/config/features.yml
-@@ -280,3 +280,11 @@
+@@ -279,3 +279,12 @@
+   enabled: false
    premium: true
    column: feature_flags_ext_1
 +

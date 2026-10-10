@@ -109,7 +109,7 @@ apply_patches "$PKG_DIR/patches/$TARGET"
 # ---- 3) dependências npm ----
 NPM_DEPS_FILE="$PKG_DIR/npm-dependencies.txt"
 if [ -f "$NPM_DEPS_FILE" ]; then
-  deps="$(grep -vE '^\s*#|^\s*$' "$NPM_DEPS_FILE" | tr '\n' ' ')"
+  deps="$(grep -vE '^\s*#|^\s*$' "$NPM_DEPS_FILE" 2>/dev/null || true | tr '\n' ' ')"
   if [ -n "$deps" ]; then
     info "Dependências npm a garantir: $deps"
     echo "   (rode no ambiente do Chatwoot, se ainda não presentes:)"

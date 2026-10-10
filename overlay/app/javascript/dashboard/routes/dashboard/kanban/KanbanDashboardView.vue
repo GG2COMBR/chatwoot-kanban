@@ -8,8 +8,8 @@ import { useAlert } from 'dashboard/composables';
 import { formatCurrency } from 'dashboard/helper/kanbanCurrency';
 import KanbanBoardsAPI from 'dashboard/api/kanbanBoards';
 import KanbanReportsAPI from 'dashboard/api/kanbanReports';
+import { PercentageChart } from '@chatwoot/viz';
 import BarChart from 'shared/components/charts/BarChart.vue';
-import DoughnutChart from 'shared/components/charts/DoughnutChart.vue';
 import KanbanBoardViewShell from './board/KanbanBoardViewShell.vue';
 
 const { t } = useI18n();
@@ -87,35 +87,47 @@ const tiles = computed(() => [
   },
 ]);
 
-const wonLostCollection = computed(() => ({
-  labels: report.value?.won_lost?.series?.map(row => row.period) || [],
-  datasets: [
-    {
-      label: t('KANBAN.DASHBOARD.CHARTS.WON'),
-      backgroundColor: '#12B76A',
-      data: report.value?.won_lost?.series?.map(row => row.won) || [],
-    },
-    {
-      label: t('KANBAN.DASHBOARD.CHARTS.LOST'),
-      backgroundColor: '#F04438',
-      data: report.value?.won_lost?.series?.map(row => row.lost) || [],
-    },
-  ],
-}));
+const wonLostData = computed(() => {
+  const series = report.value?.won_lost?.series || [];
+  return {
+    categories: series.map(row => row.period),
+    series: [
+      {
+        id: 'won',
+        label: t('KANBAN.DASHBOARD.CHARTS.WON'),
+        color: '#12B76A',
+        data: series.map(row => row.won || 0),
+      },
+      {
+        id: 'lost',
+        label: t('KANBAN.DASHBOARD.CHARTS.LOST'),
+        color: '#F04438',
+        data: series.map(row => row.lost || 0),
+      },
+    ],
+  };
+});
 
-const wonLostOptions = { plugins: { legend: { display: true } } };
-const originCollection = computed(() => ({
-  labels: [
-    t('KANBAN.DASHBOARD.CHARTS.ORIGIN_CONVERSATION'),
-    t('KANBAN.DASHBOARD.CHARTS.ORIGIN_MANUAL'),
-  ],
-  datasets: [
+const originTotal = computed(
+  () =>
+    (summary.value?.origin_summary?.conversation || 0) +
+    (summary.value?.origin_summary?.manual || 0)
+);
+
+const originData = computed(() => ({
+  total: originTotal.value,
+  segments: [
     {
-      backgroundColor: ['#7F56D9', '#36BFFA'],
-      data: [
-        summary.value?.origin_summary?.conversation || 0,
-        summary.value?.origin_summary?.manual || 0,
-      ],
+      id: 'conversation',
+      label: t('KANBAN.DASHBOARD.CHARTS.ORIGIN_CONVERSATION'),
+      value: summary.value?.origin_summary?.conversation || 0,
+      color: '#7F56D9',
+    },
+    {
+      id: 'manual',
+      label: t('KANBAN.DASHBOARD.CHARTS.ORIGIN_MANUAL'),
+      value: summary.value?.origin_summary?.manual || 0,
+      color: '#36BFFA',
     },
   ],
 }));
@@ -224,8 +236,8 @@ watch(boardId, fetchDashboard);
             </h2>
             <div class="h-72">
               <BarChart
-                :collection="wonLostCollection"
-                :chart-options="wonLostOptions"
+                :data="wonLostData"
+                :aria-label="t('KANBAN.DASHBOARD.CHARTS.WON_LOST')"
               />
             </div>
           </section>
@@ -237,8 +249,24 @@ watch(boardId, fetchDashboard);
             <h2 class="mb-4 text-base font-semibold text-n-slate-12">
               {{ t('KANBAN.DASHBOARD.CHARTS.ORIGIN') }}
             </h2>
-            <div class="h-72">
-              <DoughnutChart :collection="originCollection" />
+            <div class="h-72 flex items-center justify-center">
+              <div v-if="originTotal" class="w-full">
+                <PercentageChart
+                  :data="originData"
+                  :aria-label="t('KANBAN.DASHBOARD.CHARTS.ORIGIN')"
+                >
+                  <template #legend-item="{ label, formattedPercentage, formattedValue }">
+                    <span class="text-sm text-n-slate-11">{{ label }}</span>
+                    <span class="text-sm font-medium text-n-slate-12">
+                      {{ formattedPercentage }}
+                    </span>
+                    <span class="text-xs text-n-slate-10">({{ formattedValue }})</span>
+                  </template>
+                </PercentageChart>
+              </div>
+              <div v-else class="text-sm text-n-slate-11">
+                {{ t('KANBAN.DASHBOARD.EMPTY') }}
+              </div>
             </div>
           </section>
         </div>
