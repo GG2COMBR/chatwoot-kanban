@@ -168,14 +168,22 @@ class KanbanBoardsAPI extends ApiClient {
     );
   }
 
-  getStageCards(boardId, stageId, params = {}) {
+  getStageCards(boardId, stageId, params = {}, config = {}) {
+    const { signal, ...queryParams } = params;
     return axios.get(`${this.url}/${boardId}/stages/${stageId}/cards`, {
-      params,
+      params: queryParams,
+      signal: signal || config.signal,
+      ...config,
     });
   }
 
-  getBoardCards(boardId, params = {}) {
-    return axios.get(`${this.url}/${boardId}/cards`, { params });
+  getBoardCards(boardId, params = {}, config = {}) {
+    const { signal, ...queryParams } = params;
+    return axios.get(`${this.url}/${boardId}/cards`, {
+      params: queryParams,
+      signal: signal || config.signal,
+      ...config,
+    });
   }
 
   createManualCard(boardId, payload) {
