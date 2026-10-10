@@ -120,7 +120,9 @@
         "STAGE_DESCRIPTION_PLACEHOLDER": "Stage description (optional)",
         "SLA_HOURS": "Time limit (hours)",
         "SLA_HOURS_PLACEHOLDER": "No limit",
-        "SLA_HOURS_HELP": "Cards sitting longer than this are highlighted on the board."
+        "SLA_HOURS_HELP": "Cards sitting longer than this are highlighted on the board.",
+        "WON_TAG": "Won",
+        "LOST_TAG": "Lost"
       },
       "SETTINGS_TAB": {
         "LOST_REASON_REQUIRED": "Require a loss reason",
@@ -131,8 +133,15 @@
         "DANGER_ZONE_TITLE": "Danger zone",
         "DANGER_ZONE_DESCRIPTION": "Deleting this funnel removes it from active Kanban navigation. Historical cards are not changed.",
         "DELETE_FUNNEL": "Delete funnel",
-        "ENTRY_RULES_HINT": "Cards are created automatically by the rules on the Entry Rules tab."
-      }
+        "ENTRY_RULES_HINT": "Cards are created automatically by the rules on the Entry Rules tab.",
+        "AUTOMATIONS_TITLE": "Automatically create cards from conversations"
+      },
+      "CREATE_TITLE": "Creating: New Funnel",
+      "DISCARD_DRAFT_TITLE": "Discard funnel draft?",
+      "DISCARD_DRAFT_MESSAGE": "This funnel was never activated. Leaving now will delete this funnel along with its stages, custom fields, and reasons.",
+      "DISCARD_DRAFT_CONFIRM": "Discard funnel",
+      "ACTIVATE_LOCKED_HELP": "Define Won and Lost stages in the Stages and Data tab to activate this funnel.",
+      "DISCARD_ERROR": "Could not discard the funnel."
     },
     "BOARD_FORM": {
       "AUTO_CREATE_CARDS": "Create cards automatically for new conversations",
@@ -211,7 +220,8 @@
         "CONFIRM_MESSAGE": "{count} cards move with this list.",
         "CONFIRM_DROPPED_FIELDS": "Custom fields missing on the destination board will be discarded: {fields}",
         "CONFIRM_SUBMIT": "Move list",
-        "CONFIRM_CANCEL": "Cancel"
+        "CONFIRM_CANCEL": "Cancel",
+        "NONEMPTY_HINT": "Move all cards before moving this list to another board."
       },
       "MOVE_CARDS": {
         "LABEL": "Move all cards in this list",
@@ -254,7 +264,9 @@
         "SPECIAL_STAGE_CANNOT_MOVE_BOARD": "Won and lost lists cannot be moved to another board.",
         "TERMINAL_STAGE_NOT_ALLOWED": "Cards can only be moved to a regular list.",
         "MOVE_CARDS_LIMIT": "This list holds more than {count} opportunities. Move them to another funnel in smaller batches from the board."
-      }
+      },
+      "BACK": "Back",
+      "CLOSE": "Close"
     },
     "ACTIONS": {
       "CREATE_BOARD": "Add",
@@ -318,7 +330,10 @@
       "REMOVE_STAGE_NOT_EMPTY": "Move or remove all cards before removing this stage.",
       "REMOVE_STAGE_TERMINAL": "The Won and Lost stages can't be deleted.",
       "DRAG_LOST_REASON_REQUIRED": "This stage requires a loss reason — open the card and use the status badge to pick one before moving it here.",
-      "DRAG_DIRECT_WON_LOST_TRANSITION_NOT_ALLOWED": "Reopen the opportunity before marking it as won or lost."
+      "DRAG_DIRECT_WON_LOST_TRANSITION_NOT_ALLOWED": "Reopen the opportunity before marking it as won or lost.",
+      "NEW_STAGE_NAME": "New stage",
+      "LOADING_CARDS": "Loading",
+      "REORDER_DISABLED_FILTERED": "Clear inbox, agent, or search filters to reorder cards."
     },
     "BULK": {
       "SELECTED": "{count} selected",
@@ -688,7 +703,9 @@
       "TABS": {
         "PRODUCTS": "Products",
         "ACTIVITY": "Activity",
-        "DETAILS": "Details"
+        "DETAILS": "Details",
+        "GENERAL": "General",
+        "ADDITIONAL_DATA": "Additional data"
       },
       "TITLE": "Edit Opportunity",
       "CLOSE_PANEL": "Close opportunity details",
@@ -855,7 +872,34 @@
       "DESCRIPTION_UPDATE_ERROR": "Could not update the description.",
       "QUICK_UPDATE_ERROR": "Could not update the opportunity.",
       "REQUIRED_TITLE": "Subject is required.",
-      "CLOSE": "Close opportunity details"
+      "CLOSE": "Close opportunity details",
+      "TITLE_WITH_BOARD": "Edit opportunity in {boardName}",
+      "CARD_ID": "#{id}",
+      "COPY_CARD_ID": "Copy card ID",
+      "FIELD_TITLE": "Subject",
+      "FIELD_DESCRIPTION": "Description",
+      "UNASSIGNED": "Unassigned",
+      "LOAD_ASSIGNEES_ERROR": "Could not load assignees.",
+      "PRIORITY_NONE": "No priority",
+      "CONVERSATION": "Conversation",
+      "CONVERSATION_ID": "Conversation #{id}",
+      "NO_INBOX": "No linked inbox",
+      "CONTACT": "Contact",
+      "NO_CONTACT": "No linked contact",
+      "DATES": "Dates",
+      "SAVE_CHANGES": "Save changes",
+      "SAVING": "Saving...",
+      "SAVE_SUCCESS": "Opportunity saved.",
+      "UNSAVED_CHANGES_INDICATOR": "Unsaved",
+      "UNSAVED_CHANGES_TITLE": "Unsaved changes",
+      "UNSAVED_CHANGES_MESSAGE": "You edited this opportunity but have not saved yet. If you leave now, changes will be lost.",
+      "KEEP_EDITING": "Keep editing",
+      "DISCARD_CHANGES": "Discard",
+      "SAVE_AND_EXIT": "Save and exit",
+      "NO_LABELS_SELECTED": "No labels selected",
+      "LOAD_LABELS_ERROR": "Could not load labels.",
+      "NO_LINKED_CONVERSATION": "No linked conversation",
+      "SAVE_ERROR": "Could not save opportunity details."
     },
     "ADD_ITEM": {
       "TITLE_WITH_STAGE": "New card in {stageName}",
@@ -978,7 +1022,9 @@
         "REOPEN_SUCCESS": "Opportunity reopened.",
         "REOPEN_ERROR": "Could not reopen the opportunity.",
         "DIRECT_WON_LOST_TRANSITION_NOT_ALLOWED": "Reopen the opportunity before marking it as won or lost."
-      }
+      },
+      "NO_LINKED_CONVERSATION": "No linked conversation",
+      "CONVERSATION_ID": "#{id}"
     },
     "CARD_ADDITIONAL_DATA": {
       "LOADING": "Loading additional data...",
@@ -986,7 +1032,9 @@
       "TAG_PLACEHOLDER": "Type a value and press Enter",
       "ADD_DATE": "Add date",
       "REMOVE_VALUE": "Remove value",
-      "SAVE_ERROR": "Could not save additional data."
+      "SAVE_ERROR": "Could not save additional data.",
+      "EMPTY": "No custom fields configured for this funnel.",
+      "SAVE_SUCCESS": "Additional data saved."
     },
     "NOTES": {
       "TITLE": "Contact notes",

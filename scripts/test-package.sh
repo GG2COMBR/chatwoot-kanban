@@ -133,6 +133,43 @@ if [ -n "$violations" ]; then
 else
   pass "Nenhuma dependência não protegida de fork detectada."
 fi
+# 7. Paridade de chaves de internacionalização (i18n)
+info "7. Validando paridade de chaves i18n (en vs pt_BR)..."
+pt_i18n="$PKG_DIR/overlay/app/javascript/dashboard/i18n/locale/pt_BR/kanban.json"
+en_i18n="$PKG_DIR/overlay/app/javascript/dashboard/i18n/locale/en/kanban.json"
+
+if [ -f "$pt_i18n" ] && [ -f "$en_i18n" ] && command -v node >/dev/null 2>&1; then
+  i18n_diff="$(node -e '
+    const fs = require("fs");
+    const pt = JSON.parse(fs.readFileSync(process.argv[1], "utf8"));
+    const en = JSON.parse(fs.readFileSync(process.argv[2], "utf8"));
+    function flatten(obj, p = "") {
+      let r = [];
+      for (const k of Object.keys(obj)) {
+        const full = p ? `${p}.${k}` : k;
+        if (typeof obj[k] === "object" && obj[k] !== null && !Array.isArray(obj[k])) {
+          r = r.concat(flatten(obj[k], full));
+        } else { r.push(full); }
+      }
+      return r;
+    }
+    const ptK = flatten(pt);
+    const enK = flatten(en);
+    const mEn = ptK.filter(k => !enK.includes(k));
+    const mPt = enK.filter(k => !ptK.includes(k));
+    if (mEn.length > 0 || mPt.length > 0) {
+      if (mEn.length) console.log(`Faltam no EN (${mEn.length}): ${mEn.slice(0, 5).join(", ")}`);
+      if (mPt.length) console.log(`Faltam no PT (${mPt.length}): ${mPt.slice(0, 5).join(", ")}`);
+      process.exit(1);
+    }
+  ' "$pt_i18n" "$en_i18n" 2>&1 || true)"
+
+  if [ -n "$i18n_diff" ]; then
+    fail "Divergência nas chaves de tradução i18n:\n$i18n_diff"
+  else
+    pass "Paridade de chaves i18n garantida entre pt_BR e en."
+  fi
+fi
 
 echo "=================================================="
 if [ $ERRORS -eq 0 ]; then
