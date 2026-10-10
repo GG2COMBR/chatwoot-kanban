@@ -19,12 +19,14 @@ set -euo pipefail
 PKG_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 TARGET_DIR="${1:-}"
 TARGET="vanilla"
+RUN_MIGRATIONS=0
 
 # ---- args ----
 shift || true
 while [ $# -gt 0 ]; do
   case "$1" in
     --target) TARGET="${2:-}"; shift 2 ;;
+    --run-migrations) RUN_MIGRATIONS=1; shift ;;
     *) echo "Argumento desconhecido: $1" >&2; exit 2 ;;
   esac
 done
@@ -120,21 +122,24 @@ fi
 INSTALL_COMPLETED=1
 trap - ERR INT TERM
 
+if [ "$RUN_MIGRATIONS" -eq 1 ]; then
+  info "Executando reconciliação e migrations automaticamente..."
+  if command -v docker >/dev/null 2>&1 && ( cd "$TARGET_DIR" && docker compose ps -q rails 2>/dev/null | grep -q . || docker compose ps -q postgres 2>/dev/null | grep -q . ); then
+    ( cd "$TARGET_DIR" && docker compose run --rm rails bundle exec rails runner "$(< "$PKG_DIR/scripts/reconcile_migrations.rb")" && docker compose run --rm rails bundle exec rails db:migrate )
+  else
+    ( cd "$TARGET_DIR" && bundle exec rails runner "$(< "$PKG_DIR/scripts/reconcile_migrations.rb")" && bundle exec rails db:migrate )
+  fi
+  info "Migrations aplicadas com sucesso!"
+fi
+
 cat <<EOF
 
 Instalação de arquivos concluída. Próximos passos (no ambiente do Chatwoot):
 
-  1) Dependências npm (se o passo acima listou):  pnpm add <deps>
-  2) Migrations do Kanban. ATENÇÃO: se o banco foi criado via
-     'db:chatwoot_prepare' (schema:load), as migrations do Kanban podem ter
-     sido marcadas como aplicadas sem rodar. Rode o reconciliador:
-         bundle exec rails runner "$(cat "$PKG_DIR/scripts/reconcile_migrations.rb" 2>/dev/null | tr '\n' ' ' | sed 's/"/\\"/g')"
-     ou, mais simples, copie scripts/reconcile_migrations.rb para o app e rode:
-         bundle exec rails runner reconcile_migrations.rb
-     Depois:
-         bundle exec rails db:migrate
-  3) Assets (dev): o Vite recompila ao subir; (prod) rake assets:precompile
-  4) Reinicie os serviços (rails + sidekiq).
+  1) Migrations do Kanban (caso não tenha usado --run-migrations):
+     bundle exec rails runner scripts/reconcile_migrations.rb
+     bundle exec rails db:migrate
+  2) Reinicie os serviços do Chatwoot (rails + sidekiq).
 
 Para reverter:  ./scripts/uninstall.sh "$TARGET_DIR" --target $TARGET
 EOF
