@@ -7,12 +7,14 @@
 #  auto_create_cards_from_conversations :boolean          default(FALSE), not null
 #  automation_settings                  :jsonb            not null
 #  description                          :text
+#  enable_products                      :boolean          default(FALSE), not null
 #  inbox_scope_mode                     :string           default("all_inboxes"), not null
 #  lost_reason_required                 :boolean          default(FALSE), not null
 #  lost_recurrence_enabled              :boolean          default(FALSE), not null
 #  lost_recurrence_window_minutes       :integer
 #  name                                 :string           not null
 #  position                             :integer          default(0), not null
+#  show_monetary_values                 :boolean          default(FALSE), not null
 #  use_opportunity_card_reads           :boolean          default(TRUE), not null
 #  visibility_mode                      :string           default("all_agents"), not null
 #  won_recurrence_enabled               :boolean          default(FALSE), not null
