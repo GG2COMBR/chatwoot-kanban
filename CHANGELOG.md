@@ -7,6 +7,18 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ---
 
+## [1.0.1] - 2026-10-09
+
+### 🚀 Melhorias e Governança
+- **Paridade 100% de Internacionalização (i18n):** Sincronizadas todas as 48 chaves faltantes no inglês (`en/kanban.json`) e adicionado validador de paridade executado no CI e no hook pré-commit. (Fixes #1)
+- **Specs Unitárias & Factories RSpec:** Cobertura de testes unitários para models de catálogo e funil (`KanbanProduct`, `KanbanProductSource`, `KanbanReason`, `KanbanCardProduct`). (Fixes #2)
+- **Governança & Segurança (CI):** Configurado Dependabot para monitoramento semanal de dependências npm/actions e adicionada a política de reporte de vulnerabilidades `SECURITY.md`. (Fixes #3)
+- **Performance & AbortController:** Suporte a cancelamento transparente de requisições de listagem de cartões via `AbortController` (`signal`) na API client. (Fixes #4)
+- **Rollback Atômico na Instalação:** Adicionado handler com `trap` no `scripts/install.sh` garantindo reversão automática e restauração limpa da árvore caso ocorra erro no meio da instalação. (Fixes #5)
+- **Ambiente de Teste Local Desacoplado:** Disponibilizado `docker-compose.dev.yml` com Postgres e Redis e novo manual em `docs/DEVELOPMENT.md`. (Fixes #6)
+
+---
+
 ## [1.0.0] - 2026-10-09
 
 ### 🚀 Adicionado
