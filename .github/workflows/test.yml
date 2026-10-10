@@ -5,6 +5,7 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   validate-package:
@@ -13,7 +14,7 @@ jobs:
 
     steps:
       - name: Checkout repositório
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
 
       - name: Configurar Ruby
         uses: ruby/setup-ruby@v1
@@ -21,11 +22,47 @@ jobs:
           ruby-version: '3.3'
 
       - name: Configurar Node.js
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências npm
+        run: npm ci
 
       - name: Executar suíte de validação estática
         run: |
           chmod +x ./scripts/test-package.sh
           ./scripts/test-package.sh
+
+  e2e-integrity:
+    name: Validação das Specs E2E (Playwright)
+    runs-on: ubuntu-latest
+    needs: validate-package
+
+    steps:
+      - name: Checkout repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Instalar navegadores Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Validar compilação e tipagem da suíte Playwright
+        run: npx playwright test --list
+
+      - name: Upload Playwright Report (se gerado)
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 14
