@@ -1,0 +1,17 @@
+{
+  "name": "chatwoot-kanban",
+  "version": "1.0.0",
+  "description": "Módulo Kanban e CRM de Vendas Plug-and-Play para Chatwoot",
+  "private": true,
+  "scripts": {
+    "test:package": "./scripts/test-package.sh",
+    "test:specs": "./scripts/run-specs.sh",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:debug": "playwright test --debug"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.50.0"
+  }
+}

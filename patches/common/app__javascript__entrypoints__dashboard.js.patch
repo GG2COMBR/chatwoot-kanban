@@ -1,0 +1,22 @@
+diff --git a/app/javascript/entrypoints/dashboard.js b/app/javascript/entrypoints/dashboard.js
+index be2ec02..1bdaa3d 100644
+--- a/app/javascript/entrypoints/dashboard.js
++++ b/app/javascript/entrypoints/dashboard.js
+@@ -123,6 +123,15 @@ initializeChatwootEvents();
+ initializeAnalyticsEvents();
+ initalizeRouter();
+ 
+-window.onload = () => {
+-  app.mount('#app');
++const mountApp = () => {
++  if (!window.__appMounted) {
++    window.__appMounted = true;
++    app.mount('#app');
++  }
+ };
++
++if (document.readyState === 'complete') {
++  mountApp();
++} else {
++  window.addEventListener('load', mountApp);
++}

@@ -118,7 +118,54 @@ Acesse no navegador:
 
 ---
 
-## 7. Como Limpar e Resetar o Ambiente do Zero (Clean Reset)
+## 7. Testes Automatizados Ponta a Ponta (Playwright E2E)
+
+O repositório possui uma suíte completa de testes automatizados ponta a ponta (E2E) com **Playwright**, cobrindo desde autenticação e navegação até ciclo de vida de cards, fechamento Ganho/Perdido, catálogo de produtos e relatórios.
+
+### 7.1 Pré-requisitos para os Testes E2E
+
+1. Stack do Chatwoot rodando localmente (`http://localhost:3000`).
+2. Conta 1 criada com features `kanban` e `kanban_products` habilitadas.
+3. Dependências de teste instaladas no repositório `chatwoot-kanban`:
+
+```bash
+npm install
+npx playwright install chromium
+```
+
+### 7.2 Executando a Suíte E2E
+
+Para rodar todos os testes automatizados:
+
+```bash
+# Executa todos os testes E2E em modo headless
+npm run test:e2e
+# ou diretamente via Playwright
+npx playwright test
+```
+
+Para rodar testes em modo interativo (com UI ou depuração visual):
+
+```bash
+# Modo interativo com interface do Playwright
+npm run test:e2e:ui
+
+# Modo com navegador visível (headed)
+npm run test:e2e:headed
+```
+
+Para rodar um arquivo de teste específico:
+
+```bash
+npx playwright test e2e/01-navigation.spec.ts
+npx playwright test e2e/04-card-lifecycle.spec.ts
+```
+
+> Para a especificação detalhada de todos os casos de uso cobertos, consulte a matriz BDD em **[docs/E2E_USE_CASES.md](E2E_USE_CASES.md)**.
+
+---
+
+## 8. Como Limpar e Resetar o Ambiente do Zero (Clean Reset)
 
 Se quiser testar a reinstalação a qualquer momento ou limpar dados de teste:
 
@@ -134,10 +181,11 @@ git checkout -- . && git clean -fd
 
 ---
 
-## 8. Desinstalando o Kanban
+## 9. Desinstalando o Kanban
 
 Caso precise apenas reverter a integração do Kanban sem apagar o Chatwoot:
 
 ```bash
 ./scripts/uninstall.sh /caminho/para/chatwoot-vanilla --target vanilla
 ```
+

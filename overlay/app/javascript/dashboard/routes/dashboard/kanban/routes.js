@@ -21,6 +21,12 @@ export const routes = [
     meta,
   },
   {
+    path: frontendURL('accounts/:accountId/kanban/new'),
+    name: 'kanban_board_create_form',
+    component: KanbanBoardCreate,
+    meta: { permissions: ['administrator'], featureFlag: 'kanban' },
+  },
+  {
     path: frontendURL('accounts/:accountId/kanban/:boardId'),
     name: 'kanban_board_show',
     component: KanbanView,
@@ -68,12 +74,6 @@ export const routes = [
         },
       };
     },
-  },
-  {
-    path: frontendURL('accounts/:accountId/kanban/new'),
-    name: 'kanban_board_create_form',
-    component: KanbanBoardCreate,
-    meta: { permissions: ['administrator'], featureFlag: 'kanban' },
   },
   {
     path: frontendURL('accounts/:accountId/kanban/:boardId/edit'),

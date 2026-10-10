@@ -82,6 +82,7 @@ Reverte os patches e remove os arquivos do overlay. As migrations **não** são 
 - 🏗️ **[Arquitetura do Pacote (docs/ARCHITECTURE.md)](docs/ARCHITECTURE.md)**: Pirâmide de extensibilidade, governança de patches aditivos (Regra de Ouro) e isolamento em relação ao core do Chatwoot.
 - 🛡️ **[Pre-flight para Produção (docs/PRODUCTION_PREFLIGHT.md)](docs/PRODUCTION_PREFLIGHT.md)**: Runbook de validação SQL e integridade de dados antes de executar migrations em bases de produção existentes.
 - 🛠️ **[Guia de Desenvolvimento Local (docs/DEVELOPMENT.md)](docs/DEVELOPMENT.md)**: Instruções para desenvolvedores, Docker Compose local (`docker-compose.dev.yml`) e ciclo de testes.
+- 🧪 **[Matriz de Testes E2E (docs/E2E_USE_CASES.md)](docs/E2E_USE_CASES.md)**: Matriz de casos de uso críticos ponta a ponta e especificação BDD com Playwright.
 - 📜 **[Histórico de Mudanças (CHANGELOG.md)](CHANGELOG.md)**: Notas de lançamento e histórico de versões do projeto.
 
 ## Arquitetura do pacote
@@ -96,6 +97,19 @@ patches/
   vanilla/    edições específicas do Chatwoot CE puro
 scripts/      install.sh, uninstall.sh, test-package.sh, run-specs.sh, reconcile_migrations.rb
 docs/         guias de usuário, arquitetura e pre-flight de produção
+e2e/          suíte de testes ponta a ponta automatizados com Playwright
+```
+
+### Testes Automatizados (Playwright E2E)
+
+Com a stack do Chatwoot ativa localmente:
+
+```bash
+# Executa todos os testes E2E com Playwright
+npm run test:e2e
+
+# Modo interativo (UI)
+npm run test:e2e:ui
 ```
 
 ### Desenvolvimento & Pre-commit Hooks
@@ -112,7 +126,7 @@ Isso ativa os hooks nativos versionados em `.githooks/pre-commit`, garantindo qu
 - Nenhuma contaminação ou dependência oculta de forks seja introduzida;
 - A regra de ouro de patches estritamente aditivos seja respeitada.
 
-Para rodar a validação manualmente a qualquer momento:
+Para rodar a validação do pacote manualmente a qualquer momento:
 
 ```bash
 ./scripts/test-package.sh
@@ -122,6 +136,7 @@ Para rodar a validação manualmente a qualquer momento:
 
 - **Fase A (Board Principal):** 100% concluída e validada em Chatwoot v4.18 (banco, migrations, build Vite e telas de funil/cards funcionais).
 - **Fase B (Multi-tenant & Catálogo):** Multi-tenant por conta via feature flags, suporte a motivos de ganho/perda, catálogo de produtos interno com importação inteligente de CSV / Google Merchant XML e 7 regras de automação testadas com auditoria em tempo real.
+- **Fase C (Qualidade & Testes E2E):** Suíte de testes automatizados E2E com Playwright cobrindo 100% dos fluxos críticos de ponta a ponta (UC-01 a UC-12).
 - **Governança & Extensibilidade:** Arquitetura limpa estabelecida priorizando *Overlay First* e *Rails Initializers* para manter o core imune a conflitos de atualização.
 
 ---

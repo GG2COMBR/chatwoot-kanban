@@ -111,6 +111,7 @@ const submit = async () => {
         :label="t('KANBAN.OPPORTUNITY_DETAILS.TIMELINE.ADD_NOTE')"
         :is-loading="isSaving"
         :disabled="isSaving || !content.trim()"
+        @click="submit"
       />
     </div>
     <ul
