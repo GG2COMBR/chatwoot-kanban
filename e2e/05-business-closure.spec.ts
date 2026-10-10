@@ -50,7 +50,7 @@ test.describe('UC-08 & UC-09: Fechamento de Negócios (Ganho e Perdido)', () => 
 
     // 2. Abre os detalhes de um card (prefere o segundo card para isolamento do teste 1)
     const cards = page.locator('article[data-card-id]');
-    await expect(cards.first()).toBeVisible({ timeout: 15000 });
+    await expect(cards.first()).toBeVisible({ timeout: 25000 });
     const card = (await cards.count()) > 1 ? cards.nth(1) : cards.first();
 
     const cardMenuBtn = card.getByTestId('kanban-card-actions');

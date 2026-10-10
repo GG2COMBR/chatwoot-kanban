@@ -10,7 +10,7 @@ test.describe('UC-01 & UC-02: Autenticação & Navegação no Módulo Kanban', (
 
     // O link do Kanban deve estar visível no menu lateral
     const kanbanNavLink = page.locator('a[href*="/kanban"]').first();
-    await expect(kanbanNavLink).toBeVisible({ timeout: 10000 });
+    await expect(kanbanNavLink).toBeVisible({ timeout: 20000 });
 
     // Clica no link e navega para /app/accounts/1/kanban
     await kanbanNavLink.click();

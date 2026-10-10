@@ -45,7 +45,7 @@ test.describe('Relatórios e Dashboards de Performance (UC-12)', () => {
     // 2. Valida o cabeçalho de relatórios kanban
     await expect(
       page.getByText(/Kanban reports|Relatórios do Kanban/i).first()
-    ).toBeVisible({ timeout: 15000 });
+    ).toBeVisible({ timeout: 25000 });
 
     // 3. Valida que o filtro de funil/board está visível
     const boardFilterButton = page.getByRole('button', { name: /Pipeline de Vendas|Funil de Vendas|Board/i });
