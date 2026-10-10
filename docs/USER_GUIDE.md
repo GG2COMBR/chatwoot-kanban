@@ -149,6 +149,8 @@ As automações no Kanban operam no modelo **Evento -> Condições (Filtros) -> 
 5. *(Recomendado)* Deixe a opção **Modo de Simulação (Dry Run)** marcada para testar primeiro nos logs sem alterar dados.
 6. Salve a regra.
 
+> 📖 **Para uma documentação aprofundada com 9 Casos de Uso Reais, variáveis dinâmicas e matriz completa de gatilhos e ações, consulte o manual dedicado: [docs/AUTOMATIONS.md](AUTOMATIONS.md).**
+
 ---
 
 ### Catálogo de Ações Disponíveis com Exemplos Práticos Validados

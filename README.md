@@ -80,7 +80,8 @@ Reverte os patches e remove os arquivos do overlay. As migrations **não** são 
 
 ## Documentação
 
-- 📘 **[Guia do Usuário e Administrador (docs/USER_GUIDE.md)](docs/USER_GUIDE.md)**: Manual operacional completo cobrindo arquitetura multi-tenant, feature flags por conta, cadastro de motivos de ganho/perda, catálogo de produtos (importação CSV inteligente e Google Merchant XML), regras de automação com exemplos e auditoria em tempo real.
+- 📘 **[Guia do Usuário e Administrador (docs/USER_GUIDE.md)](docs/USER_GUIDE.md)**: Manual operacional completo cobrindo arquitetura multi-tenant, feature flags por conta, cadastro de motivos de ganho/perda, catálogo de produtos e visão geral do sistema.
+- ⚡ **[Guia de Automações & Casos de Uso (docs/AUTOMATIONS.md)](docs/AUTOMATIONS.md)**: Manual aprofundado com 9 Casos de Uso reais de automação (boas-vindas, follow-ups no WhatsApp, SLA, estagnação e cross-board), matriz de gatilhos, variáveis dinâmicas e auditoria de logs.
 - 🏗️ **[Arquitetura do Pacote (docs/ARCHITECTURE.md)](docs/ARCHITECTURE.md)**: Pirâmide de extensibilidade, governança de patches aditivos (Regra de Ouro) e isolamento em relação ao core do Chatwoot.
 - 🛡️ **[Pre-flight para Produção (docs/PRODUCTION_PREFLIGHT.md)](docs/PRODUCTION_PREFLIGHT.md)**: Runbook de validação SQL e integridade de dados antes de executar migrations em bases de produção existentes.
 - 🛠️ **[Guia de Desenvolvimento Local (docs/DEVELOPMENT.md)](docs/DEVELOPMENT.md)**: Instruções para desenvolvedores, Docker Compose local (`docker-compose.dev.yml`) e ciclo de testes.
