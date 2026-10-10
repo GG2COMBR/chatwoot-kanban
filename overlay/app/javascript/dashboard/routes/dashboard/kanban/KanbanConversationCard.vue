@@ -859,11 +859,7 @@ const toggleSelection = async event => {
           <span class="max-w-40 truncate" :title="contactName">
             {{ contactName }}
           </span>
-          <ChannelIcon
-            :inbox="namedInbox"
-            class="size-3.5 flex-shrink-0 text-n-slate-11"
-          />
-          <InboxName :inbox="namedInbox" :show-icon="false" class="min-w-0" />
+          <InboxName :inbox="namedInbox" class="min-w-0" />
         </span>
       </span>
 
@@ -955,11 +951,7 @@ const toggleSelection = async event => {
           </h4>
 
           <div class="mt-1 flex min-w-0 items-center gap-1 text-xs leading-4">
-            <ChannelIcon
-              :inbox="namedInbox"
-              class="size-3.5 flex-shrink-0 text-n-slate-11"
-            />
-            <InboxName :inbox="namedInbox" :show-icon="false" class="min-w-0" />
+            <InboxName :inbox="namedInbox" class="min-w-0" />
           </div>
         </div>
 
