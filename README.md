@@ -71,8 +71,14 @@ Reverte os patches e remove os arquivos do overlay. As migrations **não** são 
 
 ## Documentação
 
-- 📘 **[Guia do Usuário e Administrador (docs/USER_GUIDE.md)](docs/USER_GUIDE.md)**: Manual operacional completo cobrindo arquitetura multi-tenant, feature flags por conta, cadastro de motivos de ganho/perda, catálogo de produtos e visão geral do sistema.
-- ⚡ **[Guia de Automações & Casos de Uso (docs/AUTOMATIONS.md)](docs/AUTOMATIONS.md)**: Manual aprofundado com 9 Casos de Uso reais de automação (boas-vindas, follow-ups no WhatsApp, SLA, estagnação e cross-board), matriz de gatilhos, variáveis dinâmicas e auditoria de logs.
+- 📘 **[Guia Geral do Usuário (docs/USER_GUIDE.md)](docs/USER_GUIDE.md)**: Manual operacional completo cobrindo visão geral da solução, instalação e primeiros passos.
+- ⚡ **[Guia de Automações & Casos de Uso (docs/AUTOMATIONS.md)](docs/AUTOMATIONS.md)**: 9 Casos de Uso reais de automação (boas-vindas, follow-ups no WhatsApp, SLAs e cross-board), matriz de gatilhos e logs.
+- 📥 **[Guia de Regras de Entrada (docs/ENTRY_RULES.md)](docs/ENTRY_RULES.md)**: Casos de uso de conversão automática de chats (WhatsApp/Instagram) em oportunidades com filtros anti-duplicação e de grupos.
+- 🛍️ **[Guia do Catálogo de Produtos & Feeds (docs/PRODUCTS_CATALOG.md)](docs/PRODUCTS_CATALOG.md)**: Cotação no chat, importação de planilhas CSV e sincronização periódica de XML Google Merchant.
+- 📊 **[Guia de Funis, Etapas & SLAs (docs/BOARDS_AND_STAGES.md)](docs/BOARDS_AND_STAGES.md)**: Estruturação de pipelines B2B e suporte, estágios terminais (Won/Lost) e SLAs coloridos por coluna.
+- 🎯 **[Guia de Motivos de Perda & Recorrência (docs/REASONS_AND_RECURRENCE.md)](docs/REASONS_AND_RECURRENCE.md)**: Auditoria obrigatória de encerramento e janelas de recompra/recorrência automática.
+- 🖥️ **[Guia de Operação Comercial (docs/VIEWS_AND_OPERATION.md)](docs/VIEWS_AND_OPERATION.md)**: Melhores práticas operacionais com as Visões Kanban (Drag & Drop), Lista (Ações em Massa) e Agenda (Prazos).
+- 📈 **[Guia de Relatórios Analíticos (docs/REPORTS.md)](docs/REPORTS.md)**: Métricas de conversão de funil, tempo médio em cada etapa, desempenho por atendente e exportação CSV.
 - 🏗️ **[Arquitetura do Pacote (docs/ARCHITECTURE.md)](docs/ARCHITECTURE.md)**: Pirâmide de extensibilidade, governança de patches aditivos (Regra de Ouro) e isolamento em relação ao core do Chatwoot.
 - 🛡️ **[Pre-flight para Produção (docs/PRODUCTION_PREFLIGHT.md)](docs/PRODUCTION_PREFLIGHT.md)**: Runbook de validação SQL e integridade de dados antes de executar migrations em bases de produção existentes.
 - 🛠️ **[Guia de Desenvolvimento Local (docs/DEVELOPMENT.md)](docs/DEVELOPMENT.md)**: Instruções para desenvolvedores, Docker Compose local (`docker-compose.dev.yml`) e ciclo de testes.
