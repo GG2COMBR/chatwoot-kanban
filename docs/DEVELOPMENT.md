@@ -57,16 +57,16 @@ Para rodar a verificação manualmente a qualquer momento:
 Clone uma árvore de código limpa do Chatwoot CE (v4.18.x) e instale o pacote:
 
 ```bash
-# A partir da raiz do chatwoot-kanban
-./scripts/install.sh /caminho/para/o/chatwoot --target vanilla
+# A partir da raiz do chatwoot-kanban (com reconciliação e migrations automáticas)
+./scripts/install.sh /caminho/para/o/chatwoot --target vanilla --run-migrations
 ```
 
-No diretório do Chatwoot alvo:
-```bash
-# Instalar dependências npm do Kanban
-pnpm add chart.js@~4.4.4 vue-chartjs@5.3.1
+> **Zero dependências npm adicionais:** O Kanban utiliza exclusivamente componentes e bibliotecas de gráficos nativas do Chatwoot (`shared/components/charts/BarChart.vue` e `@chatwoot/viz`), dispensando `pnpm add`.
 
+No diretório do Chatwoot alvo (caso não tenha usado `--run-migrations`):
+```bash
 # Rodar as migrations do Kanban
+bundle exec rails runner scripts/reconcile_migrations.rb
 bundle exec rails db:migrate
 
 # Iniciar o servidor de desenvolvimento
