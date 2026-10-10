@@ -82,7 +82,7 @@ manifest_file="$PKG_DIR/patches/common/MANIFEST.txt"
 if [ ! -f "$manifest_file" ]; then
   fail "patches/common/MANIFEST.txt não encontrado."
 else
-  manifest_diff="$(diff -u <(cd "$PKG_DIR/patches/common" && ls -1 *.patch) "$manifest_file" || true)"
+  manifest_diff="$(diff -u <(cd "$PKG_DIR/patches/common" && ls -1 *.patch | LC_ALL=C sort) "$manifest_file" || true)"
   if [ -n "$manifest_diff" ]; then
     fail "MANIFEST.txt desatualizado em relação a patches/common/:\n$manifest_diff"
   else
