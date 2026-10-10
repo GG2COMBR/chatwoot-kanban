@@ -1,0 +1,17 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    ignore:
+      # Dependências com versão restrita para compatibilidade com o Chatwoot
+      - dependency-name: "chart.js"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "vue-chartjs"
+        update-types: ["version-update:semver-major"]
