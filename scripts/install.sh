@@ -57,6 +57,24 @@ if git -C "$TARGET_DIR" rev-parse --git-dir >/dev/null 2>&1; then
   fi
 fi
 
+# ---- rollback handler ----
+INSTALL_COMPLETED=0
+rollback_on_failure() {
+  local exit_code=$?
+  if [ $INSTALL_COMPLETED -eq 0 ]; then
+    echo "" >&2
+    echo "==================================================" >&2
+    echo "FALHA NA INSTALAÇÃO: Iniciando rollback automático..." >&2
+    echo "==================================================" >&2
+    if [ -n "$TARGET_DIR" ] && [ -d "$TARGET_DIR" ]; then
+      "$PKG_DIR/scripts/uninstall.sh" "$TARGET_DIR" --target "$TARGET" >/dev/null 2>&1 || true
+      echo "==> Rollback concluído: árvore restaurada ao estado original." >&2
+    fi
+  fi
+  exit "$exit_code"
+}
+trap rollback_on_failure ERR INT TERM
+
 # ---- 1) overlay ----
 info "Copiando overlay (arquivos novos)..."
 ( cd "$PKG_DIR/overlay" && find . -type f -print0 | while IFS= read -r -d '' rel; do
@@ -98,6 +116,9 @@ if [ -f "$NPM_DEPS_FILE" ]; then
     echo "     pnpm add $deps"
   fi
 fi
+
+INSTALL_COMPLETED=1
+trap - ERR INT TERM
 
 cat <<EOF
 
