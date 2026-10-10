@@ -21,7 +21,7 @@ Oferecemos serviços completos de engenharia e suporte para a sua operação:
 ### 💬 Entre em contato:
 - 📲 **WhatsApp:** [wa.me/gihovani](https://wa.me/gihovani)
 - 💼 **LinkedIn:** [linkedin.com/in/gihovani](https://www.linkedin.com/in/gihovani/)
-- ✉️ **E-mail Comercial:** [gihovani@gg2.com.br](mailto:gihovani@gg2.com.br)
+- ✉️ **E-mail:** [gihovani@gg2.com.br](mailto:gihovani@gg2.com.br)
 
 ---
 
