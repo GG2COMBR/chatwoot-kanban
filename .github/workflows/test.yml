@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout repositório
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Configurar Ruby
         uses: ruby/setup-ruby@v1
