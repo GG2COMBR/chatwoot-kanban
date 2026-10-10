@@ -1,7 +1,7 @@
 # ⚡ Guia Definitivo de Automações: Casos de Uso & Referência Operacional
 
 > **Módulo:** `chatwoot-kanban`  
-> **Autor & Engenharia:** Gihovani Demetrio (GG2) — [wa.me/gihovani](https://wa.me/gihovani) | [gihovani@gg2.com.br](mailto:gihovani@gg2.com.br)  
+> **Autor & Engenharia:** Gihovani Demetrio (GG2) — [gihovani@gg2.com.br](mailto:gihovani@gg2.com.br)  
 > **Compatibilidade:** Chatwoot v4.18.x (CE & Forks)
 
 ---
@@ -252,10 +252,9 @@ Na aba **"Histórico"** do painel de automações, cada execução é auditada c
 
 ---
 
-## 🛠️ Suporte, Implantação e Consultoria Especializada
+## 💬 Contato & Comunidade
 
-Deseja implementar regras avançadas personalizadas, conectar seu ERP (Bling, Tiny, Omie, TOTVS) ou implantar o `chatwoot-kanban` em escala na sua infraestrutura?
-
-* 📲 **WhatsApp:** [wa.me/gihovani](https://wa.me/gihovani)
+Dúvidas, sugestões ou interesse em contribuir com o projeto:
 * 💼 **LinkedIn:** [linkedin.com/in/gihovani](https://www.linkedin.com/in/gihovani/)
 * ✉️ **E-mail:** [gihovani@gg2.com.br](mailto:gihovani@gg2.com.br)
+

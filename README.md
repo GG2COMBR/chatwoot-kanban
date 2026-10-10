@@ -8,18 +8,9 @@ Kanban de vendas (funil) nativo para o Chatwoot, distribuído como um pacote ins
 
 ---
 
-## 🚀 Implantação Profissional & Serviços Especializados
-
-Quer colocar o Kanban rodando na sua empresa sem riscos e sem dor de cabeça técnica?
-
-Oferecemos serviços completos de engenharia e suporte para a sua operação:
-- 🛠️ **Instalação e Rollout Assistido:** Implantação em instâncias Chatwoot existentes (Docker, Kubernetes, Coolify, Portainer, CapRover).
-- ⚡ **Desenvolvimento de Customizações & Integrações:** Conexão com seu ERP, webhooks customizados, funis sob medida e regras de automação avançadas.
-- 🏷️ **Licenciamento Comercial:** Liberação para uso em provedores de SaaS ou distribuição comercial.
-- 🎓 **Treinamento & Suporte Contínuo:** Capacitação da equipe comercial e acompanhamento de atualizações.
-
-### 💬 Entre em contato:
-- 📲 **WhatsApp:** [wa.me/gihovani](https://wa.me/gihovani)
+## 💬 Comunidade & Contato
+ 
+Para tirar dúvidas, reportar issues ou acompanhar o desenvolvimento do projeto:
 - 💼 **LinkedIn:** [linkedin.com/in/gihovani](https://www.linkedin.com/in/gihovani/)
 - ✉️ **E-mail:** [gihovani@gg2.com.br](mailto:gihovani@gg2.com.br)
 
@@ -137,6 +128,6 @@ Este projeto é distribuído sob os termos da **PolyForm Noncommercial License 1
 
 - ✅ **Uso Livre e Gratuito:** Permitido para uso pessoal, interno, estudos, testes e desenvolvimento não-comercial, desde que mantida a atribuição ao autor original.
 - ❌ **Uso Comercial Restrito:** É vedado vender, sublicenciar, cobrar mensalidades/taxas ou revender este software como produto comercial próprio ou serviço SaaS de terceiros sem autorização prévia.
-- 💼 **Licença Comercial & Customizações:** Para uso comercial direto ou projetos corporativos sob medida, entre em contato via [WhatsApp](https://wa.me/gihovani) ou [gihovani@gg2.com.br](mailto:gihovani@gg2.com.br).
+- 💼 **Licença Comercial:** Para dúvidas sobre licenciamento comercial ou uso corporativo, entre em contato via [gihovani@gg2.com.br](mailto:gihovani@gg2.com.br).
 
 *Componentes históricos e adaptados do Chatwoot Inc. e comunidade sob licença MIT têm seus respectivos avisos de copyright integralmente preservados em [LICENSE](LICENSE).*
