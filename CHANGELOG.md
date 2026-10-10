@@ -7,6 +7,17 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ---
 
+## [1.0.2] - 2026-10-10
+
+### 🚀 Documentação & Casos de Uso
+- **Guia Definitivo de Automações (`docs/AUTOMATIONS.md`):** Manual aprofundado com 9 Casos de Uso práticos da vida real cobrindo todos os eventos (`card_created`, `stage_changed`, `card_won`, `card_lost`, `card_reopened`, `card_stalled`, `due_soon`, `overdue`, `no_reply`).
+- **Matriz Completa do Motor de Automação:** Mapeamento exaustivo de 100% dos gatilhos, condições, operadores e ações com exemplos em JSON e passo a passo na interface do Chatwoot.
+- **Variáveis Dinâmicas & Templates:** Documentação detalhada da interpolação de variáveis Liquid (`{{ contact_name }}`, `{{ total }}`, `{{ agent_name }}`, etc.) em notas e mensagens automáticas.
+- **Validação E2E do Motor de Execução:** Suíte de testes unitários de frontend (Vitest) e testes ponta a ponta do backend (Rails / `CardActions`) verificando 100% das ações sem gaps técnicos.
+- **Higienização de Dados de Desenvolvimento:** Procedimento de limpeza de regras residuais e sanitização do ambiente de testes.
+
+---
+
 ## [1.0.1] - 2026-10-09
 
 ### 🚀 Melhorias e Governança
