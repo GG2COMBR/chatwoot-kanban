@@ -1,6 +1,6 @@
 {
   "name": "chatwoot-kanban",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Módulo Kanban e CRM de Vendas Plug-and-Play para Chatwoot",
   "private": true,
   "scripts": {

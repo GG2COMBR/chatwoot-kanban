@@ -7,6 +7,20 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ---
 
+## [1.0.3] - 2026-10-10
+
+### 🧪 Testes Ponta a Ponta (E2E) & Qualidade
+- **Suíte de Testes Automatizados E2E (Playwright):** Implementada cobertura completa ponta a ponta com 8 arquivos de testes (`e2e/01-navigation.spec.ts` a `e2e/07-products.spec.ts`), cobrindo rigorosamente os Casos de Uso UC-01 até UC-12 com 100% verde.
+- **Matriz de Casos de Uso BDD (`docs/E2E_USE_CASES.md`):** Especificação detalhada em formato BDD/Gherkin de 12 fluxos críticos: Autenticação, Navegação, Funis de Vendas, Cartões manuais e por conversa, Ciclo de vida (etapas, timeline, notas, prioridades), Fechamento comercial (Ganho / Perdido com motivo), Catálogo de produtos e Relatórios operacionais.
+- **Fixture de Sessão Compartilhada (`e2e/auth.setup.ts`):** Autenticação única e reutilizável gravada em `e2e/.auth/user.json`, otimizando o tempo total de execução da suíte.
+
+### 🐛 Correções & Resiliência
+- **Resolução de Race Condition no Boot do Chatwoot (`entrypoints/dashboard.js`):** Correção no patch do core do Chatwoot no Vite para verificar se `document.readyState === 'complete'` antes de registrar `window.onload`, prevenindo tela em branco / carregamento incompleto da SPA em navegações rápidas.
+- **Roteamento SPA de Criação de Funil (`routes.js`):** Ajustada ordem de precedência das rotas do Kanban para que `/kanban/new` seja avaliada antes de `/:boardId`, eliminando conflitos de ID inválido.
+- **Envio de Notas no Card (`KanbanNoteComposer.vue`):** Adicionado handler `@click="submit"` no botão de envio para garantir submissão tanto por clique quanto por atalho de teclado (`Cmd/Ctrl + Enter`).
+
+---
+
 ## [1.0.2] - 2026-10-10
 
 ### 🚀 Documentação & Casos de Uso
