@@ -92,13 +92,21 @@ apply_patches() {
   local applied=0
   for p in "$dir"/*.patch; do
     [ -e "$p" ] || continue
+    local patch_name="$(basename "$p")"
+
+    # Se estiver aplicando patches de common e houver override especifico em patches/$TARGET, pula o common
+    if [ "$dir" = "$PKG_DIR/patches/common" ] && [ -n "$TARGET" ] && [ -f "$PKG_DIR/patches/$TARGET/$patch_name" ]; then
+      echo "   (sobrescrito por patches/$TARGET/$patch_name, pulando common) $patch_name"
+      continue
+    fi
+
     if git -C "$TARGET_DIR" apply --check "$p" 2>/dev/null; then
       git -C "$TARGET_DIR" apply "$p"
       applied=$((applied+1))
     elif git -C "$TARGET_DIR" apply --reverse --check "$p" 2>/dev/null; then
-      echo "   (já aplicado, pulando) $(basename "$p")"
+      echo "   (já aplicado, pulando) $patch_name"
     else
-      err "Patch não aplica: $(basename "$p"). O alvo pode ter divergido; use --target correto ou gere patches para esta versão."
+      err "Patch não aplica: $patch_name. O alvo pode ter divergido; use --target correto ou gere patches para esta versão."
     fi
   done
   info "Patches aplicados de $(basename "$dir"): $applied"

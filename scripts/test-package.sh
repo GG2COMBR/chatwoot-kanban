@@ -62,7 +62,7 @@ fi
 # 2. Integridade dos patches
 info "2. Validando integridade dos arquivos de patch..."
 patch_count=0
-for patch in "$PKG_DIR"/patches/common/*.patch; do
+for patch in "$PKG_DIR"/patches/common/*.patch "$PKG_DIR"/patches/fazer-ai/*.patch; do
   [ -e "$patch" ] || continue
   patch_count=$((patch_count + 1))
   if ! head -n 5 "$patch" | grep -q "^diff --git"; then
@@ -71,24 +71,26 @@ for patch in "$PKG_DIR"/patches/common/*.patch; do
 done
 
 if [ $patch_count -gt 0 ]; then
-  pass "$patch_count patches em patches/common/ validados."
+  pass "$patch_count patches validados (common e fazer-ai)."
 else
-  fail "Nenhum patch encontrado em patches/common/."
+  fail "Nenhum patch encontrado."
 fi
 
-# 3. Validação do MANIFEST.txt
-info "3. Verificando manifesto de patches (MANIFEST.txt)..."
-manifest_file="$PKG_DIR/patches/common/MANIFEST.txt"
-if [ ! -f "$manifest_file" ]; then
-  fail "patches/common/MANIFEST.txt não encontrado."
-else
-  manifest_diff="$(diff -u <(cd "$PKG_DIR/patches/common" && ls -1 *.patch | LC_ALL=C sort) "$manifest_file" || true)"
-  if [ -n "$manifest_diff" ]; then
-    fail "MANIFEST.txt desatualizado em relação a patches/common/:\n$manifest_diff"
+# 3. Validação dos manifestos (MANIFEST.txt)
+info "3. Verificando manifestos de patches (MANIFEST.txt)..."
+for target_dir in "common" "fazer-ai"; do
+  manifest_file="$PKG_DIR/patches/$target_dir/MANIFEST.txt"
+  if [ ! -f "$manifest_file" ]; then
+    fail "patches/$target_dir/MANIFEST.txt não encontrado."
   else
-    pass "MANIFEST.txt sincronizado com patches/common/."
+    manifest_diff="$(diff -u <(cd "$PKG_DIR/patches/$target_dir" && ls -1 *.patch | LC_ALL=C sort) "$manifest_file" || true)"
+    if [ -n "$manifest_diff" ]; then
+      fail "MANIFEST.txt desatualizado em relação a patches/$target_dir/:\n$manifest_diff"
+    else
+      pass "MANIFEST.txt sincronizado com patches/$target_dir/."
+    fi
   fi
-fi
+done
 
 # 4. Validação de JSONs
 info "4. Validando sintaxe JSON em arquivos do overlay..."

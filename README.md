@@ -33,7 +33,7 @@ Para tirar dúvidas, reportar issues ou acompanhar o desenvolvimento do projeto:
 | Alvo | Versão | Status |
 | :-- | :-- | :-- |
 | Chatwoot CE (vanilla) | v4.18.x | validado e funcional |
-| fork fazer-ai | v4.18.x | em preparação (`patches/fazer-ai`) |
+| fork fazer-ai | v4.18.x | validado e funcional (`--target fazer-ai`) |
 
 Os patches de integração são sensíveis à versão. Use a versão homologada em `VERSION_COMPAT`. Em versões diferentes, o `install.sh` aborta com mensagem clara (não corrompe a árvore).
 
@@ -42,8 +42,11 @@ Os patches de integração são sensíveis à versão. Use a versão homologada 
 Pré-requisitos: uma árvore de código do Chatwoot (git), árvore limpa (para permitir rollback).
 
 ```bash
-# a partir da raiz deste repositório
+# Para Chatwoot CE Oficial (vanilla)
 ./scripts/install.sh /caminho/para/o/chatwoot --target vanilla
+
+# Para o fork fazer-ai
+./scripts/install.sh /caminho/para/o/chatwoot --target fazer-ai
 ```
 
 O script:

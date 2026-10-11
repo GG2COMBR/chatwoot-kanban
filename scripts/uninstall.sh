@@ -37,11 +37,19 @@ reverse_patches() {
   local reverted=0
   # ordem inversa para desfazer com segurança
   for p in $(ls "$dir"/*.patch 2>/dev/null | sort -r); do
+    [ -e "$p" ] || continue
+    local patch_name="$(basename "$p")"
+
+    # Se estiver revertendo common e havia override especifico no TARGET, pula o common
+    if [ "$dir" = "$PKG_DIR/patches/common" ] && [ -n "$TARGET" ] && [ -f "$PKG_DIR/patches/$TARGET/$patch_name" ]; then
+      continue
+    fi
+
     if git -C "$TARGET_DIR" apply --reverse --check "$p" 2>/dev/null; then
       git -C "$TARGET_DIR" apply --reverse "$p"
       reverted=$((reverted+1))
     else
-      echo "   (não aplicado/ignorando) $(basename "$p")"
+      echo "   (não aplicado/ignorando) $patch_name"
     fi
   done
   info "Patches revertidos de $(basename "$dir"): $reverted"

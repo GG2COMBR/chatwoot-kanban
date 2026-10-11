@@ -1,0 +1,9 @@
+diff --git a/app/javascript/shared/constants/busEvents.js b/app/javascript/shared/constants/busEvents.js
+--- a/app/javascript/shared/constants/busEvents.js
++++ b/app/javascript/shared/constants/busEvents.js
+@@ -17,4 +17,5 @@
+   ASSIGNMENT_CONFLICT: 'assignmentConflict',
+   OPEN_CONVERSATION_GONE: 'openConversationGone',
+   MFA_STATE_CHANGED: 'MFA_STATE_CHANGED',
++  KANBAN_REALTIME_EVENT: 'KANBAN_REALTIME_EVENT',
+ };

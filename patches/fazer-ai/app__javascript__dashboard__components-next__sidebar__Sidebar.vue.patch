@@ -1,0 +1,112 @@
+diff --git a/app/javascript/dashboard/components-next/sidebar/Sidebar.vue b/app/javascript/dashboard/components-next/sidebar/Sidebar.vue
+--- a/app/javascript/dashboard/components-next/sidebar/Sidebar.vue
++++ b/app/javascript/dashboard/components-next/sidebar/Sidebar.vue
+@@ -69,6 +69,31 @@
+ const isFeatureEnabledonAccount = useMapGetter(
+   'accounts/isFeatureEnabledonAccount'
+ );
++
++const hasKanbanFeature = computed(() => {
++  return isFeatureEnabledonAccount.value(accountId.value, 'kanban');
++});
++
++const kanbanBoards = useMapGetter('kanbanBoards/kanbanBoards');
++const isFetchingKanbanBoards = useMapGetter('kanbanBoards/kanbanBoardsLoading');
++const lastFetchedKanbanAccountId = ref(null);
++
++const fetchKanbanBoards = async ({ force = false } = {}) => {
++  if (!accountId.value || !hasKanbanFeature.value || isFetchingKanbanBoards.value) return;
++
++  if (!force && kanbanBoards.value.length > 0) {
++    lastFetchedKanbanAccountId.value = accountId.value;
++    return;
++  }
++
++  lastFetchedKanbanAccountId.value = accountId.value;
++
++  try {
++    await store.dispatch('kanbanBoards/fetchBoards');
++  } catch {
++    // The kanban screens own the user-facing error state.
++  }
++};
+ 
+ const hasAdvancedAssignment = computed(() => {
+   return isFeatureEnabledonAccount.value(
+@@ -274,6 +299,21 @@
+ 
+ watch(accountId, fetchConversationPins, { immediate: true });
+ 
++watch(
++  [accountId, hasKanbanFeature],
++  ([newAccountId, newHasFeature], [oldAccountId]) => {
++    const accountChanged =
++      Boolean(oldAccountId) && newAccountId !== oldAccountId;
++    if (accountChanged || !newHasFeature) {
++      store.dispatch('kanbanBoards/resetBoards');
++    }
++    if (newHasFeature) {
++      fetchKanbanBoards({ force: accountChanged });
++    }
++  },
++  { immediate: true }
++);
++
+ const hasUnreadCountsForSection = section => {
+   if (section === SIDEBAR_SORT_SECTIONS.FOLDERS) {
+     return hasFilteredUnreadCounts.value;
+@@ -366,6 +406,15 @@
+     to: accountScopedRoute('team_reports_index'),
+     activeOn: ['team_reports_show'],
+   },
++  ...(hasKanbanFeature.value
++    ? [
++        {
++          name: 'Reports Kanban',
++          label: t('SIDEBAR.REPORTS_KANBAN'),
++          to: accountScopedRoute('kanban_reports'),
++        },
++      ]
++    : []),
+ ];
+ 
+ const reportRoutes = computed(() => newReportRoutes());
+@@ -527,13 +576,31 @@
+         count: 'internalChat/getUnreadCount',
+       },
+     },
+-    {
+-      name: 'Kanban',
+-      label: t('SIDEBAR.KANBAN'),
+-      icon: 'i-lucide-columns-3',
+-      to: accountScopedRoute('kanban_view'),
+-      activeOn: ['kanban_view'],
+-    },
++    ...(hasKanbanFeature.value
++      ? [
++          {
++            name: 'Kanban',
++            label: t('SIDEBAR.KANBAN'),
++            icon: 'i-lucide-columns-3',
++            children: [
++              {
++                name: 'Kanban Overview',
++                label: t('SIDEBAR.KANBAN_OVERVIEW'),
++                activeOn: ['kanban_boards'],
++                to: accountScopedRoute('kanban_boards'),
++              },
++              ...kanbanBoards.value.map(board => ({
++                name: `Kanban Board ${board.id}`,
++                label: board.name,
++                activeOn: ['kanban_board_show', 'kanban_board_edit_form'],
++                to: accountScopedRoute('kanban_board_show', {
++                  boardId: board.id,
++                }),
++              })),
++            ],
++          },
++        ]
++      : []),
+     {
+       name: 'Captain',
+       icon: 'i-woot-captain',

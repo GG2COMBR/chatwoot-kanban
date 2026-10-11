@@ -1,0 +1,19 @@
+diff --git a/app/javascript/dashboard/store/index.js b/app/javascript/dashboard/store/index.js
+--- a/app/javascript/dashboard/store/index.js
++++ b/app/javascript/dashboard/store/index.js
+@@ -68,6 +68,7 @@
+ import captainCustomTools from './captain/customTools';
+ import internalChat from './modules/internalChat';
+ import internalChatTypingStatus from './modules/internalChat/typingStatus';
++import kanbanBoards from './modules/kanbanBoards';
+ 
+ const plugins = [];
+ 
+@@ -141,6 +142,7 @@
+     captainCustomTools,
+     internalChat,
+     internalChatTypingStatus,
++    kanbanBoards,
+   },
+   plugins,
+ });
