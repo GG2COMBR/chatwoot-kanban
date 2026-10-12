@@ -103,17 +103,27 @@ docs/         guias de usuário, arquitetura e pre-flight de produção
 e2e/          suíte de testes ponta a ponta automatizados com Playwright
 ```
 
-### Testes Automatizados (Playwright E2E)
+### Estratégia de Testes em 2 Camadas
 
-Com a stack do Chatwoot ativa localmente:
+Para manter o ritmo de desenvolvimento ágil e proteger a infraestrutura de produção:
+
+1. **Camada 1 — CI Rápido no GitHub (`.github/workflows/test.yml`):**
+   - Executa automaticamente a cada Push e Pull Request em ~45s.
+   - Valida sintaxe de 250+ arquivos Ruby, integridade dos 45 patches, manifestos e discovery do Playwright (`--list`).
+2. **Camada 2 — Suíte E2E Completa Local no Docker (`scripts/test-e2e.sh`):**
+   - Executa no ambiente Docker local do desenvolvedor em ~35s.
+   - Aplica automaticamente dados de teste idempotentes via `scripts/seed-e2e.rb` e roda 16 cenários de negócio ponta a ponta com Playwright.
+   - **Gate obrigatório antes de lançar qualquer release SemVer.**
 
 ```bash
-# Executa todos os testes E2E com Playwright
+# Executa todos os testes E2E com seed automático contra o container ativo
 npm run test:e2e
 
-# Modo interativo (UI)
+# Modo interativo com interface do Playwright
 npm run test:e2e:ui
 ```
+
+Consulte o [Checklist de Release em docs/DEVELOPMENT.md](docs/DEVELOPMENT.md#8-arquitetura-de-testes--gate-de-qualidade-para-novas-releases) para o procedimento completo de lançamento de versão.
 
 ### Desenvolvimento & Pre-commit Hooks
 

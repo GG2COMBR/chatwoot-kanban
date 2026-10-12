@@ -165,7 +165,71 @@ npx playwright test e2e/04-card-lifecycle.spec.ts
 
 ---
 
-## 8. Como Limpar e Resetar o Ambiente do Zero (Clean Reset)
+## 8. Arquitetura de Testes & Gate de Qualidade para Novas Releases
+
+O **chatwoot-kanban** adota uma estratégia de testes em 2 camadas para equilibrar velocidade contínua no dia a dia e garantia absoluta antes de qualquer release:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  Camada 1: CI do GitHub (Automático a cada Push e PR)       │
+│  Arquivo: .github/workflows/test.yml (~45 segundos)         │
+│  - Validação de integridade estática (scripts/test-package)  │
+│  - Sintaxe de 250+ arquivos Ruby e integridade de patches   │
+│  - Validação de tipagem e discovery Playwright (--list)     │
+└─────────────────────────────────────────────────────────────┘
+                               ▲
+                               │ Protege o código comum
+                               │
+┌─────────────────────────────────────────────────────────────┐
+│  Camada 2: Validação E2E Docker (Local no Desenvolvedor)    │
+│  Comando: npm run test:e2e (~35 segundos)                   │
+│  - Roda contra o container Docker real (Vanilla ou Fazer-AI)│
+│  - Injeção idempotente automática de seed (scripts/seed-e2e)│
+│  - 16 cenários de negócio Playwright de ponta a ponta       │
+│  - Não queima minutos de CI e não compete com produção     │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### 8.1 Checklist Mandatório para Lançamento de Versão (Release Checklist)
+
+Todo desenvolvedor que for publicar uma nova versão (ex: `v1.0.4`) DEVE seguir rigorosamente este checklist:
+
+1. **Validação Estática e Patches:**
+   ```bash
+   ./scripts/test-package.sh
+   # Deve exibir: SUCESSO: Todas as validações passaram! Pacote 100% íntegro.
+   ```
+
+2. **Homologação E2E no Chatwoot Vanilla:**
+   - Com o Docker do Vanilla ativo (`docker compose up -d postgres redis rails vite`):
+   ```bash
+   npm run test:e2e
+   # Deve exibir: 16 passed (sem erros)
+   ```
+
+3. **Homologação E2E no Chatwoot Fazer-AI:**
+   - Com o Docker do Fazer-AI ativo:
+   ```bash
+   npm run test:e2e
+   # Deve exibir: 16 passed (sem erros)
+   ```
+
+4. **Version Bump e Changelog:**
+   - Atualizar a versão em `package.json` (ex: `"version": "1.0.4"`).
+   - Registrar as novas features, correções e notas no topo de `CHANGELOG.md`.
+
+5. **Commit, Tag e Release:**
+   ```bash
+   git add .
+   git commit -m "chore(release): vX.Y.Z"
+   git tag vX.Y.Z
+   git push origin main --tags
+   gh release create vX.Y.Z --title "vX.Y.Z" --notes-file CHANGELOG.md
+   ```
+
+---
+
+## 9. Como Limpar e Resetar o Ambiente do Zero (Clean Reset)
 
 Se quiser testar a reinstalação a qualquer momento ou limpar dados de teste:
 
@@ -181,7 +245,7 @@ git checkout -- . && git clean -fd
 
 ---
 
-## 9. Desinstalando o Kanban
+## 10. Desinstalando o Kanban
 
 Caso precise apenas reverter a integração do Kanban sem apagar o Chatwoot:
 
