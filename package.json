@@ -6,10 +6,11 @@
   "scripts": {
     "test:package": "./scripts/test-package.sh",
     "test:specs": "./scripts/run-specs.sh",
-    "test:e2e": "playwright test",
-    "test:e2e:ui": "playwright test --ui",
-    "test:e2e:headed": "playwright test --headed",
-    "test:e2e:debug": "playwright test --debug"
+    "test:e2e": "./scripts/test-e2e.sh",
+    "test:e2e:raw": "playwright test",
+    "test:e2e:ui": "./scripts/test-e2e.sh --ui",
+    "test:e2e:headed": "./scripts/test-e2e.sh --headed",
+    "test:e2e:debug": "./scripts/test-e2e.sh --debug"
   },
   "devDependencies": {
     "@playwright/test": "^1.50.0"

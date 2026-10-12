@@ -150,20 +150,22 @@ Este documento especifica os cenários de teste ponta a ponta (E2E) críticos do
 
 ---
 
-## 6. Criação de Card a Partir de Conversas do Chatwoot
+## 6. Motor de Automações & Regras de Entrada do Funil
 
-### UC-11: Vínculo de Oportunidade a Partir da Conversa Ativa
-- **Objetivo:** O operador no inbox de atendimento pode vincular ou criar um card diretamente da conversa.
+### UC-11: Motor de Automações, Kill Switch e Regras de Entrada
+- **Objetivo:** Validar a governança de regras de ciclo de vida, interruptor geral (kill-switch), modal de nova regra e regras de entrada por inboxes.
 - **Cenário (BDD):**
   ```gherkin
-  Dado que o atendente está visualizando uma conversa aberta no inbox do Chatwoot
-  Quando ele abre o painel lateral de integrações/aplicações da conversa
-  Então a seção "Kanban" deve estar disponível
-  Quando o atendente clica em "Adicionar ao Funil"
-  E seleciona o pipeline "Funil Comercial de Teste" e estágio "Lead"
-  E clica em vincular
-  Então um card correspondente à conversa deve ser gerado no funil
-  E o botão no chat deve exibir o atalho direto para a oportunidade criada
+  Dado que o usuário está na tela de configurações do pipeline ("/app/accounts/{account_id}/kanban/{board_id}/edit")
+  Quando ele acessa a aba "Automações"
+  Então o Kill Switch de automações do funil deve estar visível e ativo
+  E o botão de "Adicionar Regra" deve estar disponível
+  Quando o usuário clica em "Adicionar Regra"
+  Então o modal de criação de regra deve exibir os campos obrigatórios (Nome, Evento/Gatilho, Ação)
+  Quando o usuário acessa a aba "Regras de Entrada"
+  Então os controles de escopo de inboxes e criação automática de cards devem ser renderizados
+  Quando o usuário navega para as configurações globais do Chatwoot ("/app/accounts/{account_id}/settings/automations")
+  Então a tela de automações do core deve carregar sem erros contendo as ações estendidas do Kanban
   ```
 
 ---
@@ -174,11 +176,11 @@ Este documento especifica os cenários de teste ponta a ponta (E2E) críticos do
 - **Objetivo:** Validar que os dashboards de relatórios carregam os gráficos nativos corretamente.
 - **Cenário (BDD):**
   ```gherkin
-  Dado que o usuário navega para "/app/accounts/{account_id}/settings/reports/kanban"
-  Quando a página carrega
-  Então os cartões de resumo (Cards Ativos, Taxa de Conversão, Valor Ganho) devem ser exibidos
-  E os componentes de gráfico nativos ("BarChart" e "PercentageChart") devem ser renderizados
-  E nenhum erro de dependência externa de gráficos deve ocorrer
+  Dado que o usuário navega para o funil e aciona o View Switcher "Dashboard"
+  Então as métricas de resumo (Oportunidades no funil, Valor total em aberto) devem ser exibidas
+  E os gráficos nativos ("Ganhos x perdidos", "Origem", "Funil por etapa") devem ser renderizados
+  Quando o usuário acessa os relatórios gerais da conta ("/app/accounts/{account_id}/reports/kanban")
+  Então o cabeçalho e os cartões de cartões abertos e ganhos devem ser renderizados sem erros
   ```
 
 ---
