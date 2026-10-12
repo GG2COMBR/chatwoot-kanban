@@ -9,7 +9,7 @@ import Draggable from 'vuedraggable';
 import { useAlert } from 'dashboard/composables';
 import { useAdmin } from 'dashboard/composables/useAdmin';
 import { useKanbanStageOrder } from 'dashboard/composables/useKanbanStageOrder';
-import { useStore } from 'dashboard/composables/store';
+import { useMapGetter, useStore } from 'dashboard/composables/store';
 import KanbanBoardsAPI from 'dashboard/api/kanbanBoards';
 import Button from 'dashboard/components-next/button/Button.vue';
 import DurationInput from 'dashboard/components-next/input/DurationInput.vue';
@@ -18,6 +18,7 @@ import Select from 'dashboard/components-next/select/Select.vue';
 import Switch from 'dashboard/components-next/switch/Switch.vue';
 import TabBar from 'dashboard/components-next/tabbar/TabBar.vue';
 import AgentTagInput from 'dashboard/components-next/taginput/AgentTagInput.vue';
+import TagMultiSelectComboBox from 'dashboard/components-next/combobox/TagMultiSelectComboBox.vue';
 import { DEFAULT_KANBAN_STAGE_COLOR } from 'dashboard/helper/kanbanStageColors';
 import KanbanStageEditPanel from './KanbanStageEditPanel.vue';
 import KanbanCustomFieldsTab from './KanbanCustomFieldsTab.vue';
@@ -93,6 +94,8 @@ const form = reactive({
   active: false,
   visibilityMode: 'all_agents',
   visibleUserIds: [],
+  inboxScopeMode: 'all_inboxes',
+  inboxIds: [],
   wonStageId: null,
   lostStageId: null,
   lostReasonRequired: false,
@@ -104,6 +107,24 @@ const form = reactive({
   showMonetaryValues: false,
   automationSettings: {},
 });
+
+const inboxes = useMapGetter('inboxes/getAllInboxes');
+const inboxOptions = computed(() =>
+  (inboxes.value || []).map(i => ({ value: String(i.id), label: i.name }))
+);
+const isAllInboxes = computed(() => form.inboxScopeMode === 'all_inboxes');
+
+const onAllInboxesToggle = value => {
+  form.inboxScopeMode = value ? 'all_inboxes' : 'selected_inboxes';
+  if (value) {
+    form.inboxIds = [];
+  }
+};
+
+const onInboxIdsChange = ids => {
+  form.inboxIds = (ids || []).map(Number);
+  form.inboxScopeMode = form.inboxIds.length ? 'selected_inboxes' : 'all_inboxes';
+};
 
 // DurationInput stores/edits everything in minutes and picks its own unit for
 // display; this just chooses the least fiddly unit to land on when a saved
@@ -203,6 +224,8 @@ const normalizeForDiff = source => ({
   description: (source.description || '').trim(),
   visibilityMode: source.visibilityMode,
   visibleUserIds: [...(source.visibleUserIds || [])].sort((a, b) => a - b),
+  inboxScopeMode: source.inboxScopeMode || 'all_inboxes',
+  inboxIds: [...(source.inboxIds || [])].map(Number).sort((a, b) => a - b),
   wonStageId: source.wonStageId ?? null,
   lostStageId: source.lostStageId ?? null,
   lostReasonRequired: !!source.lostReasonRequired,
@@ -229,6 +252,10 @@ const applySettings = payload => {
   form.active = settings.active || false;
   form.visibilityMode = settings.visibilityMode || 'all_agents';
   form.visibleUserIds = settings.visibleUserIds || [];
+  form.inboxScopeMode = settings.inboxScopeMode || 'all_inboxes';
+  form.inboxIds = (settings.allowedInboxIds || settings.inboxIds || []).map(
+    Number
+  );
   form.wonStageId = settings.wonStageId ?? null;
   form.lostStageId = settings.lostStageId ?? null;
   form.lostReasonRequired = settings.lostReasonRequired || false;
@@ -302,6 +329,9 @@ const buildSettingsPayload = () => ({
     visibility_mode: form.visibilityMode,
     visible_user_ids:
       form.visibilityMode === 'selected_agents' ? form.visibleUserIds : [],
+    inbox_scope_mode: form.inboxScopeMode,
+    inbox_ids:
+      form.inboxScopeMode === 'selected_inboxes' ? form.inboxIds : [],
     won_stage_id: form.wonStageId,
     lost_stage_id: form.lostStageId,
     lost_reason_required: form.lostReasonRequired,
@@ -834,6 +864,39 @@ onMounted(async () => {
               :auto-open-dropdown="false"
               @update:model-value="onVisibleUserIdsChange"
             />
+          </div>
+
+          <div class="grid gap-3 border-t border-n-weak pt-5">
+            <div class="flex items-center justify-between">
+              <h2 class="text-base font-medium text-n-slate-12">
+                {{ t('KANBAN.SETTINGS.INBOXES.TITLE') }}
+              </h2>
+              <label
+                class="flex cursor-pointer items-center gap-2 text-sm text-n-slate-11"
+              >
+                <span>{{ t('KANBAN.SETTINGS.INBOXES.ALL') }}</span>
+                <Switch
+                  :model-value="isAllInboxes"
+                  data-testid="kanban-board-form-all-inboxes-switch"
+                  @update:model-value="onAllInboxesToggle"
+                />
+              </label>
+            </div>
+
+            <div v-if="!isAllInboxes" class="grid gap-1.5">
+              <span class="text-xs font-medium text-n-slate-11">
+                {{ t('KANBAN.SETTINGS.INBOXES.SELECTED') }}
+              </span>
+              <TagMultiSelectComboBox
+                :model-value="form.inboxIds.map(String)"
+                data-testid="kanban-board-form-inbox-picker"
+                :options="inboxOptions"
+                :placeholder="t('KANBAN.SETTINGS.INBOXES.PLACEHOLDER')"
+                :search-placeholder="t('KANBAN.SETTINGS.INBOXES.SEARCH')"
+                :empty-state="t('KANBAN.SETTINGS.INBOXES.EMPTY')"
+                @update:model-value="onInboxIdsChange"
+              />
+            </div>
           </div>
         </div>
 

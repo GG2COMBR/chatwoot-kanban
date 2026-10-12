@@ -3,7 +3,8 @@ json.array! @kanban_boards do |kanban_board|
 
   json.partial! 'api/v1/accounts/kanban_boards/kanban_board', formats: [:json], kanban_board: kanban_board
   json.visibility_mode kanban_board.visibility_mode
-  json.inbox_scope_mode entry_rule_scope.fetch(:all_inboxes, true) ? 'all_inboxes' : 'selected_inboxes'
+  is_all_inboxes = kanban_board.all_inboxes? && entry_rule_scope.fetch(:all_inboxes, true)
+  json.inbox_scope_mode is_all_inboxes ? 'all_inboxes' : 'selected_inboxes'
   json.all_inbox_rule_names entry_rule_scope.fetch(:all_inbox_rule_names, [])
   json.cards_count @overview_cards_count_by_board_id.fetch(kanban_board.id, 0)
 
@@ -24,8 +25,10 @@ json.array! @kanban_boards do |kanban_board|
     end
   end
 
+  allowed_inbox_list = @overview_allowed_inboxes_by_board_id.fetch(kanban_board.id, [])
+  json.allowed_inbox_ids allowed_inbox_list.map(&:id)
   json.allowed_inboxes do
-    json.array! @overview_allowed_inboxes_by_board_id.fetch(kanban_board.id, []) do |inbox|
+    json.array! allowed_inbox_list do |inbox|
       json.id inbox.id
       json.name inbox.name
       json.channel_type inbox.channel_type

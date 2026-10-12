@@ -19,6 +19,10 @@ user.name = 'Admin Test'
 user.password = 'Password123!'
 user.password_confirmation = 'Password123!'
 user.confirmed_at ||= Time.current
+user.ui_settings = (user.ui_settings || {}).merge(
+  'is_contact_sidebar_open' => true,
+  'is_kanban_open' => true
+)
 user.save!
 
 AccountUser.find_or_create_by!(account: account, user: user) do |au|
@@ -77,6 +81,8 @@ board.update!(
   show_monetary_values: true
 )
 
+board.kanban_board_inboxes.find_or_create_by!(account: account, inbox: inbox)
+
 board.kanban_reasons.find_or_create_by!(title: 'Preço elevado') do |r|
   r.account = account
   r.reason_type = :lost
@@ -87,16 +93,19 @@ board.kanban_reasons.find_or_create_by!(title: 'Fechou com concorrente') do |r|
   r.reason_type = :lost
 end
 
-card = board.kanban_cards.first || board.kanban_cards.create!(
+board.kanban_cards.where(conversation: conversation).where("subject LIKE 'Oportunidade Adicional%'").destroy_all
+
+card = board.kanban_cards.find_or_initialize_by(
   account: account,
-  kanban_stage: s_inbox,
-  inbox: inbox,
   conversation: conversation,
-  contact: contact,
-  subject: 'Oportunidade de Consultoria E2E',
-  origin: :conversation,
-  position: 1000
+  subject: 'Oportunidade de Consultoria E2E'
 )
+card.kanban_stage = s_inbox
+card.inbox = inbox
+card.contact = contact
+card.origin = :conversation
+card.position = 1000
+card.save!
 
 KanbanProduct.find_or_create_by!(account: account, sku: 'PRO-ANUAL') do |p|
   p.title = 'Plano Pro Anual'

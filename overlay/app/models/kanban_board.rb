@@ -82,15 +82,21 @@ class KanbanBoard < ApplicationRecord
   # closed: a board still being set up has to stay usable by hand.
   scope :accepting_inbox, lambda { |inbox_id|
     active_rules = KanbanBoardEntryRule.active.where('kanban_board_entry_rules.kanban_board_id = kanban_boards.id')
-    named_inbox = KanbanBoardEntryRuleInbox
-                  .where('kanban_board_entry_rule_inboxes.kanban_board_id = kanban_boards.id')
-                  .where(inbox_id: inbox_id)
-                  .where(kanban_board_entry_rule_id: KanbanBoardEntryRule.active.select(:id))
+    named_entry_inbox = KanbanBoardEntryRuleInbox
+                        .where('kanban_board_entry_rule_inboxes.kanban_board_id = kanban_boards.id')
+                        .where(inbox_id: inbox_id)
+                        .where(kanban_board_entry_rule_id: KanbanBoardEntryRule.active.select(:id))
+    named_board_inbox = KanbanBoardInbox
+                        .where('kanban_board_inboxes.kanban_board_id = kanban_boards.id')
+                        .where(inbox_id: inbox_id)
 
     where(
+      "(kanban_boards.inbox_scope_mode = 'all_inboxes' AND (" \
       "NOT EXISTS (#{active_rules.select('1').to_sql}) " \
-      "OR EXISTS (#{active_rules.where(all_inboxes: true).select('1').to_sql}) " \
-      "OR EXISTS (#{named_inbox.select('1').to_sql})"
+      "OR EXISTS (#{active_rules.where(all_inboxes: true).select('1').to_sql})" \
+      ")) " \
+      "OR EXISTS (#{named_board_inbox.select('1').to_sql}) " \
+      "OR EXISTS (#{named_entry_inbox.select('1').to_sql})"
     )
   }
   scope :accepting_inbox_for_account, lambda { |account_id, inbox_id|
@@ -107,41 +113,49 @@ class KanbanBoard < ApplicationRecord
     inbox_id = inbox_or_id.is_a?(Inbox) ? inbox_or_id.id : inbox_or_id.to_i
 
     return false if inbox_id.blank?
+    return true if all_inboxes? && derived_all_inboxes?
 
     allowed_inbox_ids([inbox_id]).include?(inbox_id)
   end
 
   def allowed_inbox_ids(candidate_ids)
     existing_ids = Inbox.where(account_id: account_id, id: Array(candidate_ids).map(&:to_i).uniq).pluck(:id)
-    return existing_ids if derived_all_inboxes?
+    return existing_ids if all_inboxes? && derived_all_inboxes?
 
-    kanban_board_entry_rule_inboxes
-      .where(kanban_board_entry_rule_id: active_entry_rule_ids, inbox_id: existing_ids)
-      .distinct
-      .pluck(:inbox_id)
+    board_inbox_ids = kanban_board_inboxes.where(inbox_id: existing_ids).pluck(:inbox_id)
+    rule_inbox_ids = kanban_board_entry_rule_inboxes
+                     .where(kanban_board_entry_rule_id: active_entry_rule_ids, inbox_id: existing_ids)
+                     .distinct
+                     .pluck(:inbox_id)
+
+    (board_inbox_ids | rule_inbox_ids)
   end
 
   # The payload keeps the `inbox_scope_mode` / `allowed_inboxes` shape the dashboard has
   # always read; only where the answer comes from has changed.
   def derived_inbox_scope_mode
+    return 'selected_inboxes' if selected_inboxes?
+
     derived_all_inboxes? ? 'all_inboxes' : 'selected_inboxes'
   end
 
   def derived_allowed_inbox_ids
-    return [] if derived_all_inboxes?
+    return [] if derived_inbox_scope_mode == 'all_inboxes'
 
-    kanban_board_entry_rule_inboxes.where(kanban_board_entry_rule_id: active_entry_rule_ids).distinct.pluck(:inbox_id).sort
+    board_inbox_ids = kanban_board_inboxes.pluck(:inbox_id)
+    rule_inbox_ids = kanban_board_entry_rule_inboxes
+                     .where(kanban_board_entry_rule_id: active_entry_rule_ids)
+                     .distinct
+                     .pluck(:inbox_id)
+
+    (board_inbox_ids | rule_inbox_ids).sort
   end
 
   def derived_inbox_scope
-    all_inboxes = derived_all_inboxes?
-    inbox_ids = if all_inboxes
-                  []
-                else
-                  kanban_board_entry_rule_inboxes.where(kanban_board_entry_rule_id: active_entry_rule_ids).distinct.pluck(:inbox_id).sort
-                end
+    mode = derived_inbox_scope_mode
+    inbox_ids = mode == 'all_inboxes' ? [] : derived_allowed_inbox_ids
 
-    { mode: all_inboxes ? 'all_inboxes' : 'selected_inboxes', inbox_ids: inbox_ids }
+    { mode: mode, inbox_ids: inbox_ids }
   end
 
   def derived_all_inboxes?

@@ -110,12 +110,17 @@ class Api::V1::Accounts::KanbanBoardsController < Api::V1::Accounts::BaseControl
   # active entry rules name. A board whose rules cover every inbox contributes nothing
   # here: the view reads `inbox_scope_mode` for that case.
   def overview_allowed_inboxes_by_board_id(board_ids)
-    KanbanBoardEntryRuleInbox.includes(:inbox)
-                             .where(account_id: Current.account.id, kanban_board_id: board_ids)
-                             .where(kanban_board_entry_rule_id: KanbanBoardEntryRule.active.select(:id))
-                             .order(:inbox_id)
-                             .group_by(&:kanban_board_id)
-                             .transform_values { |rule_inboxes| rule_inboxes.map(&:inbox).uniq }
+    board_inboxes = KanbanBoardInbox.includes(:inbox)
+                                    .where(account_id: Current.account.id, kanban_board_id: board_ids)
+                                    .order(:inbox_id)
+    rule_inboxes = KanbanBoardEntryRuleInbox.includes(:inbox)
+                                            .where(account_id: Current.account.id, kanban_board_id: board_ids)
+                                            .where(kanban_board_entry_rule_id: KanbanBoardEntryRule.active.select(:id))
+                                            .order(:inbox_id)
+
+    (board_inboxes.to_a + rule_inboxes.to_a)
+      .group_by(&:kanban_board_id)
+      .transform_values { |items| items.map(&:inbox).uniq }
   end
 
   def overview_entry_rule_scope_by_board_id(board_ids)
@@ -135,6 +140,7 @@ class Api::V1::Accounts::KanbanBoardsController < Api::V1::Accounts::BaseControl
   def kanban_board_params
     params.require(:kanban_board).permit(
       :name, :description, :position, :active,
+      :inbox_scope_mode,
       :won_stage_id, :lost_stage_id, :lost_reason_required,
       :enable_products, :show_monetary_values,
       automation_settings: {}

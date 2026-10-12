@@ -185,7 +185,28 @@ Este documento especifica os cenários de teste ponta a ponta (E2E) críticos do
 
 ---
 
-## 8. Critérios de Execução da Suíte E2E
+## 8. Integração na Tela de Conversa do Atendente
+
+### UC-17: Gestão do Funil e Troca de Etapas Diretamente na Conversa
+- **Arquivo:** `e2e/09-conversation-kanban.spec.ts`
+- **Objetivo:** Permitir ao atendente visualizar cards associados à conversa atual e trocar a etapa do funil diretamente pela barra lateral da conversa, sem precisar sair do chat para abrir o Kanban.
+- **Cenário (BDD):**
+  ```gherkin
+  Dado que o usuário está atendendo uma conversa no Chatwoot ("/app/accounts/{account_id}/conversations/{conversation_id}")
+  E a caixa de entrada (Inbox) da conversa está vinculada a um ou mais funis do Kanban
+  Quando ele visualiza o painel lateral de contato (ContactPanel)
+  Então a seção/acordeão "Kanban" deve estar visível
+  E o card da conversa deve exibir o assunto, funil e o seletor de etapas
+  Quando o atendente clica no seletor de etapas do card
+  E seleciona uma nova etapa regular (ex: "Em Negociação")
+  Então a etapa do card deve ser atualizada imediatamente na conversa e sincronizada com o backend
+  Quando o atendente clica em "Criar em outro funil" ou "Criar oportunidade"
+  Então o formulário deve exibir apenas os funis que aceitam a caixa de entrada da conversa atual
+  ```
+
+---
+
+## 9. Critérios de Execução da Suíte E2E
 
 1. **Isolamento de Estado:** Os testes devem executar em um banco de desenvolvimento preparado ou usar fixtures que criem e limpem suas próprias entidades.
 2. **Reuso de Sessão:** A autenticação do usuário administrador deve ser realizada no setup do Playwright via `storageState` (`playwright/.auth/user.json`) para evitar overhead de login repetitivo.

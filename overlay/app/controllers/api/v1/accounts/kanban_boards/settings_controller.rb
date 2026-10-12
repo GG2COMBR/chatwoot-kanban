@@ -8,8 +8,9 @@ class Api::V1::Accounts::KanbanBoards::SettingsController < Api::V1::Accounts::B
 
   def update
     ActiveRecord::Base.transaction do
-      @kanban_board.update!(settings_params.except(:visible_user_ids))
+      @kanban_board.update!(settings_params.except(:visible_user_ids, :inbox_ids))
       replace_memberships!
+      replace_inbox_scopes!
     end
 
     dispatch_kanban_board_event
@@ -57,6 +58,7 @@ class Api::V1::Accounts::KanbanBoards::SettingsController < Api::V1::Accounts::B
       :name,
       :description,
       :visibility_mode,
+      :inbox_scope_mode,
       :won_recurrence_enabled,
       :won_recurrence_window_minutes,
       :lost_recurrence_enabled,
@@ -67,7 +69,8 @@ class Api::V1::Accounts::KanbanBoards::SettingsController < Api::V1::Accounts::B
       :enable_products,
       :show_monetary_values,
       automation_settings: {},
-      visible_user_ids: []
+      visible_user_ids: [],
+      inbox_ids: []
     )
   end
 
@@ -106,6 +109,30 @@ class Api::V1::Accounts::KanbanBoards::SettingsController < Api::V1::Accounts::B
     # rubocop:enable Rails/SkipsModelValidations
   end
 
+  def replace_inbox_scopes!
+    return unless settings_params.key?(:inbox_ids) || settings_params[:inbox_scope_mode] == 'all_inboxes' || @kanban_board.all_inboxes?
+
+    inbox_ids = normalized_ids(settings_params[:inbox_ids])
+    validate_account_inbox_ids!(inbox_ids)
+    KanbanBoardInbox.where(kanban_board_id: @kanban_board.id).delete_all
+    return if @kanban_board.all_inboxes? || inbox_ids.blank?
+
+    timestamp = Time.current
+    # rubocop:disable Rails/SkipsModelValidations
+    KanbanBoardInbox.insert_all!(
+      inbox_ids.map do |inbox_id|
+        {
+          account_id: Current.account.id,
+          kanban_board_id: @kanban_board.id,
+          inbox_id: inbox_id,
+          created_at: timestamp,
+          updated_at: timestamp
+        }
+      end
+    )
+    # rubocop:enable Rails/SkipsModelValidations
+  end
+
   def normalized_ids(ids)
     Array(ids).filter_map(&:presence).map(&:to_i).uniq
   end
@@ -115,6 +142,15 @@ class Api::V1::Accounts::KanbanBoards::SettingsController < Api::V1::Accounts::B
 
     valid_user_count = AccountUser.where(account_id: Current.account.id, user_id: user_ids).select(:user_id).distinct.count
     return if valid_user_count == user_ids.length
+
+    raise ActiveRecord::RecordInvalid, @kanban_board
+  end
+
+  def validate_account_inbox_ids!(inbox_ids)
+    return if inbox_ids.blank?
+
+    valid_inbox_count = Inbox.where(account_id: Current.account.id, id: inbox_ids).select(:id).distinct.count
+    return if valid_inbox_count == inbox_ids.length
 
     raise ActiveRecord::RecordInvalid, @kanban_board
   end

@@ -7,6 +7,25 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ---
 
+## [1.0.4] - 2026-10-12
+
+### 🚀 Funcionalidades & Integrações
+- **Vínculo N:N entre Funis e Caixas de Entrada (Inboxes):**
+  - Associação flexível de funis a múltiplas caixas de entrada ou modo irrestrito ("Todas as caixas de entrada").
+  - Interface visual na aba Configurações de `KanbanBoardForm.vue` com switch e combobox multiselect (`TagMultiSelectComboBox`).
+  - Suporte completo no backend (`KanbanBoard`, `settings_controller.rb`, `kanban_boards_controller.rb`) com escopo transacional, unicidade e validação multi-tenant.
+- **Gestão de Oportunidades & Troca de Etapas Diretamente na Conversa:**
+  - Injeção cirúrgica do módulo Kanban na barra lateral direita de contato da conversa (`ContactPanel.vue`) via patch aditivo para Chatwoot Vanilla v4.18 e Fork Fazer-AI.
+  - Troca instantânea de etapa no card da conversa (`KanbanStageSelect`) sem recarregar a tela ou navegar para o funil.
+  - Criação rápida de novas oportunidades dentro da conversa com filtro dinâmico que exibe exclusivamente os funis autorizados para a caixa de entrada daquela conversa.
+
+### 🧪 Testes Ponta a Ponta (E2E) & Qualidade
+- **Novo Caso de Uso E2E (UC-17):** Testes Playwright automatizados em `e2e/09-conversation-kanban.spec.ts` cobrindo o acordeão do Kanban na conversa, troca de etapa pelo card e criação com filtro de elegibilidade de inboxes (**100% verde**).
+- **Especificação BDD em `docs/E2E_USE_CASES.md`:** Documentação detalhada dos cenários Gherkin do UC-17.
+- **Suíte E2E Completa (18 testes):** Homologação 100% aprovada em ambiente Docker com zero regressões nos outros 8 módulos.
+
+---
+
 ## [1.0.3] - 2026-10-10
 
 ### 🧪 Testes Ponta a Ponta (E2E) & Qualidade
