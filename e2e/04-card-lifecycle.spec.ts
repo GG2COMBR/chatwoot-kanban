@@ -88,6 +88,9 @@ test.describe('UC-04, UC-06 & UC-07: Customização de Estágios, Movimentação
     await expect(submitNoteBtn).toBeEnabled();
     await submitNoteBtn.click();
 
+    // Aguarda o input ser limpo confirmando envio da nota
+    await expect(noteInput).toHaveValue('', { timeout: 10000 });
+
     // 5. A nota deve aparecer na timeline
     await expect(page.locator('body')).toContainText(noteText, { timeout: 15000 });
 

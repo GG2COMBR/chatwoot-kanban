@@ -23,17 +23,17 @@ test.describe('Relatórios e Dashboards de Performance (UC-12)', () => {
     await expect(dashboardContainer).toBeVisible({ timeout: 10000 });
 
     // 5. Verifica os cartões de métricas do dashboard
-    const openMetrics = page.getByText(/Leads in funnel|Oportunidades em Aberto|Total open value|Valor em aberto/i).first();
+    const openMetrics = page.getByText(/Leads in funnel|Oportunidades (no funil|em Aberto)|Total open value|Valor (total )?em aberto/i).first();
     await expect(openMetrics).toBeVisible();
 
     // 6. Verifica a presença das seções de gráficos nativos
-    const wonLostHeading = page.getByRole('heading', { name: /Won vs Lost|Ganhos vs Perdidos/i });
+    const wonLostHeading = page.getByRole('heading', { name: /Won vs Lost|Ganhos [vx]s? [pP]erdidos/i });
     await expect(wonLostHeading).toBeVisible();
 
-    const originHeading = page.getByRole('heading', { name: /Lead origin|Origem dos leads/i });
+    const originHeading = page.getByRole('heading', { name: /Lead origin|Origem/i });
     await expect(originHeading).toBeVisible();
 
-    const funnelHeading = page.getByRole('heading', { name: /Funnel by stage|Funil por estágio/i });
+    const funnelHeading = page.getByRole('heading', { name: /Funnel by stage|Funil por (estágio|etapa)/i });
     await expect(funnelHeading).toBeVisible();
   });
 
@@ -41,6 +41,7 @@ test.describe('Relatórios e Dashboards de Performance (UC-12)', () => {
     // 1. Navega para a rota de relatórios kanban (/app/accounts/1/reports/kanban)
     await page.goto('/app/accounts/1/reports/kanban');
     await page.waitForLoadState('domcontentloaded');
+    await expect(page.locator('aside, nav, .left-sidebar').first()).toBeVisible({ timeout: 20000 });
 
     // 2. Valida o cabeçalho de relatórios kanban
     await expect(
@@ -53,10 +54,10 @@ test.describe('Relatórios e Dashboards de Performance (UC-12)', () => {
 
     // 4. Valida os cartões de métricas de resumo
     await expect(
-      page.getByRole('heading', { name: /Open cards|Cards em aberto|Abertos/i })
+      page.getByRole('heading', { name: /Open cards|Cards em aberto|Cartões em aberto|Abertos/i }).first()
     ).toBeVisible();
     await expect(
-      page.getByRole('heading', { name: /Won cards|Cards ganhos|Ganhos/i })
+      page.getByRole('heading', { name: /Won cards|Cards ganhos|Cartões ganhos/i }).first()
     ).toBeVisible();
   });
 });

@@ -87,9 +87,15 @@ test.describe('UC-08 & UC-09: Fechamento de Negócios (Ganho e Perdido)', () => 
     await expect(lostOption).toBeVisible({ timeout: 5000 });
     await lostOption.click();
 
-    // 6. Formulário de motivo de perda: confirma
+    // 6. Formulário de motivo de perda: seleciona motivo se o campo existir e confirma
+    const reasonSelect = page.locator('select, [role="combobox"]').filter({ hasText: /Motivo|Reason/i }).or(page.getByRole('combobox', { name: /motivo|reason/i }));
+    if (await reasonSelect.isVisible({ timeout: 2000 }).catch(() => false)) {
+      await reasonSelect.selectOption({ index: 0 });
+    }
+
     const confirmReasonBtn = page.getByTestId('kanban-card-status-confirm');
     if (await confirmReasonBtn.isVisible({ timeout: 3000 }).catch(() => false)) {
+      await expect(confirmReasonBtn).toBeEnabled({ timeout: 5000 });
       await confirmReasonBtn.click();
     }
 

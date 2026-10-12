@@ -5,6 +5,7 @@ test.describe('UC-03 & UC-04: Gestão de Pipelines (Boards & Estágios)', () => 
     // 1. Acessa a tela geral de Kanban
     await page.goto(`${baseURL}/app/accounts/1/kanban`);
     await page.waitForLoadState('domcontentloaded');
+    await expect(page.locator('aside, nav, .left-sidebar').first()).toBeVisible({ timeout: 20000 });
 
     // 2. O botão de criar pipeline deve estar visível para o admin
     const createBtn = page.getByTestId('overview-create-board-button');
@@ -35,7 +36,7 @@ test.describe('UC-03 & UC-04: Gestão de Pipelines (Boards & Estágios)', () => 
     await page.waitForURL(/\/app\/accounts\/1\/kanban\/\d+/, { timeout: 20000 });
 
     // 7. Valida que o board carregou com suas colunas de estágios
-    const addCardButtons = page.locator('text=/Add new card|Adicionar card/i');
+    const addCardButtons = page.locator('text=/Add new card|Adicionar (novo )?cart[ãa]o|Adicionar card/i');
     await expect(addCardButtons.first()).toBeVisible({ timeout: 15000 });
   });
 

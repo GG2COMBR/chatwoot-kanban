@@ -16,7 +16,7 @@ test.describe('UC-05 & UC-06: Criação Manual de Oportunidades & Gestão de Car
     await expect(panel).toBeVisible({ timeout: 10000 });
 
     // 4. Busca o contato de teste criado no seed
-    const contactInput = page.getByRole('searchbox', { name: /search contacts/i }).or(page.getByPlaceholder(/name, phone, or email/i));
+    const contactInput = page.getByRole('searchbox', { name: /search contacts|pesquisar contatos/i }).or(page.getByPlaceholder(/name, phone, or email|nome, telefone/i));
     await contactInput.fill('Cliente Exemplo');
 
     // 5. Clica no resultado da busca de contato
@@ -31,12 +31,12 @@ test.describe('UC-05 & UC-06: Criação Manual de Oportunidades & Gestão de Car
 
     // 7. Passo do card: preenche o assunto do card de forma única
     const cardSubject = `Oportunidade E2E ${Date.now()}`;
-    const subjectInput = page.getByTestId('kanban-manual-card-subject').or(page.getByPlaceholder(/Exchange negotiation/i));
+    const subjectInput = page.getByTestId('kanban-manual-card-subject').or(page.getByPlaceholder(/Exchange negotiation|negocia/i));
     await expect(subjectInput).toBeVisible({ timeout: 10000 });
     await subjectInput.fill(cardSubject);
 
     // 8. Submete a criação do card
-    const submitBtn = page.getByTestId('kanban-manual-card-submit').or(page.getByRole('button', { name: /create card|criar/i }));
+    const submitBtn = page.getByTestId('kanban-manual-card-submit').or(page.getByRole('button', { name: /create card|criar cart[ãa]o|criar/i }));
     await expect(submitBtn).toBeEnabled({ timeout: 10000 });
     await submitBtn.click();
 
