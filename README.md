@@ -21,6 +21,8 @@ Para tirar dúvidas, reportar issues ou acompanhar o desenvolvimento do projeto:
 - **Boards (funis)** com estágios e cards por drag-and-drop.
 - **Cards** a partir de conversas ou manuais; vínculo conversa↔board sem duplicar entidades do core.
 - **Won/Lost** com motivos, prioridade, SLA por estágio, agendamento.
+- **Gestão na Conversa:** Acordeão Kanban nativo na barra lateral de contato (`ContactPanel.vue`) permitindo visualizar, criar oportunidades e mudar a etapa do lead em 1 clique sem sair do chat.
+- **Vínculo N:N com Caixas de Entrada:** Associação de funis a inboxes específicas ou modo irrestrito ("Todas as caixas").
 - **Catálogo de produtos** nativo com importação inteligente de CSV (autodetecção de separadores e moedas) e feeds Google Merchant XML, além de promoções "De / Por".
 - **Campos personalizados** por funil e cotação de produtos por oportunidade.
 - **Automações nativas** do Kanban (7 ações: mover estágio, prioridade, etiquetas, vencimento, notas, atribuição e perda com motivos).
@@ -109,10 +111,10 @@ Para manter o ritmo de desenvolvimento ágil e proteger a infraestrutura de prod
 
 1. **Camada 1 — CI Rápido no GitHub (`.github/workflows/test.yml`):**
    - Executa automaticamente a cada Push e Pull Request em ~45s.
-   - Valida sintaxe de 250+ arquivos Ruby, integridade dos 45 patches, manifestos e discovery do Playwright (`--list`).
+   - Valida sintaxe de 250+ arquivos Ruby, integridade dos 47 patches, manifestos e discovery do Playwright (`--list`).
 2. **Camada 2 — Suíte E2E Completa Local no Docker (`scripts/test-e2e.sh`):**
    - Executa no ambiente Docker local do desenvolvedor em ~35s.
-   - Aplica automaticamente dados de teste idempotentes via `scripts/seed-e2e.rb` e roda 16 cenários de negócio ponta a ponta com Playwright.
+   - Aplica automaticamente dados de teste idempotentes via `scripts/seed-e2e.rb` e roda 18 cenários de negócio ponta a ponta com Playwright (UC-01 a UC-17).
    - **Gate obrigatório antes de lançar qualquer release SemVer.**
 
 ```bash
@@ -149,7 +151,7 @@ Para rodar a validação do pacote manualmente a qualquer momento:
 
 - **Fase A (Board Principal):** 100% concluída e validada em Chatwoot v4.18 (banco, migrations, build Vite e telas de funil/cards funcionais).
 - **Fase B (Multi-tenant & Catálogo):** Multi-tenant por conta via feature flags, suporte a motivos de ganho/perda, catálogo de produtos interno com importação inteligente de CSV / Google Merchant XML e 7 regras de automação testadas com auditoria em tempo real.
-- **Fase C (Qualidade & Testes E2E):** Suíte de testes automatizados E2E com Playwright cobrindo 100% dos fluxos críticos de ponta a ponta (UC-01 a UC-12).
+- **Fase C (Qualidade & Testes E2E):** Suíte de testes automatizados E2E com Playwright cobrindo 100% dos fluxos críticos de ponta a ponta (UC-01 a UC-17).
 - **Governança & Extensibilidade:** Arquitetura limpa estabelecida priorizando *Overlay First* e *Rails Initializers* para manter o core imune a conflitos de atualização.
 
 ---

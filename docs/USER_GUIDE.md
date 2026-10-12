@@ -195,4 +195,21 @@ Validamos todas as ações do motor de automação diretamente no banco de dados
 - `assign_agents`:  Atendente associado ao cartão com sucesso.
 - `mark_as_lost`:  Cartão movido para a etapa de Perdido com motivo gravado.
 
+---
+
+## 7. Gestão de Oportunidades Diretamente na Conversa (`ContactPanel.vue`)
+
+A partir da versão **v1.0.4**, o atendente não precisa mais sair do chat para gerenciar o funil de vendas. O módulo Kanban é integrado diretamente à barra lateral direita da conversa.
+
+### A. Funcionalidades no Painel da Conversa:
+1. **Acordeão Kanban Nativo:** Ao abrir qualquer conversa ativa, o bloco **"Kanban"** aparece no painel lateral de contato.
+2. **Visualização Rápida:** Exibe os cartões vinculados àquele contato e conversa com título, funil, estágio atual, valor e tempo na etapa.
+3. **Troca Instantânea de Etapa:** O dropdown de etapas permite avançar ou retroceder a oportunidade com 1 clique (ex: de *Inbox* para *Em Negociação*), refletindo imediatamente na API e no board.
+4. **Criação Rápida de Oportunidades:** Botão *"Criar oportunidade"* pré-preenche o contato e permite selecionar o funil e a etapa. O sistema filtra e lista **apenas os funis que aceitam a caixa de entrada daquela conversa**.
+
+### B. Como Vincular Funis a Caixas de Entrada Específicas (N:N):
+1. Acesse **Kanban** ➔ Clique nas **Configurações (Engrenagem)** do funil desejado.
+2. Na seção **"Caixas de entrada"**, marque **"Caixas selecionadas"**.
+3. Escolha uma ou mais caixas de entrada (ex: WhatsApp Comercial, Webchat Suporte).
+4. Salve. O funil agora responderá exclusivamente aos chats que entrarem por esses canais.
 

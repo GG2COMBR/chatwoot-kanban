@@ -61,7 +61,16 @@ Defina quantas horas um cartão pode permanecer em determinada coluna antes de e
   2. Desative: **"Habilitar catálogo de produtos"** (`enable_products: false`).
   3. Desative: **"Exibir valores monetários"** (`show_monetary_values: false`).
   4. Visibilidade: Restrita aos membros da equipe técnica (`selected_agents`).
-* **Resultado:** Interface enxuta e focada em tarefas, preservando o sigilo financeiro da empresa.
+---
+
+### 📌 Caso de Uso #3: Segmentação de Funis por Caixa de Entrada (Vínculo N:N) & Gestão na Conversa
+* **Cenário / Problema:** A empresa opera múltiplos canais de comunicação (ex: WhatsApp Comercial, WhatsApp Suporte, Instagram Direct). Um funil comercial deve atender somente às conversas vindas dos números comerciais, enquanto o time de suporte opera em outro funil. Além disso, o atendente precisa mover o lead de etapa diretamente na conversa sem abrir o Kanban.
+* **Configuração:**
+  1. No funil desejado, acesse **Configurações** ➔ Seção **"Caixas de entrada"**.
+  2. Alterne de *"Todas as caixas de entrada"* para *"Caixas de entrada selecionadas"*.
+  3. Selecione as inboxes autorizadas (ex: *WhatsApp Vendas SP*, *WhatsApp Vendas RJ*).
+* **Resultado:**
+  - **Na Conversa:** Ao abrir um chat dessas caixas, o atendente vê o acordeão **"Kanban"** no painel direito de contato (`ContactPanel.vue`). Ele pode alterar a etapa da oportunidade com 1 clique (`KanbanStageSelect`) ou criar um novo card diretamente da conversa, com o sistema filtrando apenas os funis autorizados para aquela inbox.
 
 ---
 

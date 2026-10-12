@@ -185,7 +185,7 @@ O **chatwoot-kanban** adota uma estratégia de testes em 2 camadas para equilibr
 │  Comando: npm run test:e2e (~35 segundos)                   │
 │  - Roda contra o container Docker real (Vanilla ou Fazer-AI)│
 │  - Injeção idempotente automática de seed (scripts/seed-e2e)│
-│  - 16 cenários de negócio Playwright de ponta a ponta       │
+│  - 18 cenários de negócio Playwright de ponta a ponta       │
 │  - Não queima minutos de CI e não compete com produção     │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -204,14 +204,14 @@ Todo desenvolvedor que for publicar uma nova versão (ex: `v1.0.4`) DEVE seguir 
    - Com o Docker do Vanilla ativo (`docker compose up -d postgres redis rails vite`):
    ```bash
    npm run test:e2e
-   # Deve exibir: 16 passed (sem erros)
+   # Deve exibir: 18 passed (sem erros)
    ```
 
 3. **Homologação E2E no Chatwoot Fazer-AI:**
    - Com o Docker do Fazer-AI ativo:
    ```bash
    npm run test:e2e
-   # Deve exibir: 16 passed (sem erros)
+   # Deve exibir: 18 passed (sem erros)
    ```
 
 4. **Version Bump e Changelog:**
