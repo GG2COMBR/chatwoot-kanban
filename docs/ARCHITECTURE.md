@@ -102,6 +102,8 @@ chatwoot-kanban/
 │   ├── uninstall.sh         # Rollback limpo (remove overlay e reverte patches)
 │   ├── reconcile_migrations.rb  # Reconciliação do schema_migrations
 │   ├── test-package.sh      # Validação estática de sintaxe e integridade
+│   ├── test-e2e.sh          # Execução da suíte E2E Playwright integrada ao Docker
+│   ├── seed-e2e.rb          # Seed idempotente de dados de teste E2E
 │   └── run-specs.sh         # Execução dos specs contra um Chatwoot funcional
 └── docs/
     └── ARCHITECTURE.md      # Este documento

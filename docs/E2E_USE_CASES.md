@@ -152,8 +152,9 @@ Este documento especifica os cenários de teste ponta a ponta (E2E) críticos do
 
 ## 6. Motor de Automações & Regras de Entrada do Funil
 
-### UC-11: Motor de Automações, Kill Switch e Regras de Entrada
-- **Objetivo:** Validar a governança de regras de ciclo de vida, interruptor geral (kill-switch), modal de nova regra e regras de entrada por inboxes.
+### UC-11: Motor de Automações de Ciclo de Vida e Kill-Switch
+- **Arquivo:** `e2e/08-automations.spec.ts`
+- **Objetivo:** Validar a governança de regras de ciclo de vida, interruptor geral (kill-switch) e modal de criação de regras.
 - **Cenário (BDD):**
   ```gherkin
   Dado que o usuário está na tela de configurações do pipeline ("/app/accounts/{account_id}/kanban/{board_id}/edit")
@@ -162,34 +163,78 @@ Este documento especifica os cenários de teste ponta a ponta (E2E) críticos do
   E o botão de "Adicionar Regra" deve estar disponível
   Quando o usuário clica em "Adicionar Regra"
   Então o modal de criação de regra deve exibir os campos obrigatórios (Nome, Evento/Gatilho, Ação)
-  Quando o usuário acessa a aba "Regras de Entrada"
-  Então os controles de escopo de inboxes e criação automática de cards devem ser renderizados
-  Quando o usuário navega para as configurações globais do Chatwoot ("/app/accounts/{account_id}/settings/automations")
-  Então a tela de automações do core deve carregar sem erros contendo as ações estendidas do Kanban
+  ```
+
+### UC-15: Regras de Entrada do Funil e Controles de Inboxes
+- **Arquivo:** `e2e/08-automations.spec.ts`
+- **Objetivo:** Validar a configuração de escopo de caixas de entrada para captura automática de leads.
+- **Cenário (BDD):**
+  ```gherkin
+  Dado que o usuário está na aba "Regras de Entrada" das configurações do pipeline
+  Então a listagem de regras ativas e o botão "Nova Regra" devem ser renderizados
+  Quando o usuário abre o modal de nova regra
+  Então os seletores de caixa de entrada, condições por tipo de conversa e etapa de destino devem estar operacionais
+  ```
+
+### UC-16: Ações Estendidas nas Automações Globais do Chatwoot
+- **Arquivo:** `e2e/08-automations.spec.ts`
+- **Objetivo:** Garantir que o motor de automações nativo do core do Chatwoot renderize sem quebra contendo as ações injetadas do Kanban.
+- **Cenário (BDD):**
+  ```gherkin
+  Dado que o usuário navega para as configurações globais do Chatwoot ("/app/accounts/{account_id}/settings/automations")
+  Quando a tela de automações é carregada
+  Então o botão "Adicionar Regra de Automação" e a tabela de regras devem estar visíveis
+  E as ações estendidas de criação e movimentação de cards Kanban devem estar disponíveis no sistema
   ```
 
 ---
 
 ## 7. Relatórios de Performance do Kanban
 
-### UC-12: Visualização de Métricas de Conversão e Desempenho
-- **Objetivo:** Validar que os dashboards de relatórios carregam os gráficos nativos corretamente.
+### UC-12: Dashboard do Funil via View Switcher e Métricas Gráficas
+- **Arquivo:** `e2e/06-reports.spec.ts`
+- **Objetivo:** Validar que a visualização de Dashboard dentro do próprio funil renderiza métricas e gráficos nativos.
 - **Cenário (BDD):**
   ```gherkin
-  Dado que o usuário navega para o funil e aciona o View Switcher "Dashboard"
+  Dado que o usuário navega para o funil no painel Kanban
+  Quando aciona o View Switcher na opção "Dashboard"
   Então as métricas de resumo (Oportunidades no funil, Valor total em aberto) devem ser exibidas
   E os gráficos nativos ("Ganhos x perdidos", "Origem", "Funil por etapa") devem ser renderizados
-  Quando o usuário acessa os relatórios gerais da conta ("/app/accounts/{account_id}/reports/kanban")
-  Então o cabeçalho e os cartões de cartões abertos e ganhos devem ser renderizados sem erros
+  ```
+
+### UC-14: Relatórios Gerais do Kanban na Rota da Conta
+- **Arquivo:** `e2e/06-reports.spec.ts`
+- **Objetivo:** Validar o carregamento da tela de relatórios globais de Kanban da conta.
+- **Cenário (BDD):**
+  ```gherkin
+  Dado que o usuário acessa os relatórios gerais da conta ("/app/accounts/{account_id}/reports/kanban")
+  Quando a página carrega
+  Então o cabeçalho "Relatórios do Kanban" e os cartões de cartões abertos e ganhos devem ser renderizados sem erros
   ```
 
 ---
 
-## 8. Integração na Tela de Conversa do Atendente
+## 8. Criação Avançada de Pipelines
 
-### UC-17: Gestão do Funil e Troca de Etapas Diretamente na Conversa
+### UC-13: Criação de Pipeline Personalizado (Template Blank)
+- **Arquivo:** `e2e/02-boards.spec.ts`
+- **Objetivo:** Validar a criação de funis sem estágios pré-definidos para fluxos altamente personalizados.
+- **Cenário (BDD):**
+  ```gherkin
+  Dado que o usuário está no modal de criação de pipeline
+  Quando seleciona o template "Blank" (Funil em Branco)
+  E preenche um nome customizado
+  E confirma a criação
+  Então o novo pipeline é criado e o usuário pode configurar seus próprios estágios do zero
+  ```
+
+---
+
+## 9. Integração na Tela de Conversa do Atendente
+
+### UC-17: Gestão do Funil, Troca de Etapas e Criação Filtrada por Inbox na Conversa
 - **Arquivo:** `e2e/09-conversation-kanban.spec.ts`
-- **Objetivo:** Permitir ao atendente visualizar cards associados à conversa atual e trocar a etapa do funil diretamente pela barra lateral da conversa, sem precisar sair do chat para abrir o Kanban.
+- **Objetivo:** Permitir ao atendente visualizar cards associados à conversa atual, trocar a etapa do funil diretamente pela barra lateral da conversa e criar novos cards filtrados por inboxes elegíveis, sem precisar sair do chat para abrir o Kanban.
 - **Cenário (BDD):**
   ```gherkin
   Dado que o usuário está atendendo uma conversa no Chatwoot ("/app/accounts/{account_id}/conversations/{conversation_id}")
