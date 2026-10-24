@@ -13,6 +13,6 @@
     "test:e2e:debug": "./scripts/test-e2e.sh --debug"
   },
   "devDependencies": {
-    "@playwright/test": "^1.50.0"
+    "@playwright/test": "^1.64.1"
   }
 }
